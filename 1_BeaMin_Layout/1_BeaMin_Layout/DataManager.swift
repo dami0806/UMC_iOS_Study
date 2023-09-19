@@ -18,6 +18,29 @@ struct ShopSection{
     let headerButton:UIImage?
     let items: [ShopItem]
 }
+class SecondCellDataManager {
+    private var secondDataArray: [ShopItem] = []
+    func makesecondData(){
+        secondDataArray = [
+        ShopItem(image: UIImage(named: "주문1")!, text: "알뜰배달"),
+        ShopItem(image: UIImage(named: "주문2")!, text: "돈가스.회"),
+        ShopItem(image: UIImage(named: "주문3")!, text: "피자"),
+        ShopItem(image: UIImage(named: "주문4")!, text: "중식"),
+        ShopItem(image: UIImage(named: "주문5")!, text: "치킨"),
+        ShopItem(image: UIImage(named: "주문6")!, text: "버거"),
+        ShopItem(image: UIImage(named: "주문7")!, text: "분식"),
+        ShopItem(image: UIImage(named: "주문8")!, text: "디저트"),
+        ShopItem(image: UIImage(named: "주문9")!, text: "족발.보쌈"),
+        ShopItem(image: UIImage(named: "주문10")!, text: "전체보기"),
+
+        
+        ]
+        
+    }
+    func getSecondCellData() -> [ShopItem] {
+        return secondDataArray
+    }
+}
 class ShopDataManager{
     private var shopDataArray: [ShopSection] = []
     

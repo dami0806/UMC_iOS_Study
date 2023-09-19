@@ -7,21 +7,22 @@
 import UIKit
 import SnapKit
 
-class CustomView: UIView {
+class FirstCustomView: UIView {
    
     private lazy var titleLabel: UILabel = {
-            let label = UILabel()
+        let label = UILabel()
         label.textAlignment = .left
-        titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
-        titleLabel.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.textColor = .black
         return label
 
     }()
     private lazy var subtitleLabel: UILabel = {
             let label = UILabel()
         label.textAlignment = .left
-        titleLabel.font = UIFont.systemFont(ofSize: 13, weight: .light)
-        titleLabel.textColor = .darkGray
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 13, weight: .light)
+        label.textColor = .darkGray
         return label
 
     }()
@@ -30,6 +31,9 @@ class CustomView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+       super.backgroundColor = .white
+        super.layer.cornerRadius = 8
+        super.layer.masksToBounds = true
         addSubview()
     }
 
@@ -48,18 +52,18 @@ class CustomView: UIView {
 
     private func configureConstraints() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(3)
-            make.leading.equalToSuperview().inset(3)
+            make.top.equalToSuperview().inset(8)
+            make.leading.equalToSuperview().inset(8)
         }
 
         subtitleLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(3)
-            make.leading.equalToSuperview().inset(3)        }
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.leading.equalToSuperview().inset(8)        }
 
         imageView.snp.makeConstraints { make in
             make.trailing.equalToSuperview()
             make.bottom.equalToSuperview()
-            make.height.width.equalTo(super.snp.height).multipliedBy(0.32)
+            make.height.width.equalTo(super.snp.height).multipliedBy(0.5)
         }
     }
 

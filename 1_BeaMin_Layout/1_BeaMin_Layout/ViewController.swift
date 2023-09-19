@@ -55,48 +55,50 @@ final class ViewController: UIViewController {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.alignment = .center
-        stackView.spacing = 3
+        stackView.spacing = 6
+        stackView.distribution = .equalCentering
         return stackView
     }()
-    private lazy var customView1: CustomView = {
-        let view = CustomView()
+    
+    private lazy var customView1: FirstCustomView = {
+        let view = FirstCustomView()
         view.configure(title: "배달", subtitle: "세상은 넓고\n맛집은 많다", image: UIImage(named: "맨위1"))
         return view
     }()
-    private lazy var customView2: CustomView = {
-        let view = CustomView()
+    private lazy var customView2: FirstCustomView = {
+        let view = FirstCustomView()
         view.configure(title: "B마트", subtitle: "장보기도\n더빠르게!", image: UIImage(named: "맨위2"))
         return view
     }()
-    private lazy var customView3: CustomView = {
-        let view = CustomView()
+    private lazy var customView3: FirstCustomView = {
+        let view = FirstCustomView()
         view.configure(title: "배민스토어", subtitle: "홈플익스프레스\n신선 장보기", image: UIImage(named: "맨위3"))
         return view
     }()
     
-    
     //customView2
-    
-    //bannersjgrl
+    private lazy var customItemView = SecondCustomView()
+    private var secondCustomviewHeight: CGFloat = 0.0
+    //banners
     
     //image로 넣고 그안에 셀 넣기
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        addSubviews()
-       
-      
+        
+        
         dataManager.makeShopData()
         shopsDataArray = dataManager.getShopData()
-        
-        
         setupViews()
-        setupConstraints()
         addSubviews()
-        navibutton()
+        settingNaviItem()
         
+        //탭바 맨위로
+        view.bringSubviewToFront(customTabBarController.view)
+
     }
+
     private func setupViews(){
         shopTableView.dataSource = self
         shopTableView.delegate = self
@@ -111,19 +113,10 @@ final class ViewController: UIViewController {
         
         midView.addSubview(shopTableView)
     }
-    private func setupConstraints(){
-        shopTableView.snp.makeConstraints { make in
-            
-            make.edges.equalToSuperview()
-            make.width.equalToSuperview()
-            make.bottom.equalTo(bottomView.snp.bottom)
-            
-        }
-        
-    }
     
     
-    private func navibutton(){
+    
+    private func settingNaviItem(){
         let placeText = UIBarButtonItem(title: "남동구 소래역로 93", style: .plain, target: self, action: #selector(buttonTapped))
         // 네비게이션 바 오른쪽 상단에 버튼 3개 추가
         let button1 = UIBarButtonItem(title: "버튼1", style: .plain, target: self, action: #selector(buttonTapped))
@@ -149,12 +142,21 @@ final class ViewController: UIViewController {
         view.addSubview(customTabBarController.view)
         customTabBarController.didMove(toParent: self)
         view.addSubview(scrollView)
+        
         scrollView.addSubview(contentView)
         contentView.addSubview(topView)
         contentView.addSubview(midView)
         topView.addSubview(searchBar)
         
         contentView.addSubview(bottomView)
+        
+        stackView.addArrangedSubview(customView1)
+        stackView.addArrangedSubview(customView2)
+        stackView.addArrangedSubview(customView3)
+        
+        
+        topView.addSubview(stackView)
+        topView.addSubview(customItemView)
         configureConstraints()
     }
     
@@ -194,7 +196,34 @@ final class ViewController: UIViewController {
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(500)
         }
+        shopTableView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.width.equalToSuperview()
+            make.bottom.equalTo(bottomView.snp.bottom)
+            
+        }
+        stackView.snp.makeConstraints { make in
+            make.top.equalTo(searchBar.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview().inset(10)
+            make.height.equalTo(stackView.snp.width).multipliedBy(0.35)
+        }
+        customView1.snp.makeConstraints { make in
+            make.height.width.equalTo(stackView.snp.width).multipliedBy(0.3)
+        }
+        customView2.snp.makeConstraints { make in
+            make.height.width.equalTo(stackView.snp.width).multipliedBy(0.3)
+        }
+        customView3.snp.makeConstraints { make in
+            make.height.width.equalTo(stackView.snp.width).multipliedBy(0.3)
+        }
+        
+        customItemView.snp.makeConstraints { make in
+            make.top.equalTo(stackView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview().inset(10)
+            make.height.equalTo(customItemView.snp.width).multipliedBy(0.55)
+        }
     }
+    
     
 }
 extension ViewController: UITableViewDataSource {
