@@ -67,7 +67,9 @@ class ShopTableHeaderView: UITableViewHeaderFooterView{
 }
 
 //MARK: -ShopAllProductsTableViewCell
-class ShopAllProductsTableViewCell: UITableViewCell {
+class FastdeliveryTableViewCell: UITableViewCell {
+    static let reuseIdentifier = "FastdeliveryTableViewCell"
+
     private let collectionView: UICollectionView
     let shopDataManager = ShopDataManager()
     var shopDataArray: [ShopSection] = []
@@ -96,7 +98,7 @@ class ShopAllProductsTableViewCell: UITableViewCell {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(ShopAllProductCollectionViewCell.self, forCellWithReuseIdentifier: "ShopAllProductCollectionViewCell")
+        collectionView.register(FastdeliveryCollectionViewCell.self, forCellWithReuseIdentifier: FastdeliveryCollectionViewCell.reuseIdentifier)
         contentView.addSubview(collectionView)
     }
     
@@ -114,17 +116,17 @@ class ShopAllProductsTableViewCell: UITableViewCell {
     
     
 }
-extension  ShopAllProductsTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+extension FastdeliveryTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return shopDataArray[1].items.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ShopAllProductCollectionViewCell", for: indexPath) as! ShopAllProductCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FastdeliveryCollectionViewCell.reuseIdentifier, for: indexPath) as! FastdeliveryCollectionViewCell
         let image = shopDataArray[1].items[indexPath.item].image
         let label = shopDataArray[1].items[indexPath.item].text
-        cell.imageView.image = image
-        cell.label.text = label
+        cell.foodImageView.image = image
+        cell.storeLabel.text = label
         return cell
     }
     // MARK: - UICollectionViewDelegateFlowLayout

@@ -45,64 +45,132 @@ class ShopAddCollectionViewCell: UICollectionViewCell {
         
     }
 }
-class ShopAllProductCollectionViewCell: UICollectionViewCell {
-    var uiView = UIView()
-    lazy var imageView:UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        
-        return imageView
-    }()
-    lazy var label: UILabel = {
+//MARK: -FastdeliveryCollectionViewCell
+class FastdeliveryCollectionViewCell: UICollectionViewCell {
+    static let reuseIdentifier = "FastdeliveryCollectionViewCell"
+   
+    
+    lazy var foodImageView:UIImageView = {
+           let imageView = UIImageView()
+           imageView.contentMode = .scaleAspectFill
+           imageView.layer.cornerRadius = 8
+           imageView.clipsToBounds = true
+           return imageView
+       }()
+   lazy var storeLabel: UILabel = {
         let label = UILabel()
-        label.textAlignment = .center
-        label.font = customFont ?? UIFont.systemFont(ofSize: 12, weight: .light)
-        label.numberOfLines = 2
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        label.textColor = .black
+        label.numberOfLines = 1
         return label
     }()
-    var customFont: UIFont? {
-        didSet {
-            label.font = customFont
-        }
-    }
+     lazy var scoreLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        label.textColor = .black
+        label.numberOfLines = 1
+        return label
+    }()
+    //배달
+     lazy var deliveryLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        label.textColor = .lightGray
+        label.text = "배달"
+        label.numberOfLines = 1
+        return label
+    }()
+     lazy var deliveryTextLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        label.textColor = .gray
+        label.numberOfLines = 1
+        return label
+    }()
+    //배달팁
+     lazy var deliveryTipLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.textColor = .lightGray
+        label.text = "배달팁"
+        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        label.numberOfLines = 1
+        return label
+    }()
+     lazy var deliveryTipTextLabel: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .left
+        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        label.numberOfLines = 1
+        return label
+    }()
+     lazy var uiImageView: UIImageView = {
+        let uiImageView = UIImageView()
+        return uiImageView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        setupImageView()
+        addsubView()
         
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         
-        setupImageView()
     }
-    private func setupImageView() {
-        contentView.addSubview(uiView)
-        uiView.addSubview(imageView)
-        uiView.addSubview(label)
-        
-        uiView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+    private func addsubView() {
+        contentView.addSubview(foodImageView)
+        contentView.addSubview(storeLabel)
+        contentView.addSubview(scoreLabel)
+        contentView.addSubview(deliveryLabel)
+        contentView.addSubview(deliveryTextLabel)
+        contentView.addSubview(deliveryTipLabel)
+        contentView.addSubview(deliveryTipTextLabel)
+        contentView.addSubview(uiImageView)
+        configureConstraints()
+       
+    }
+    private func configureConstraints(){
+        foodImageView.snp.makeConstraints { make in
+            make.leading.trailing.top.equalToSuperview().inset(3)
+            make.width.equalTo(foodImageView.snp.height)
         }
-        imageView.snp.makeConstraints { make in
-            make.centerX.equalTo(uiView.snp.centerX)
-            make.top.equalTo(uiView.snp.top).inset(10)
-            make.width.height.equalTo(uiView.snp.width).multipliedBy(0.8)
-            make.height.equalTo(imageView.snp.width)
+        storeLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(3)
+            make.top.equalTo(foodImageView.snp.bottom).offset(3)
         }
-        label.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(5)
+        scoreLabel.snp.makeConstraints { make in
+            make.leading.equalTo(storeLabel.snp.trailing).offset(1)
+            make.centerY.equalTo(storeLabel.snp.centerY)
         }
-        layoutIfNeeded()
+        deliveryLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(3)
+            make.top.equalTo(storeLabel.snp.bottom).offset(3)
+        }
+        deliveryTextLabel.snp.makeConstraints { make in
+            make.leading.equalTo(deliveryLabel.snp.trailing).offset(1)
+            make.centerY.equalTo(deliveryLabel.snp.centerY)
+
+        }
         
-        imageView.layer.cornerRadius = imageView.frame.width / 2
-        imageView.clipsToBounds = true
-        
-        label.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(8)
-            make.centerX.equalTo(uiView.snp.centerX)
-            
+        deliveryTipLabel.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(3)
+            make.top.equalTo(deliveryLabel.snp.bottom).offset(3)
+
+        }
+        deliveryTipTextLabel.snp.makeConstraints { make in
+            make.leading.equalTo(deliveryTipLabel.snp.trailing).offset(1)
+            make.centerY.equalTo(deliveryTipLabel.snp.centerY)
+
+        }
+        uiImageView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(3)
         }
     }
     

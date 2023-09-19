@@ -8,6 +8,7 @@
 import UIKit
 import SnapKit
 
+///mark: - 알뜰어쩌구 아이템 많은거
 class SecondCustomCollectionCell: UICollectionViewCell {
     static let reuseIdentifier = "SecondCustomCollectionCell"
     

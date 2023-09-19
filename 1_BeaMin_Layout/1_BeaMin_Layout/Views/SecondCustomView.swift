@@ -122,7 +122,6 @@ class SecondCustomView: UIView {
 }
 extension SecondCustomView: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(secondItemArray.count)
         print("🍎\(secondItemArray.count)")
         return secondItemArray.count
     }

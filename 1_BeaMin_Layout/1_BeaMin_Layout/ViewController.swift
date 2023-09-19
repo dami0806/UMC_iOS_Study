@@ -13,6 +13,9 @@ final class ViewController: UIViewController {
     let dataManager = ShopDataManager()
     var shopsDataArray: [ShopSection] = []
     
+    let topViewfourDataManager = TopViewfourDataManager()
+    var topViewfourDataArray: [ShopItem] = []
+    
     let customTabBarController = CustomTabBarController()
     private lazy var shopTableView : UITableView = {
         let tableView = UITableView()
@@ -21,10 +24,11 @@ final class ViewController: UIViewController {
         tableView.isScrollEnabled = false
         return tableView
     }()
-    
+    //전체스크롤
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = true
+        scrollView.tag = 0
         return scrollView
     }()
     
@@ -79,9 +83,52 @@ final class ViewController: UIViewController {
     //customView2
     private lazy var customItemView = SecondCustomView()
     private var secondCustomviewHeight: CGFloat = 0.0
+    
     //banners
+    private lazy var bannerView : UIView = {
+        let uiView = UIView()
+        uiView.layer.cornerRadius = 8
+        uiView.backgroundColor = .gray
+        return uiView
+    }()
+    private lazy var bannerScrollView : UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.delegate = self
+           scrollView.isPagingEnabled = true
+           scrollView.showsHorizontalScrollIndicator = false
+        scrollView.tag = 2
+        return scrollView
+    }()
+    
+    var currentIndex = 0
+    var bannerImageViews: [UIImageView] = []
+
+    //4가지 쿠폰
+    
+    private lazy var topViewLastView : UIView = {
+        let uiView = UIView()
+        uiView.layer.cornerRadius = 8
+        uiView.backgroundColor = .gray
+        return uiView
+    }()
+    private lazy var topViewLastImage : UIImageView = {
+        let uiImage = UIImageView()
+        uiImage.image = UIImage(named: "topViewLastImage")
+        return uiImage
+    }()
     
     //image로 넣고 그안에 셀 넣기
+  private lazy var topViewLastcollectionView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        collectionView.showsHorizontalScrollIndicator = false
+       collectionView.register(SecondCustomCollectionCell.self, forCellWithReuseIdentifier: SecondCustomCollectionCell.reuseIdentifier)
+      
+        return collectionView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,6 +137,10 @@ final class ViewController: UIViewController {
         
         dataManager.makeShopData()
         shopsDataArray = dataManager.getShopData()
+        
+        topViewfourDataManager.maketopViewfourData()
+        topViewfourDataArray = topViewfourDataManager.gettopViewfourCellData()
+        print("🍎\(topViewfourDataArray.count)")
         setupViews()
         addSubviews()
         settingNaviItem()
@@ -103,13 +154,13 @@ final class ViewController: UIViewController {
         shopTableView.dataSource = self
         shopTableView.delegate = self
         //  shopTableView.register(ShopAddTableViewCell.self, forCellReuseIdentifier: "ShopAddTableViewCell")
-        shopTableView.register(ShopAllProductsTableViewCell.self, forCellReuseIdentifier: "ShopAllProductsTableViewCell")
+        shopTableView.register(FastdeliveryTableViewCell.self, forCellReuseIdentifier: FastdeliveryTableViewCell.reuseIdentifier)
         shopTableView.register(ShopMobileGiftsTableViewCell.self, forCellReuseIdentifier: "ShopMobileGiftsTableViewCell")
         //shopTableView.register(ShopBestItemsTableViewCell.self, forCellReuseIdentifier: "ShopBestItemsTableViewCell")
         //shopTableView.register(ShopNewProductsTableViewCell.self, forCellReuseIdentifier: "ShopNewProductsTableViewCell")
         
         shopTableView.register(ShopTableHeaderView.self, forHeaderFooterViewReuseIdentifier: "ShopTableHeaderView")
-        
+        topViewLastcollectionView.register(SecondCustomCollectionCell.self, forCellWithReuseIdentifier:SecondCustomCollectionCell.reuseIdentifier)
         
         midView.addSubview(shopTableView)
     }
@@ -157,6 +208,12 @@ final class ViewController: UIViewController {
         
         topView.addSubview(stackView)
         topView.addSubview(customItemView)
+        
+        topView.addSubview(bannerView)
+        topView.addSubview(topViewLastView)
+        topViewLastView.addSubview(topViewLastImage)
+        
+        topViewLastView.addSubview(topViewLastcollectionView)
         configureConstraints()
     }
     
@@ -183,7 +240,7 @@ final class ViewController: UIViewController {
         }
         topView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(500)
+            make.bottom.equalTo(topViewLastcollectionView.snp.bottom).offset(20)
         }
         
         midView.snp.makeConstraints { make in
@@ -222,6 +279,23 @@ final class ViewController: UIViewController {
             make.leading.trailing.equalToSuperview().inset(10)
             make.height.equalTo(customItemView.snp.width).multipliedBy(0.55)
         }
+        bannerView.snp.makeConstraints { make in
+            make.top.equalTo(customItemView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview().inset(8)
+            make.height.equalTo(bannerView.snp.width).multipliedBy(0.33)
+        }
+        topViewLastView.snp.makeConstraints { make in
+            make.top.equalTo(bannerView.snp.bottom).offset(10)
+            make.leading.trailing.equalToSuperview()
+            make.height.equalTo(bannerView.snp.width).multipliedBy(0.33)
+
+        }
+        topViewLastImage.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        topViewLastcollectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(8)
+        }
     }
     
     
@@ -235,37 +309,37 @@ extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //우리동네 빠른배달
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ShopAllProductsTableViewCell", for: indexPath) as! ShopAllProductsTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: FastdeliveryTableViewCell.reuseIdentifier, for: indexPath) as! FastdeliveryTableViewCell
             return cell
             //최근에 주문했어요
         } else if indexPath.section == 1{
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ShopAllProductsTableViewCell", for: indexPath) as! ShopAllProductsTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: FastdeliveryTableViewCell.reuseIdentifier, for: indexPath) as! FastdeliveryTableViewCell
             return cell
         }
         //오늘의 할인
         else if indexPath.section == 2{
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ShopMobileGiftsTableViewCell", for: indexPath) as! ShopMobileGiftsTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: FastdeliveryTableViewCell.reuseIdentifier, for: indexPath) as! FastdeliveryTableViewCell
             return cell
         }
         //B마트 장보기 특가
         else if indexPath.section == 3{
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ShopAllProductsTableViewCell", for: indexPath) as! ShopAllProductsTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: FastdeliveryTableViewCell.reuseIdentifier, for: indexPath) as! FastdeliveryTableViewCell
             return cell
         }
         //마음을 선물해보세요
         if indexPath.section == 4 {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ShopAllProductsTableViewCell", for: indexPath) as! ShopAllProductsTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: FastdeliveryTableViewCell.reuseIdentifier, for: indexPath) as! FastdeliveryTableViewCell
             return cell
         }
         //전국의 별미가 한가득
         else if indexPath.section == 5{
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ShopAllProductsTableViewCell", for: indexPath) as! ShopAllProductsTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: FastdeliveryTableViewCell.reuseIdentifier, for: indexPath) as! FastdeliveryTableViewCell
             return cell
         }
         //이런일도 한답니다
         else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ShopAllProductsTableViewCell", for: indexPath) as! ShopAllProductsTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: FastdeliveryTableViewCell.reuseIdentifier, for: indexPath) as! FastdeliveryTableViewCell
             return cell
         }
         
@@ -343,4 +417,30 @@ extension ViewController: UITableViewDelegate {
             return tableView.bounds.width * 0.3
         }
     }
+}
+extension ViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+          print("🍎\(topViewfourDataArray.count)")
+          return topViewfourDataArray.count
+      }
+      
+      // 이 메서드는 private에서 public로 변경되어야 합니다.
+      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+          guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecondCustomCollectionCell.reuseIdentifier, for: indexPath) as? SecondCustomCollectionCell else {
+              return UICollectionViewCell()
+          }
+          
+          let shopItem = topViewfourDataArray[indexPath.item]
+          cell.configure(image: shopItem.image!, title: shopItem.text)
+          
+          return cell
+      }
+      
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 4
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+            // 원하는 아이템 크기를 반환합니다.
+            return CGSize(width: collectionView.bounds.width / 4 - 10, height: collectionView.bounds.height)
+        }
 }
