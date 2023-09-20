@@ -125,6 +125,18 @@ final class ViewController: UIViewController {
         return uiImage
     }()
     
+    private lazy var bottomViewaddImage : UIImageView = {
+        let uiImage = UIImageView()
+        uiImage.image = UIImage(named: "맨아래 광고")
+        return uiImage
+    }()
+    private lazy var bottomViewImage : UIImageView = {
+        let uiImage = UIImageView()
+        uiImage.image = UIImage(named: "맨아래 설명")
+        return uiImage
+    }()
+    
+    
     //image로 넣고 그안에 셀 넣기
   private lazy var topViewLastcollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -229,6 +241,8 @@ final class ViewController: UIViewController {
         topViewLastView.addSubview(topViewLastImage)
         
         topViewLastView.addSubview(topViewLastcollectionView)
+        bottomView.addSubview(bottomViewaddImage)
+        bottomView.addSubview(bottomViewImage)
         configureConstraints()
     }
     
@@ -271,7 +285,7 @@ final class ViewController: UIViewController {
         bottomView.snp.makeConstraints { make in
             make.top.equalTo(midView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(500)
+            make.height.equalTo(800)
         }
         shopTableView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
@@ -315,6 +329,14 @@ final class ViewController: UIViewController {
         }
         topViewLastcollectionView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(8)
+        }
+        bottomViewaddImage.snp.makeConstraints { make in
+            make.leading.trailing.top.equalToSuperview()
+            make.height.equalTo(bottomViewaddImage.snp.width).multipliedBy(0.2)
+        }
+        bottomViewImage.snp.makeConstraints { make in
+            make.top.equalTo(bottomViewaddImage.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
         }
     }
     
