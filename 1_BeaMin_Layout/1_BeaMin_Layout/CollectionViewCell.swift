@@ -8,12 +8,12 @@
 import UIKit
 import SnapKit
 
-class ShopAddCollectionViewCell: UICollectionViewCell {
-    
-    var uiView = UIView()
+///Mark: - SaleCollectionViewCell
+class SaleCollectionViewCell: UICollectionViewCell {
+    static let reuseIdentifier = "SaleCollectionViewCell"
+
     lazy var imageView:UIImageView = {
         let imageView = UIImageView()
-    
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 10
         imageView.clipsToBounds = true
@@ -29,21 +29,14 @@ class ShopAddCollectionViewCell: UICollectionViewCell {
         setupImageView()
     }
     private func setupImageView() {
-        contentView.addSubview(uiView)
-        uiView.addSubview(imageView)
-        
-        uiView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
+        contentView.addSubview(imageView)
+       
         imageView.snp.makeConstraints { make in
-            make.edges.equalTo(uiView)
+            make.width.equalTo(contentView).offset(5)
+            make.height.equalTo(imageView.snp.width).multipliedBy(0.55)
         }
     }
-    func configure(with image: UIImage) {
-        imageView.image = image
-        
-        
-    }
+  
 }
 //MARK: -FastdeliveryCollectionViewCell
 class FastdeliveryCollectionViewCell: UICollectionViewCell {
@@ -60,7 +53,7 @@ class FastdeliveryCollectionViewCell: UICollectionViewCell {
    lazy var storeLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         label.textColor = .black
         label.numberOfLines = 1
         return label
@@ -68,7 +61,7 @@ class FastdeliveryCollectionViewCell: UICollectionViewCell {
      lazy var scoreLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         label.textColor = .black
         label.numberOfLines = 1
         return label
@@ -77,17 +70,17 @@ class FastdeliveryCollectionViewCell: UICollectionViewCell {
      lazy var deliveryLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .light)
         label.textColor = .lightGray
-        label.text = "배달"
+        label.text = "배달 "
         label.numberOfLines = 1
         return label
     }()
      lazy var deliveryTextLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        label.textColor = .darkGray
         label.numberOfLines = 1
         return label
     }()
@@ -96,8 +89,8 @@ class FastdeliveryCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.textAlignment = .left
         label.textColor = .lightGray
-        label.text = "배달팁"
-        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        label.text = "배달팁 "
+        label.font = UIFont.systemFont(ofSize: 14, weight: .light)
         label.numberOfLines = 1
         return label
     }()
@@ -105,12 +98,13 @@ class FastdeliveryCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.textAlignment = .left
         label.textColor = .gray
-        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .light)
         label.numberOfLines = 1
         return label
     }()
      lazy var uiImageView: UIImageView = {
         let uiImageView = UIImageView()
+         uiImageView.image = UIImage(named: "알뜰배달")
         return uiImageView
     }()
     
@@ -170,87 +164,34 @@ class FastdeliveryCollectionViewCell: UICollectionViewCell {
 
         }
         uiImageView.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(3)
+            make.top.equalTo(deliveryTipLabel.snp.bottom).offset(3)
+            make.leading.equalToSuperview().inset(3)
+            make.width.equalTo(foodImageView).multipliedBy(0.7)
+            make.height.equalTo(15)
         }
     }
     
 }
 
 
-//MARK: - ShopMobileGiftsCollectionViewCell
-class ShopMobileGiftsCollectionViewCell: UICollectionViewCell {
-    lazy var containView: UIView = {
-         let view = UIView()
-        view.backgroundColor = .white
-         return view
-     }()
-   lazy var view: UIView = {
-        let view = UIView()
-       view.backgroundColor = .white
-        return view
-    }()
-    var imageView : UIImageView = {
-        let image = UIImageView()
-        image.contentMode = .scaleAspectFit
-        return image
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        setupCell()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-        
-        setupCell()
-    }
-    
-    private func setupCell() {
-        setupViewUI()
-        addSubview(containView)
-        containView.addSubview(view)
-        view.addSubview(imageView)
-        containView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(8)
-        }
-        view.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(containView)
-            make.top.equalToSuperview().inset(10)
-            make.height.equalTo(view.snp.width).multipliedBy(0.35)
-        }
-        imageView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(view).inset(2)
-            make.top.bottom.equalTo(view).inset(4)
-            
-        }
-    }
-    private func setupViewUI(){
-        view.layer.cornerRadius = 5
-        view.layer.shadowColor = UIColor.lightGray.cgColor
-        view.layer.shadowOpacity = 0.3 //0일수록 투명
-        view.layer.shadowOffset = CGSize(width: 0, height: 0)
-        view.layer.shadowRadius = 4 //0일수록 흐릿
-        view.layer.masksToBounds = false
-
-
-    }
-}
-//MARK: -ShopBestItemsCollectionViewCell
-class ShopBestItemsCollectionViewCell: UICollectionViewCell {
+//MARK: -GiveMindCollectionViewCell
+class GiveMindCollectionViewCell: UICollectionViewCell {
+    static let reuseIdentifier = "GiveMindCollectionViewCell"
     var uiView = UIView()
     lazy var imageView:UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 5
+        imageView.layer.cornerRadius = 10
+        imageView.clipsToBounds = true
+
         return imageView
     }()
     lazy var label: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.numberOfLines = 2
+        label.textColor = .black
+        label.numberOfLines = 1
         return label
     }()
     override init(frame: CGRect) {
@@ -266,28 +207,58 @@ class ShopBestItemsCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupImageView() {
-        contentView.addSubview(uiView)
-        uiView.addSubview(imageView)
-        uiView.addSubview(label)
+        contentView.addSubview(imageView)
+        contentView.addSubview(label)
         
-        uiView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
         imageView.snp.makeConstraints { make in
-            make.centerX.equalTo(uiView.snp.centerX)
-            make.top.equalTo(uiView.snp.top).inset(5)
-            make.width.height.equalTo(uiView.snp.width).multipliedBy(0.9)
-            make.height.equalTo(imageView.snp.width)
+            make.leading.equalToSuperview().offset(3)
+            make.top.equalToSuperview().inset(5)
+            make.width.equalToSuperview().multipliedBy(0.9)
+            make.height.equalTo(imageView.snp.width).multipliedBy(1.5)
         }
-        
-        
         label.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(8)
-            make.leading.equalTo(imageView.snp.leading)
-            make.trailing.equalTo(imageView.snp.trailing)
+            make.top.equalTo(imageView.snp.bottom).offset(3)
+            make.leading.trailing.equalToSuperview().offset(3)
+            
             
         }
     }
     
 }
 
+//MARK: -GoodTasteCollectionViewCell
+class GoodTasteCollectionViewCell: UICollectionViewCell {
+    static let reuseIdentifier = "GoodTasteCollectionViewCell"
+    var uiView = UIView()
+    lazy var imageView:UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 10
+        imageView.clipsToBounds = true
+
+        return imageView
+    }()
+   
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupImageView()
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        setupImageView()
+    }
+    
+    private func setupImageView() {
+        contentView.addSubview(imageView)
+        
+        imageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+     
+        }
+ 
+    }
+    
+}

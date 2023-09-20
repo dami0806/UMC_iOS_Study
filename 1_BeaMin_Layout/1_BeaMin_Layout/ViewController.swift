@@ -13,6 +13,7 @@ final class ViewController: UIViewController {
     let dataManager = ShopDataManager()
     var shopsDataArray: [ShopSection] = []
     
+   
     let topViewfourDataManager = TopViewfourDataManager()
     var topViewfourDataArray: [ShopItem] = []
     
@@ -36,11 +37,18 @@ final class ViewController: UIViewController {
         let view = UIView()
         return view
     }()
+    private lazy var searchBarContentView : UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor.logoColor
+        view.layer.cornerRadius = 20
+        view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        return view
+    }()
     let searchBar = UISearchBar()
     
     private lazy var topView: UIView = {
         let view = UIView()
-        view.backgroundColor = .red
+        view.backgroundColor = UIColor.interSpaceColor
         return view
     }()
     private lazy var midView: UIView = {
@@ -138,9 +146,9 @@ final class ViewController: UIViewController {
         dataManager.makeShopData()
         shopsDataArray = dataManager.getShopData()
         
+        
         topViewfourDataManager.maketopViewfourData()
         topViewfourDataArray = topViewfourDataManager.gettopViewfourCellData()
-        print("🍎\(topViewfourDataArray.count)")
         setupViews()
         addSubviews()
         settingNaviItem()
@@ -153,13 +161,14 @@ final class ViewController: UIViewController {
     private func setupViews(){
         shopTableView.dataSource = self
         shopTableView.delegate = self
-        //  shopTableView.register(ShopAddTableViewCell.self, forCellReuseIdentifier: "ShopAddTableViewCell")
         shopTableView.register(FastdeliveryTableViewCell.self, forCellReuseIdentifier: FastdeliveryTableViewCell.reuseIdentifier)
-        shopTableView.register(ShopMobileGiftsTableViewCell.self, forCellReuseIdentifier: "ShopMobileGiftsTableViewCell")
-        //shopTableView.register(ShopBestItemsTableViewCell.self, forCellReuseIdentifier: "ShopBestItemsTableViewCell")
-        //shopTableView.register(ShopNewProductsTableViewCell.self, forCellReuseIdentifier: "ShopNewProductsTableViewCell")
         
+        shopTableView.register(SaleTableViewCell.self, forCellReuseIdentifier: SaleTableViewCell.reuseIdentifier)
+
         shopTableView.register(ShopTableHeaderView.self, forHeaderFooterViewReuseIdentifier: "ShopTableHeaderView")
+        shopTableView.register(GiveMindTableViewCell.self, forCellReuseIdentifier: GiveMindTableViewCell.reuseIdentifier)
+        shopTableView.register(GoodTasteTableViewCell.self, forCellReuseIdentifier: GoodTasteTableViewCell.reuseIdentifier)
+        
         topViewLastcollectionView.register(SecondCustomCollectionCell.self, forCellWithReuseIdentifier:SecondCustomCollectionCell.reuseIdentifier)
         
         midView.addSubview(shopTableView)
@@ -169,15 +178,18 @@ final class ViewController: UIViewController {
     
     private func settingNaviItem(){
         let placeText = UIBarButtonItem(title: "남동구 소래역로 93", style: .plain, target: self, action: #selector(buttonTapped))
+        view.backgroundColor = UIColor.logoColor
         // 네비게이션 바 오른쪽 상단에 버튼 3개 추가
         let button1 = UIBarButtonItem(title: "버튼1", style: .plain, target: self, action: #selector(buttonTapped))
         let button2 = UIBarButtonItem(title: "버튼2", style: .plain, target: self, action: #selector(buttonTapped))
         let button3 = UIBarButtonItem(title: "버튼3", style: .plain, target: self, action: #selector(buttonTapped))
         
         // 버튼 색상 설정
-        button1.tintColor = .blue
-        button2.tintColor = .blue
-        button3.tintColor = .blue
+        placeText.tintColor = .white
+        button1.tintColor = .white
+        button2.tintColor = .white
+        button3.tintColor = .white
+        navigationController?.navigationBar.barTintColor = UIColor.logoColor
         navigationItem.rightBarButtonItems = [button1, button2, button3]
         navigationItem.leftBarButtonItem = placeText
     }
@@ -197,7 +209,10 @@ final class ViewController: UIViewController {
         scrollView.addSubview(contentView)
         contentView.addSubview(topView)
         contentView.addSubview(midView)
-        topView.addSubview(searchBar)
+        
+        
+        topView.addSubview(searchBarContentView)
+        searchBarContentView.addSubview(searchBar)
         
         contentView.addSubview(bottomView)
         
@@ -238,6 +253,11 @@ final class ViewController: UIViewController {
             make.top.leading.trailing.equalToSuperview().inset(10)
             
         }
+        searchBarContentView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(searchBar.snp.bottom).offset(10)
+        }
+       
         topView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.bottom.equalTo(topViewLastcollectionView.snp.bottom).offset(20)
@@ -246,7 +266,7 @@ final class ViewController: UIViewController {
         midView.snp.makeConstraints { make in
             make.top.equalTo(topView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(2000)
+            make.height.equalTo(2600)
         }
         bottomView.snp.makeConstraints { make in
             make.top.equalTo(midView.snp.bottom)
@@ -318,7 +338,7 @@ extension ViewController: UITableViewDataSource {
         }
         //오늘의 할인
         else if indexPath.section == 2{
-            let cell = tableView.dequeueReusableCell(withIdentifier: FastdeliveryTableViewCell.reuseIdentifier, for: indexPath) as! FastdeliveryTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: SaleTableViewCell.reuseIdentifier, for: indexPath) as! SaleTableViewCell
             return cell
         }
         //B마트 장보기 특가
@@ -329,12 +349,12 @@ extension ViewController: UITableViewDataSource {
         //마음을 선물해보세요
         if indexPath.section == 4 {
             
-            let cell = tableView.dequeueReusableCell(withIdentifier: FastdeliveryTableViewCell.reuseIdentifier, for: indexPath) as! FastdeliveryTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: GiveMindTableViewCell.reuseIdentifier, for: indexPath) as! GiveMindTableViewCell
             return cell
         }
         //전국의 별미가 한가득
         else if indexPath.section == 5{
-            let cell = tableView.dequeueReusableCell(withIdentifier: FastdeliveryTableViewCell.reuseIdentifier, for: indexPath) as! FastdeliveryTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: GoodTasteTableViewCell.reuseIdentifier, for: indexPath) as! GoodTasteTableViewCell
             return cell
         }
         //이런일도 한답니다
@@ -381,7 +401,7 @@ extension ViewController: UITableViewDelegate {
         
         // 빈 뷰의 높이를 조절하여 원하는 간격 크기로 설정
         spacingView.snp.makeConstraints { make in
-            make.height.equalTo(20.0) // 원하는 간격 크기로 조절
+            make.height.equalTo(0.0) // 원하는 간격 크기로 조절
         }
         
         return spacingView
@@ -391,30 +411,33 @@ extension ViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         // 각 섹션의 하단 공백 높이 설정 (간격 크기)
-        return 50.0
+        return 10.0
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if indexPath.section == 0 {
-            return tableView.bounds.width * 0.3
+            return tableView.bounds.width * 0.8
         }
         else if indexPath.section == 1 {
-            return tableView.bounds.width * 0.253
+            return tableView.bounds.width * 0.8
         }
         else if indexPath.section == 2 {
-            return tableView.bounds.width * 0.15
+            return tableView.bounds.width * 0.5
+        }
+        if indexPath.section == 3 {
+            return tableView.bounds.width * 0.8
         }
         if indexPath.section == 4 {
-            return tableView.bounds.width * 0.3
+            return tableView.bounds.width * 0.6
         }
         else if indexPath.section == 5 {
-            return tableView.bounds.width * 0.253
+            return tableView.bounds.width * 0.55
         }
         else if indexPath.section == 6 {
-            return tableView.bounds.width * 0.15
+            return tableView.bounds.width * 0.8
         }
         else {
-            return tableView.bounds.width * 0.3
+            return tableView.bounds.width * 0.8
         }
     }
 }
@@ -424,7 +447,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDelegateFlow
           return topViewfourDataArray.count
       }
       
-      // 이 메서드는 private에서 public로 변경되어야 합니다.
+   
       func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
           guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecondCustomCollectionCell.reuseIdentifier, for: indexPath) as? SecondCustomCollectionCell else {
               return UICollectionViewCell()
@@ -440,7 +463,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDelegateFlow
         return 4
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            // 원하는 아이템 크기를 반환합니다.
+        
             return CGSize(width: collectionView.bounds.width / 4 - 10, height: collectionView.bounds.height)
         }
 }
