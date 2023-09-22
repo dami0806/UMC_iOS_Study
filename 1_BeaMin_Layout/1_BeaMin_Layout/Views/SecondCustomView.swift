@@ -40,11 +40,9 @@ class SecondCustomView: UIView {
     }()
     
     private lazy var button: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle(nil, for: .normal)
+        let button = UIButton(type: .custom)
         button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         button.tintColor = .darkGray
-        button.semanticContentAttribute = .forceRightToLeft
         return button
     }()
     
@@ -103,13 +101,13 @@ class SecondCustomView: UIView {
             make.height.equalTo(imageView.snp.width).multipliedBy(0.5)
         }
         subtitleLabel.snp.makeConstraints { make in
-            make.leading.equalTo(imageView.snp.trailing).offset(3)
+            make.leading.equalTo(imageView.snp.trailing).offset(5)
             make.centerY.equalTo(titleLabel.snp.centerY)
         }
         button.snp.makeConstraints { make in
-            make.centerY.equalTo(titleLabel.snp.centerY)
             make.trailing.equalToSuperview().inset(8)
-            make.height.width.equalTo(super.snp.width).multipliedBy(0.15)
+            make.height.equalTo(super.snp.width).multipliedBy(0.08)
+            make.centerY.equalTo(titleLabel.snp.centerY)
             
         }
         collectionView.snp.makeConstraints { make in
