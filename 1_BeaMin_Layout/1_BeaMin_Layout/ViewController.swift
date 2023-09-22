@@ -124,7 +124,17 @@ final class ViewController: UIViewController {
         uiImage.image = UIImage(named: "topViewLastImage")
         return uiImage
     }()
-    
+    //큰뷰
+    //4개이미지
+    private lazy var martShopptingImagesStackView: UIStackView = {
+            let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+            stackView.spacing = 3
+            return stackView
+    }()
+
+    //그 아래뷰하나 근데 custom 이미지와 text, 가격 3개
     private lazy var bottomViewaddImage : UIImageView = {
         let uiImage = UIImageView()
         uiImage.image = UIImage(named: "맨아래 광고")
@@ -177,8 +187,11 @@ final class ViewController: UIViewController {
         
         shopTableView.register(SaleTableViewCell.self, forCellReuseIdentifier: SaleTableViewCell.reuseIdentifier)
 
-        shopTableView.register(ShopTableHeaderView.self, forHeaderFooterViewReuseIdentifier: "ShopTableHeaderView")
+        shopTableView.register(ShopTableHeaderView.self, forHeaderFooterViewReuseIdentifier: ShopTableHeaderView.reuseIdentifier)
         shopTableView.register(GiveMindTableViewCell.self, forCellReuseIdentifier: GiveMindTableViewCell.reuseIdentifier)
+        
+        shopTableView.register(GoodTasteTableViewCell.self, forCellReuseIdentifier: GoodTasteTableViewCell.reuseIdentifier)
+        shopTableView.register(MartShoppingTableViewCell.self, forCellReuseIdentifier: MartShoppingTableViewCell.reuseIdentifier)
         shopTableView.register(GoodTasteTableViewCell.self, forCellReuseIdentifier: GoodTasteTableViewCell.reuseIdentifier)
         
         topViewLastcollectionView.register(SecondCustomCollectionCell.self, forCellWithReuseIdentifier:SecondCustomCollectionCell.reuseIdentifier)
@@ -280,12 +293,12 @@ final class ViewController: UIViewController {
         midView.snp.makeConstraints { make in
             make.top.equalTo(topView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(2600)
+            make.height.equalTo(2300)
         }
         bottomView.snp.makeConstraints { make in
             make.top.equalTo(midView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(800)
+            make.height.equalTo(600)
         }
         shopTableView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
@@ -365,7 +378,7 @@ extension ViewController: UITableViewDataSource {
         }
         //B마트 장보기 특가
         else if indexPath.section == 3{
-            let cell = tableView.dequeueReusableCell(withIdentifier: FastdeliveryTableViewCell.reuseIdentifier, for: indexPath) as! FastdeliveryTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: MartShoppingTableViewCell.reuseIdentifier, for: indexPath) as! MartShoppingTableViewCell
             return cell
         }
         //마음을 선물해보세요
@@ -397,6 +410,9 @@ extension ViewController: UITableViewDataSource {
     }
     ///헤더
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == 3{
+            
+        }
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: "ShopTableHeaderView") as! ShopTableHeaderView
         let sectionData = shopsDataArray[section]
         let title = sectionData.headerTitle ?? ""
@@ -433,7 +449,7 @@ extension ViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         // 각 섹션의 하단 공백 높이 설정 (간격 크기)
-        return 10.0
+        return 0.0
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
@@ -447,7 +463,7 @@ extension ViewController: UITableViewDelegate {
             return tableView.bounds.width * 0.5
         }
         if indexPath.section == 3 {
-            return tableView.bounds.width * 0.8
+            return tableView.bounds.width
         }
         if indexPath.section == 4 {
             return tableView.bounds.width * 0.6

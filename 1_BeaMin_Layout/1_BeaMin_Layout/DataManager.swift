@@ -27,6 +27,20 @@ struct StoreItem{
     
     
 }
+struct MartShoppingItem{
+    let foodImageView: UIImage?
+    let titleLabel: String
+    let saleLabel: String
+    let originPriceLabel: String
+    let salePriceLabel: String
+}
+
+struct MartShoppingSection{
+    let headerTitle :String?
+    let headerImage :UIImage
+    let headerButton:UIImage?
+    let items: [MartShoppingItem]
+}
 struct ShopSection{
     let headerTitle :String?
     let headerImage :UIImage
@@ -88,9 +102,10 @@ class TopViewfourDataManager {
         return topViewfourDataArray
     }
 }
+
+
 class StoreDataManager{
     private var storeDataArray: [StoreSection] = []
-    
     func makeStoreData() {
         storeDataArray = [
             StoreSection(headerTitle: "우리 동네 빠른 배달",headerImage: UIImage(named: "header 1")!,headerButton: nil,
@@ -156,6 +171,24 @@ class StoreDataManager{
         return storeDataArray
     }
 }
+
+class MarkShoppingDataManager {
+    private var martShoppingDataArray: [MartShoppingSection] = []
+    
+    func makeMartShoppingData() {
+        martShoppingDataArray = [
+    MartShoppingSection(headerTitle: "B마트 장보기 특가",headerImage: UIImage(named: "header 4")!, headerButton: nil, items: [
+        MartShoppingItem(foodImageView: UIImage(named: "B마트장보기 1"), titleLabel: "미식키친 국내산 소대창 200g", saleLabel:"20%", originPriceLabel: "15,990원", salePriceLabel: "12,790원"),
+        MartShoppingItem(foodImageView: UIImage(named: "B마트장보기 2"), titleLabel: "미식키친 국내산 소대창 200g", saleLabel:"20%", originPriceLabel: "15,990원", salePriceLabel: "12,790원"),
+        MartShoppingItem(foodImageView: UIImage(named: "B마트장보기 3"), titleLabel: "미식키친 국내산 소대창 200g", saleLabel:"20%", originPriceLabel: "15,990원", salePriceLabel: "12,790원"),
+        MartShoppingItem(foodImageView: UIImage(named: "B마트장보기 4"), titleLabel: "미식키친 국내산 소대창 200g", saleLabel:"20%", originPriceLabel: "15,990원", salePriceLabel: "12,790원")
+      
+    ])]
+    }
+    func getMartShoppingData() -> [MartShoppingSection] {
+        return martShoppingDataArray
+    }
+    }
 class ShopDataManager{
     private var shopDataArray: [ShopSection] = []
     
@@ -190,14 +223,8 @@ class ShopDataManager{
                 ShopItem(image: UIImage(named: "오늘의 할인 2"), text: "")
             ]),
             //3
-            ShopSection(headerTitle: "B마트 장보기 특가",headerImage: UIImage(named: "header 4")!, headerButton: nil, items: [
-                ShopItem(image: UIImage(named: "1"), text: "Item 1"),
-                ShopItem(image: UIImage(named: "1"), text: "Item 2"),
-                ShopItem(image: UIImage(named: "1"), text: "Item 3"),
-                ShopItem(image: UIImage(named: "1"), text: "Item 4"),
-                ShopItem(image: UIImage(named: "1"), text: "Item 5"),
-                ShopItem(image: UIImage(named: "1"), text: "Item 5")
-            ]),
+            ShopSection( headerTitle: "B마트 장보기 특가",headerImage: UIImage(named: "header 4")!, headerButton: nil, items: []),
+           
             //4
             ShopSection(headerTitle: "마음을 선물해보세요",headerImage: UIImage(named: "header 5")!, headerButton: UIImage(systemName: "chevron.right"), items: [
                 ShopItem(image: UIImage(named: "마음을선물"), text: "보름달처럼 밝고 가득찬 한가위 되세요"),

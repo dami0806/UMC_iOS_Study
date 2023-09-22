@@ -8,10 +8,10 @@
 import UIKit
 import SnapKit
 
-///Mark: - SaleCollectionViewCell
+//MARK: - SaleCollectionViewCell
 class SaleCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "SaleCollectionViewCell"
-
+    
     lazy var imageView:UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -30,27 +30,27 @@ class SaleCollectionViewCell: UICollectionViewCell {
     }
     private func setupImageView() {
         contentView.addSubview(imageView)
-       
+        
         imageView.snp.makeConstraints { make in
             make.width.equalTo(contentView).offset(5)
             make.height.equalTo(imageView.snp.width).multipliedBy(0.55)
         }
     }
-  
+    
 }
-//MARK: -FastdeliveryCollectionViewCell
+//MARK: -FastdeliveryCollectionViewCell:실속있는 알뜰배달
 class FastdeliveryCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "FastdeliveryCollectionViewCell"
-   
+    
     
     lazy var foodImageView:UIImageView = {
-           let imageView = UIImageView()
-           imageView.contentMode = .scaleAspectFill
-           imageView.layer.cornerRadius = 8
-           imageView.clipsToBounds = true
-           return imageView
-       }()
-   lazy var storeLabel: UILabel = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 8
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    lazy var storeLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
@@ -58,7 +58,7 @@ class FastdeliveryCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 1
         return label
     }()
-     lazy var scoreLabel: UILabel = {
+    lazy var scoreLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
@@ -67,7 +67,7 @@ class FastdeliveryCollectionViewCell: UICollectionViewCell {
         return label
     }()
     //배달
-     lazy var deliveryLabel: UILabel = {
+    lazy var deliveryLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.font = UIFont.systemFont(ofSize: 14, weight: .light)
@@ -76,7 +76,7 @@ class FastdeliveryCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 1
         return label
     }()
-     lazy var deliveryTextLabel: UILabel = {
+    lazy var deliveryTextLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.font = UIFont.systemFont(ofSize: 14, weight: .light)
@@ -85,7 +85,7 @@ class FastdeliveryCollectionViewCell: UICollectionViewCell {
         return label
     }()
     //배달팁
-     lazy var deliveryTipLabel: UILabel = {
+    lazy var deliveryTipLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.textColor = .lightGray
@@ -94,7 +94,7 @@ class FastdeliveryCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 1
         return label
     }()
-     lazy var deliveryTipTextLabel: UILabel = {
+    lazy var deliveryTipTextLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
         label.textColor = .gray
@@ -102,9 +102,9 @@ class FastdeliveryCollectionViewCell: UICollectionViewCell {
         label.numberOfLines = 1
         return label
     }()
-     lazy var uiImageView: UIImageView = {
+    lazy var uiImageView: UIImageView = {
         let uiImageView = UIImageView()
-         uiImageView.image = UIImage(named: "알뜰배달")
+        uiImageView.image = UIImage(named: "알뜰배달")
         return uiImageView
     }()
     
@@ -128,7 +128,7 @@ class FastdeliveryCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(deliveryTipTextLabel)
         contentView.addSubview(uiImageView)
         configureConstraints()
-       
+        
     }
     private func configureConstraints(){
         foodImageView.snp.makeConstraints { make in
@@ -150,18 +150,18 @@ class FastdeliveryCollectionViewCell: UICollectionViewCell {
         deliveryTextLabel.snp.makeConstraints { make in
             make.leading.equalTo(deliveryLabel.snp.trailing).offset(1)
             make.centerY.equalTo(deliveryLabel.snp.centerY)
-
+            
         }
         
         deliveryTipLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(3)
             make.top.equalTo(deliveryLabel.snp.bottom).offset(3)
-
+            
         }
         deliveryTipTextLabel.snp.makeConstraints { make in
             make.leading.equalTo(deliveryTipLabel.snp.trailing).offset(1)
             make.centerY.equalTo(deliveryTipLabel.snp.centerY)
-
+            
         }
         uiImageView.snp.makeConstraints { make in
             make.top.equalTo(deliveryTipLabel.snp.bottom).offset(3)
@@ -174,7 +174,7 @@ class FastdeliveryCollectionViewCell: UICollectionViewCell {
 }
 
 
-//MARK: -GiveMindCollectionViewCell
+//MARK: -GiveMindCollectionViewCell:마음을 선물
 class GiveMindCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "GiveMindCollectionViewCell"
     var uiView = UIView()
@@ -183,7 +183,7 @@ class GiveMindCollectionViewCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 10
         imageView.clipsToBounds = true
-
+        
         return imageView
     }()
     lazy var label: UILabel = {
@@ -225,20 +225,65 @@ class GiveMindCollectionViewCell: UICollectionViewCell {
     }
     
 }
-
-//MARK: -GoodTasteCollectionViewCell
-class GoodTasteCollectionViewCell: UICollectionViewCell {
-    static let reuseIdentifier = "GoodTasteCollectionViewCell"
-    var uiView = UIView()
+//MARK: - MartShoppingCollectionViewCell : B마트 장보기
+class MartShoppingCollectionViewCell: UICollectionViewCell{
+    var isSelectedBorderEnabled: Bool = true {
+           didSet {
+               layer.cornerRadius = 10
+               layer.masksToBounds = true
+               layer.borderWidth = isSelectedBorderEnabled ? 2.0 : 0.0
+               layer.borderColor = isSelectedBorderEnabled ? UIColor.orange.cgColor : UIColor.clear.cgColor
+           }
+       }
+    var selectedIndexPath: IndexPath?  // 현재 선택된 셀의 인덱스
+        var previousSelectedIndexPath: IndexPath?  // 이전에 선택된 셀의 인덱스
+    
+    static let reuseIdentifier = "MartShoppingCollectionViewCell"
+    
     lazy var imageView:UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 10
         imageView.clipsToBounds = true
-
+        
         return imageView
     }()
-   
+    
+ 
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupImageView()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        
+        setupImageView()
+    }
+    
+    private func setupImageView() {
+        contentView.addSubview(imageView)
+        
+        imageView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(imageView.snp.width)
+        }
+        
+    }
+    
+}
+//MARK: -GoodTasteCollectionViewCell: 전국의 별미가 한가득
+class GoodTasteCollectionViewCell: UICollectionViewCell {
+    static let reuseIdentifier = "GoodTasteCollectionViewCell"
+    lazy var imageView:UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.layer.cornerRadius = 10
+        imageView.clipsToBounds = true
+        
+        return imageView
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupImageView()
@@ -255,10 +300,10 @@ class GoodTasteCollectionViewCell: UICollectionViewCell {
         contentView.addSubview(imageView)
         
         imageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-     
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(imageView.snp.width)
         }
- 
+        
     }
     
 }

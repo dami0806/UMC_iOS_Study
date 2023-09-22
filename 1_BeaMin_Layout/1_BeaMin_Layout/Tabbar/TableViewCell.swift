@@ -10,6 +10,7 @@ import SnapKit
 
 //MARK: - HeaderView
 class ShopTableHeaderView: UITableViewHeaderFooterView{
+    static let reuseIdentifier = "ShopTableHeaderView"
     private let titleLabel = UILabel()
     private let imageView = UIImageView()
     private let button = UIButton()
@@ -225,8 +226,124 @@ extension SaleTableViewCell: UICollectionViewDelegate, UICollectionViewDataSourc
     }
     
 }
+//MARK: - MartShoppingTableViewCell :B마트 특가
+class MartShoppingTableViewCell: UITableViewCell {
+    static let reuseIdentifier = "MartShoppingTableViewCell"
 
+    private var selectedCellIndexPath: IndexPath?
 
+    let martShoppingDataManager = MarkShoppingDataManager()
+    var martShoppingpDataArray: [MartShoppingSection] = []
+    
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        return collectionView
+    }()
+
+    private lazy var martShoppingContentView = B_MartView()//커스터
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupCollectionView()
+        
+        let initialIndexPath = IndexPath(item: 0, section: 0)
+        collectionView.selectItem(at: initialIndexPath, animated: false, scrollPosition: .top)
+        collectionView(collectionView, didSelectItemAt: initialIndexPath)
+
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupCollectionView(){
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        
+        collectionView.register(MartShoppingCollectionViewCell.self, forCellWithReuseIdentifier: MartShoppingCollectionViewCell.reuseIdentifier)
+        
+        martShoppingDataManager.makeMartShoppingData()
+        martShoppingpDataArray = martShoppingDataManager.getMartShoppingData()
+        addSubviews()
+        
+    }
+    private func addSubviews() {
+        contentView.addSubview(collectionView)
+        contentView.addSubview(martShoppingContentView)
+        configureConstraints()
+    }
+    private func configureConstraints() {
+        collectionView.snp.makeConstraints { make in
+            make.leading.trailing.top.equalToSuperview()
+            make.height.equalTo(collectionView.snp.width).multipliedBy(0.2)
+        }
+        martShoppingContentView.snp.makeConstraints { make in
+            make.top.equalTo(collectionView.snp.bottom).offset(3)
+            make.leading.trailing.equalToSuperview().inset(10)
+         //   make.bottom.equalToSuperview().inset(100)//.offset(collectionView.bounds.width*0.4 - 10)//multipliedBy(0.5)//(martShoppingContentView.snp.width).multipliedBy(0.6)
+
+            
+        }
+    }
+
+ 
+    
+}
+extension MartShoppingTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return martShoppingpDataArray[0].items.count
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MartShoppingCollectionViewCell.reuseIdentifier, for: indexPath) as! MartShoppingCollectionViewCell
+        let foodImageView = martShoppingpDataArray[0].items[indexPath.item].foodImageView
+
+        
+        cell.imageView.image = foodImageView
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 15)
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = contentView.bounds.width * 0.2
+        let height = width
+        return CGSize(width: width, height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        let contentViewWidth = contentView.bounds.width * 0.2 * 4 + 15+15
+        
+        return (contentView.bounds.width-contentViewWidth)/3
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("🍎\(indexPath)")
+        // 이전에 선택한 셀의 테두리를 제거
+        if let previousSelectedIndexPath = selectedCellIndexPath,
+           let previousSelectedCell = collectionView.cellForItem(at: previousSelectedIndexPath) as? MartShoppingCollectionViewCell {
+            previousSelectedCell.isSelectedBorderEnabled = false
+        }
+        
+        // 현재 선택한 셀의 테두리를 주황색으로 설정
+        if let selectedCell = collectionView.cellForItem(at: indexPath) as? MartShoppingCollectionViewCell {
+            selectedCell.isSelectedBorderEnabled = true
+        }
+        
+        // 현재 선택한 셀의 인덱스를 저장
+        selectedCellIndexPath = indexPath
+        
+        // 클릭된 셀에 해당하는 데이터를 가져와서 커스텀뷰에 적용
+        let item = martShoppingpDataArray[0].items[indexPath.item]
+        martShoppingContentView.imageView.image = item.foodImageView
+        martShoppingContentView.titleLabel.text = item.titleLabel
+        martShoppingContentView.saleLabel.text = item.saleLabel
+        martShoppingContentView.originPriceLabel.text = item.originPriceLabel
+        martShoppingContentView.salePriceLabel.text = item.salePriceLabel
+    }
+}
 //MARK: -GiveMindTableViewCell:마음을 선물
 class GiveMindTableViewCell: UITableViewCell {
     static let reuseIdentifier = "GiveMindTableViewCell"
@@ -294,7 +411,7 @@ extension GiveMindTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
     }
     
 }
-//MARK: -GoodTasteTableViewCell:오늘의 할인
+//MARK: -GoodTasteTableViewCell:전국의 별미
 class GoodTasteTableViewCell: UITableViewCell {
     static let reuseIdentifier = "GoodTasteTableViewCell"
 
