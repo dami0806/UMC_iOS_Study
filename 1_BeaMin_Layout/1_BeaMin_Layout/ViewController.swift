@@ -10,8 +10,8 @@ import SnapKit
 
 
 final class ViewController: UIViewController {
-    let dataManager = StoreDataManager()
-    var shopsDataArray: [StoreSection] = []
+    let dataManager = ShopDataManager()
+    var shopsDataArray: [ShopSection] = []
     
    
     let topViewfourDataManager = TopViewfourDataManager()
@@ -170,9 +170,8 @@ final class ViewController: UIViewController {
         view.backgroundColor = .white
         
         
-        dataManager.makeStoreData()
-        shopsDataArray = dataManager.getStoreData()
-        
+        dataManager.makeShopData()
+        shopsDataArray = dataManager.getShopData()
         
         topViewfourDataManager.maketopViewfourData()
         topViewfourDataArray = topViewfourDataManager.gettopViewfourCellData()

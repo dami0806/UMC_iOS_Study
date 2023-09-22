@@ -389,6 +389,7 @@ class GiveMindTableViewCell: UITableViewCell {
 }
 extension GiveMindTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("🍎🍎🍎\(shopDataArray[4])")
         return shopDataArray[4].items.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
