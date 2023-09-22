@@ -41,9 +41,10 @@ class SecondCustomView: UIView {
     
     private lazy var button: UIButton = {
         let button = UIButton(type: .system)
-        let image = UIImage(systemName: "chevron.right")
-        button.setImage(image, for: .normal)
+        button.setTitle(nil, for: .normal)
+        button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
         button.tintColor = .darkGray
+        button.semanticContentAttribute = .forceRightToLeft
         return button
     }()
     

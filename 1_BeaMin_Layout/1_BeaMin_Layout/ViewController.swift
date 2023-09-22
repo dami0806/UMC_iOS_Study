@@ -10,8 +10,8 @@ import SnapKit
 
 
 final class ViewController: UIViewController {
-    let dataManager = ShopDataManager()
-    var shopsDataArray: [ShopSection] = []
+    let dataManager = StoreDataManager()
+    var shopsDataArray: [StoreSection] = []
     
    
     let topViewfourDataManager = TopViewfourDataManager()
@@ -44,7 +44,12 @@ final class ViewController: UIViewController {
         view.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         return view
     }()
-    let searchBar = UISearchBar()
+    let searchBar : UISearchBar = {
+        let searchBar = UISearchBar()
+        searchBar.placeholder = "치즈쭈꾸미 나와라 뚝딱!!"
+        
+        return searchBar
+    }()
     
     private lazy var topView: UIView = {
         let view = UIView()
@@ -165,8 +170,8 @@ final class ViewController: UIViewController {
         view.backgroundColor = .white
         
         
-        dataManager.makeShopData()
-        shopsDataArray = dataManager.getShopData()
+        dataManager.makeStoreData()
+        shopsDataArray = dataManager.getStoreData()
         
         
         topViewfourDataManager.maketopViewfourData()
@@ -194,6 +199,7 @@ final class ViewController: UIViewController {
         shopTableView.register(MartShoppingTableViewCell.self, forCellReuseIdentifier: MartShoppingTableViewCell.reuseIdentifier)
         shopTableView.register(GoodTasteTableViewCell.self, forCellReuseIdentifier: GoodTasteTableViewCell.reuseIdentifier)
         
+        shopTableView.register(DoThisWorkTableViewCell.self, forCellReuseIdentifier: DoThisWorkTableViewCell.reuseIdentifier)
         topViewLastcollectionView.register(SecondCustomCollectionCell.self, forCellWithReuseIdentifier:SecondCustomCollectionCell.reuseIdentifier)
         
         midView.addSubview(shopTableView)
@@ -205,9 +211,9 @@ final class ViewController: UIViewController {
         let placeText = UIBarButtonItem(title: "남동구 소래역로 93", style: .plain, target: self, action: #selector(buttonTapped))
         view.backgroundColor = UIColor.logoColor
         // 네비게이션 바 오른쪽 상단에 버튼 3개 추가
-        let button1 = UIBarButtonItem(title: "버튼1", style: .plain, target: self, action: #selector(buttonTapped))
-        let button2 = UIBarButtonItem(title: "버튼2", style: .plain, target: self, action: #selector(buttonTapped))
-        let button3 = UIBarButtonItem(title: "버튼3", style: .plain, target: self, action: #selector(buttonTapped))
+        let button1 = UIBarButtonItem(image: UIImage(systemName: "cart"), style: .plain, target: self, action: #selector(buttonTapped))
+        let button2 = UIBarButtonItem(image: UIImage(systemName: "bell"), style: .plain, target: self, action: #selector(buttonTapped))
+        let button3 = UIBarButtonItem(image: UIImage(systemName: "square.grid.2x2"), style: .plain, target: self, action: #selector(buttonTapped))
         
         // 버튼 색상 설정
         placeText.tintColor = .white
@@ -293,12 +299,12 @@ final class ViewController: UIViewController {
         midView.snp.makeConstraints { make in
             make.top.equalTo(topView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(2300)
+            make.height.equalTo(view.snp.width).multipliedBy(6.3)
         }
         bottomView.snp.makeConstraints { make in
             make.top.equalTo(midView.snp.bottom)
             make.leading.trailing.equalToSuperview()
-            make.height.equalTo(600)
+            make.height.equalTo(view.snp.width).multipliedBy(1.7)
         }
         shopTableView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
@@ -394,7 +400,7 @@ extension ViewController: UITableViewDataSource {
         }
         //이런일도 한답니다
         else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: FastdeliveryTableViewCell.reuseIdentifier, for: indexPath) as! FastdeliveryTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: DoThisWorkTableViewCell.reuseIdentifier, for: indexPath) as! DoThisWorkTableViewCell
             return cell
         }
         
@@ -406,7 +412,7 @@ extension ViewController: UITableViewDataSource {
     }
     ///헤더 높이
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
+        return view.frame.width * 0.14
     }
     ///헤더
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -454,28 +460,32 @@ extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if indexPath.section == 0 {
-            return tableView.bounds.width * 0.8
+            return tableView.bounds.width * 0.7
         }
         else if indexPath.section == 1 {
-            return tableView.bounds.width * 0.8
+            return tableView.bounds.width * 0.7
         }
+        //오늘의 할인
         else if indexPath.section == 2 {
-            return tableView.bounds.width * 0.5
+            return tableView.bounds.width * 0.43
         }
+        //B장보기
         if indexPath.section == 3 {
             return tableView.bounds.width
         }
+        //마음을 선물
         if indexPath.section == 4 {
-            return tableView.bounds.width * 0.6
-        }
-        else if indexPath.section == 5 {
             return tableView.bounds.width * 0.55
         }
+        //전국의 별미
+        else if indexPath.section == 5 {
+            return tableView.bounds.width * 0.5
+        }
         else if indexPath.section == 6 {
-            return tableView.bounds.width * 0.8
+            return tableView.bounds.width * 1
         }
         else {
-            return tableView.bounds.width * 0.8
+            return tableView.bounds.width * 0.9
         }
     }
 }

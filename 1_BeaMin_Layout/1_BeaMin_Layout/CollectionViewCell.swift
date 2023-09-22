@@ -307,3 +307,46 @@ class GoodTasteCollectionViewCell: UICollectionViewCell {
     }
     
 }
+class DoThisWorkCollectionViewCell: UICollectionViewCell {
+    static let reuseIdentifier = "DoThisWorkCollectionViewCell"
+    
+     lazy var imageView : UIImageView = {
+        let imageView = UIImageView()
+        imageView.layer.cornerRadius = 5
+        imageView.clipsToBounds = true
+        return imageView
+    }()
+    
+     lazy var label: UILabel = {
+        let label = UILabel()
+         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+         label.textColor = .black
+         label.numberOfLines = 0
+        return label
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addsubView()
+        
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    private func addsubView() {
+        contentView.addSubview(imageView)
+        contentView.addSubview(label)
+        configureConstraints()
+    }
+    private func configureConstraints(){
+        
+        label.snp.makeConstraints { make in
+            make.bottom.leading.trailing.equalToSuperview()
+        }
+        imageView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(label.snp.top).offset(-5)
+        }
+    }
+}
