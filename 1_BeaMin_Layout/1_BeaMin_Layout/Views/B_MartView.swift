@@ -84,11 +84,11 @@ class B_MartView: UIView{
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
         }
         originPriceLabel.snp.makeConstraints { make in
-            make.leading.equalTo(saleLabel.snp.trailing).offset(8)
+            make.leading.equalTo(salePriceLabel.snp.trailing).offset(8)
             make.centerY.equalTo(saleLabel.snp.centerY)
         }
         salePriceLabel.snp.makeConstraints { make in
-            make.leading.equalTo(originPriceLabel.snp.trailing).offset(8)
+            make.leading.equalTo(saleLabel.snp.trailing).offset(8)
             make.centerY.equalTo(saleLabel.snp.centerY)
 
         }

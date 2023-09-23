@@ -24,6 +24,7 @@
 		37E6DF972AB98A9B00A30B65 /* FirstCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E6DF962AB98A9B00A30B65 /* FirstCustomView.swift */; };
 		37E6DF992AB9944300A30B65 /* SecondCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E6DF982AB9944300A30B65 /* SecondCustomView.swift */; };
 		37E6DFA22AB99A2600A30B65 /* SecondCustomCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E6DFA12AB99A2600A30B65 /* SecondCustomCollectionCell.swift */; };
+		37F999E92ABE79B600B9D2DE /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F999E82ABE79B600B9D2DE /* TestViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		37E6DF962AB98A9B00A30B65 /* FirstCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstCustomView.swift; sourceTree = "<group>"; };
 		37E6DF982AB9944300A30B65 /* SecondCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondCustomView.swift; sourceTree = "<group>"; };
 		37E6DFA12AB99A2600A30B65 /* SecondCustomCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondCustomCollectionCell.swift; sourceTree = "<group>"; };
+		37F999E82ABE79B600B9D2DE /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +119,7 @@
 			children = (
 				37E6DF962AB98A9B00A30B65 /* FirstCustomView.swift */,
 				37E6DF982AB9944300A30B65 /* SecondCustomView.swift */,
+				37F999E82ABE79B600B9D2DE /* TestViewController.swift */,
 				370839EF2ABD31A600BE0676 /* B_MartView.swift */,
 			);
 			path = Views;
@@ -217,6 +220,7 @@
 				37E6DF972AB98A9B00A30B65 /* FirstCustomView.swift in Sources */,
 				370839EE2ABC331B00BE0676 /* Font+Ex.swift in Sources */,
 				37E6DF952AB96E6B00A30B65 /* UIColor+Ex.swift in Sources */,
+				37F999E92ABE79B600B9D2DE /* TestViewController.swift in Sources */,
 				37E6DF8D2AB94B3F00A30B65 /* CellData.swift in Sources */,
 				37B3A9D02AB8A3C300092CCF /* SceneDelegate.swift in Sources */,
 				37E6DF992AB9944300A30B65 /* SecondCustomView.swift in Sources */,

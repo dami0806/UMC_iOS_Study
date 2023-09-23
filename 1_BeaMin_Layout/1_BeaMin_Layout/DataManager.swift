@@ -178,9 +178,9 @@ class MarkShoppingDataManager {
     func makeMartShoppingData() {
         martShoppingDataArray = [
             MartShoppingSection(headerTitle: "B마트 장보기 특가",headerImage: UIImage(named: "header 4")!, headerButton: nil, items: [
-                MartShoppingItem(foodImageView: UIImage(named: "B마트장보기 1"), titleLabel: "미식키친 국내산 소대창 200g", saleLabel:"20%", originPriceLabel: "15,990원", salePriceLabel: "12,790원"),
-                MartShoppingItem(foodImageView: UIImage(named: "B마트장보기 2"), titleLabel: "미식키친 국내산 소대창 200g", saleLabel:"20%", originPriceLabel: "15,990원", salePriceLabel: "12,790원"),
-                MartShoppingItem(foodImageView: UIImage(named: "B마트장보기 3"), titleLabel: "미식키친 국내산 소대창 200g", saleLabel:"20%", originPriceLabel: "15,990원", salePriceLabel: "12,790원"),
+                MartShoppingItem(foodImageView: UIImage(named: "B마트장보기 1"), titleLabel: "MANNADA 칠레산 블루베리 125g", saleLabel:"44%", originPriceLabel: "8,990원", salePriceLabel: "4,950원"),
+                MartShoppingItem(foodImageView: UIImage(named: "B마트장보기 2"), titleLabel: "[2개 묶음] 삼립 촉촉한 우유식빵 330g", saleLabel:"16%", originPriceLabel: "4,560원", salePriceLabel: "3,830원"),
+                MartShoppingItem(foodImageView: UIImage(named: "B마트장보기 3"), titleLabel: "GAP 캠벨포도 1kg (2~4송이)", saleLabel:"27%", originPriceLabel: "12,990원", salePriceLabel: "17,990원"),
                 MartShoppingItem(foodImageView: UIImage(named: "B마트장보기 4"), titleLabel: "미식키친 국내산 소대창 200g", saleLabel:"20%", originPriceLabel: "15,990원", salePriceLabel: "12,790원")
                 
             ])]
