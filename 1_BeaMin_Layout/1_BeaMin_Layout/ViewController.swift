@@ -8,12 +8,12 @@
 import UIKit
 import SnapKit
 
-
+//MARK: - ViewController
 final class ViewController: UIViewController {
     let dataManager = ShopDataManager()
     var shopsDataArray: [ShopSection] = []
     
-   
+    
     let topViewfourDataManager = TopViewfourDataManager()
     var topViewfourDataArray: [ShopItem] = []
     
@@ -101,20 +101,20 @@ final class ViewController: UIViewController {
     //banners
     private lazy var bannerView : UIView = {
         let uiView = UIView()
-        uiView.layer.cornerRadius = 8
+        uiView.layer.cornerRadius = 10
+        uiView.layer.masksToBounds = true
         uiView.backgroundColor = .clear
         return uiView
     }()
-    // BannerViewController 인스턴스
-       private let bannerViewController = BannerViewController()
-    //4가지 쿠폰
+    // BannerViewController 커스텀
+    private let bannerViewController = BannerViewController()
     
+    //4가지 쿠폰
     private lazy var topViewLastView : UIView = {
         let uiView = UIView()
-        uiView.layer.cornerRadius = 8
-    
         return uiView
     }()
+    
     private lazy var topViewLastImage : UIImageView = {
         let uiImage = UIImageView()
         uiImage.image = UIImage(named: "topViewLastImage")
@@ -124,13 +124,13 @@ final class ViewController: UIViewController {
     //큰뷰
     //4개이미지
     private lazy var martShopptingImagesStackView: UIStackView = {
-            let stackView = UIStackView()
+        let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.alignment = .center
-            stackView.spacing = 3
-            return stackView
+        stackView.spacing = 3
+        return stackView
     }()
-
+    
     //그 아래뷰하나 근데 custom 이미지와 text, 가격 3개
     private lazy var bottomViewaddImage : UIImageView = {
         let uiImage = UIImageView()
@@ -145,23 +145,22 @@ final class ViewController: UIViewController {
     
     
     //image로 넣고 그안에 셀 넣기
-  private lazy var topViewLastcollectionView: UICollectionView = {
+    private lazy var topViewLastcollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsHorizontalScrollIndicator = false
-       collectionView.register(SecondCustomCollectionCell.self, forCellWithReuseIdentifier: SecondCustomCollectionCell.reuseIdentifier)
-      
+        collectionView.register(SecondCustomCollectionCell.self, forCellWithReuseIdentifier: SecondCustomCollectionCell.reuseIdentifier)
+        
         return collectionView
     }()
     
+    //MARK: - viewDidLoad()
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        scrollView.delegate = self
-        bannerViewController.scrollView.delegate = self
         dataManager.makeShopData()
         shopsDataArray = dataManager.getShopData()
         
@@ -170,21 +169,19 @@ final class ViewController: UIViewController {
         setupViews()
         addSubviews()
         settingNaviItem()
-     
-      
         
         //탭바 맨위로
         view.bringSubviewToFront(customTabBarController.view)
-
+        
     }
-
+    
     private func setupViews(){
         shopTableView.dataSource = self
         shopTableView.delegate = self
         shopTableView.register(FastdeliveryTableViewCell.self, forCellReuseIdentifier: FastdeliveryTableViewCell.reuseIdentifier)
         
         shopTableView.register(SaleTableViewCell.self, forCellReuseIdentifier: SaleTableViewCell.reuseIdentifier)
-
+        
         shopTableView.register(ShopTableHeaderView.self, forHeaderFooterViewReuseIdentifier: ShopTableHeaderView.reuseIdentifier)
         shopTableView.register(GiveMindTableViewCell.self, forCellReuseIdentifier: GiveMindTableViewCell.reuseIdentifier)
         
@@ -213,16 +210,17 @@ final class ViewController: UIViewController {
         button1.tintColor = .white
         button2.tintColor = .white
         button3.tintColor = .white
+        
         navigationController?.navigationBar.barTintColor = UIColor.logoColor
         navigationItem.rightBarButtonItems = [button1, button2, button3]
         navigationItem.leftBarButtonItem = placeText
     }
     
     @objc func buttonTapped() {
-        //버튼탭 실행
+        
     }
     
-    
+    //MARK: - addSubviews()
     private func addSubviews() {
         
         addChild(customTabBarController)
@@ -247,16 +245,15 @@ final class ViewController: UIViewController {
         topView.addSubview(stackView)
         topView.addSubview(customItemView)
         
-       // topView.addSubview(bannerView)
+        
         topView.addSubview(bannerView)
-
-              bannerView.addSubview(bannerViewController.view)
-              
-              // BannerViewController를 부모 뷰 컨트롤러로 설정
-              addChild(bannerViewController)
-              bannerViewController.didMove(toParent: self)
-      bannerViewController.scrollView.isScrollEnabled = false
-
+        
+        //banner 자식뷰로
+        bannerView.addSubview(bannerViewController.view)
+        addChild(bannerViewController)
+        bannerViewController.didMove(toParent: self)
+        bannerViewController.scrollView.isScrollEnabled = false
+        
         topView.addSubview(topViewLastView)
         topViewLastView.addSubview(topViewLastImage)
         
@@ -265,7 +262,7 @@ final class ViewController: UIViewController {
         bottomView.addSubview(bottomViewImage)
         configureConstraints()
     }
-    
+    //MARK: - configureConstraints()
     private func configureConstraints() {
         
         customTabBarController.view.snp.makeConstraints { make in
@@ -291,7 +288,7 @@ final class ViewController: UIViewController {
             make.top.leading.trailing.equalToSuperview()
             make.bottom.equalTo(searchBar.snp.bottom).offset(10)
         }
-       
+        
         topView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.bottom.equalTo(topViewLastcollectionView.snp.bottom).offset(20)
@@ -340,13 +337,13 @@ final class ViewController: UIViewController {
         }
         bannerViewController.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-               }
+        }
         
         topViewLastView.snp.makeConstraints { make in
             make.top.equalTo(bannerView.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(bannerView.snp.width).multipliedBy(0.33)
-
+            
         }
         topViewLastImage.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -366,6 +363,7 @@ final class ViewController: UIViewController {
     
     
 }
+//MARK: - UITableViewDataSource
 extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -442,6 +440,7 @@ extension ViewController: UITableViewDataSource {
     
     
 }
+//MARK: - extension: UITableViewDelegate
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         // 섹션 간의 간격을 조절하기 위한 빈 뷰
@@ -463,10 +462,11 @@ extension ViewController: UITableViewDelegate {
         return 0.0
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
+        //우리동네 빠른배달
         if indexPath.section == 0 {
             return tableView.bounds.width * 0.7
         }
+        //최근에 주문했어요
         else if indexPath.section == 1 {
             return tableView.bounds.width * 0.7
         }
@@ -494,38 +494,40 @@ extension ViewController: UITableViewDelegate {
         }
     }
 }
+//MARK: - extension:  UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,UICollectionViewDataSource
 extension ViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-          print("🍎\(topViewfourDataArray.count)")
-          return topViewfourDataArray.count
-      }
-      
-   
-      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-          guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecondCustomCollectionCell.reuseIdentifier, for: indexPath) as? SecondCustomCollectionCell else {
-              return UICollectionViewCell()
-          }
-          
-          let shopItem = topViewfourDataArray[indexPath.item]
-          cell.configure(image: shopItem.image!, title: shopItem.text)
-          
-          return cell
-      }
-      
+        print("🍎\(topViewfourDataArray.count)")
+        return topViewfourDataArray.count
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecondCustomCollectionCell.reuseIdentifier, for: indexPath) as? SecondCustomCollectionCell else {
+            return UICollectionViewCell()
+        }
+        
+        let shopItem = topViewfourDataArray[indexPath.item]
+        cell.configure(image: shopItem.image!, title: shopItem.text)
+        
+        return cell
+    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 4
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-            return CGSize(width: collectionView.bounds.width / 4 - 10, height: collectionView.bounds.height)
-        }
-}
-extension ViewController : UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView == self.scrollView {
-            print("  🍉 ")                }
-        else if scrollView == bannerViewController.scrollView {
-                   print("  🍉  🍉")
-                }
+        return CGSize(width: collectionView.bounds.width / 4 - 10, height: collectionView.bounds.height)
     }
 }
+//스크롤 확인용
+//extension ViewController : UIScrollViewDelegate {
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView == self.scrollView {
+//            print("  🍉 ")                }
+//        else if scrollView == bannerViewController.scrollView {
+//            print("  🍉  🍉")
+//        }
+//    }
+//}

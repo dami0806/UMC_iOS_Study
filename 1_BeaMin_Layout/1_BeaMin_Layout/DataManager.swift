@@ -52,16 +52,7 @@ struct StoreSection{
     let headerImage :UIImage
     let headerButton:UIImage?
     let items: [StoreItem]
-    /*
-     contentView.addSubview(foodImageView)
-     contentView.addSubview(storeLabel)
-     contentView.addSubview(scoreLabel)
-     contentView.addSubview(deliveryLabel)
-     contentView.addSubview(deliveryTextLabel)
-     contentView.addSubview(deliveryTipLabel)
-     contentView.addSubview(deliveryTipTextLabel)
-     contentView.addSubview(uiImageView)
-     */
+   
 }
 class SecondCellDataManager {
     private var secondDataArray: [ShopItem] = []

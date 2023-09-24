@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class B_MartView: UIView{
+final class B_MartView: UIView{
     
     lazy var imageView:UIImageView = {
         let imageView = UIImageView()
@@ -58,6 +58,7 @@ class B_MartView: UIView{
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    //MARK: - addSubviews()
     private func addSubviews(){
         addSubview(imageView)
         addSubview(titleLabel)
@@ -68,6 +69,7 @@ class B_MartView: UIView{
         configureConstraints()
 
     }
+    //MARK: - configureConstraints()
     private func configureConstraints() {
         imageView.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(0)

@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-///mark: - 알뜰어쩌구 아이템 많은거
+///mark: - 알뜰어쩌구 아이템 많은거 collection
 class SecondCustomCollectionCell: UICollectionViewCell {
     static let reuseIdentifier = "SecondCustomCollectionCell"
     
@@ -52,7 +52,7 @@ class SecondCustomCollectionCell: UICollectionViewCell {
                 make.centerX.equalTo(imageView.snp.centerX)
                 
             }
-
+            
             
         }
         

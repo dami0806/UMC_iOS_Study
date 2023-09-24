@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-//MARK: - SaleCollectionViewCell
+//MARK: - SaleCollectionViewCell: 오늘의 할인
 class SaleCollectionViewCell: UICollectionViewCell {
     static let reuseIdentifier = "SaleCollectionViewCell"
     
