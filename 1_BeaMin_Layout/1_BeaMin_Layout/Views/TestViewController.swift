@@ -10,13 +10,16 @@ import SnapKit
 class BannerViewController: UIViewController {
     var height = 0.0
     var width = 0.0
+    var imageView = UIImageView()
+
     lazy var scrollView : UIScrollView = {
-  
+        
         let scrollView = UIScrollView()
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
-        scrollView.tag = 1
+        scrollView.isUserInteractionEnabled = false
 
+        
         return scrollView
     }()
     
@@ -40,40 +43,47 @@ class BannerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        height = view.frame.height
-        width = view.frame.width
-        view.backgroundColor = .white
+       
+        view.backgroundColor = .clear
         
-        let images = [UIImage(named: "배너"), UIImage(named: "배너 1"), UIImage(named: "배너 2"), UIImage(named: "배너 3"),UIImage(named: "배너 4"),UIImage(named: "배너 5"),UIImage(named: "배너") ].compactMap { $0 }
-        
-        
+        let images = [UIImage(named: "배너 1"), UIImage(named: "배너 2"), UIImage(named: "배너 3"), UIImage(named: "배너 4"),UIImage(named: "배너 5"),UIImage(named: "배너 3"),UIImage(named: "배너 1") ]
         
         addSubviews()
         
         
         for (index, image) in images.enumerated() {
-            let imageView = UIImageView(image: image)
+            imageView = UIImageView(image: image)
             imageView.contentMode = .scaleAspectFill
+            imageView.layer.cornerRadius = 10
             imageView.clipsToBounds = true
+
             scrollView.addSubview(imageView)
             
             imageView.snp.makeConstraints { make in
-                make.top.bottom.equalToSuperview()
-                make.width.equalTo(200)
-                make.height.equalTo(100)
-                make.leading.equalToSuperview().offset(CGFloat(index) * 200) // 이미지들을 가로로 붙임
+                make.top.bottom.equalTo(scrollView)
+                make.height.equalTo(scrollView.snp.height)
+                make.width.equalToSuperview()
+                if index == 0 {
+                        // 첫 번째 이미지의 leading 제약은 0으로 설정
+                        make.leading.equalToSuperview()
+                    } else {
+                        make.leading.equalTo(imageViews[index - 1].snp.trailing)
+                    }// 이미지들을 가로로 붙임
             }
-            
+            print("🍉🍎\(CGFloat(index))")
             imageViews.append(imageView)
         }
         
-        scrollView.contentSize = CGSize(width: CGFloat(images.count + 1) * 200, height: 100)
-        
+        scrollView.contentSize = CGSize(width: CGFloat(images.count + 1) * view.frame.width, height: view.frame.width*0.3)
+        print("🍉🍎\(self.imageView.frame.width)")
+        print("🍉🍎\(self.view.frame.width)")
         startSlider()
+        
         
     }
     
-    private func addSubviews() {  view.addSubview(scrollView)
+    private func addSubviews() {
+        view.addSubview(scrollView)
         view.addSubview(currentIndexLabel)
         view.addSubview(totalImagesLabel)
         
@@ -81,9 +91,9 @@ class BannerViewController: UIViewController {
     }
     private func configureConstraints() {
         scrollView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.width.equalTo(200)
-            make.height.equalTo(100)
+            make.top.equalToSuperview()
+            make.width.equalToSuperview()
+            make.height.equalToSuperview()
         }
         currentIndexLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(16)
@@ -96,45 +106,75 @@ class BannerViewController: UIViewController {
         }
     }
     
-    private func startSlider() {
-        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
-            guard let self = self else { return }
-            
-            
-            // print("🍎🍎\(imageViews.count)")
-            
-            // 다음 페이지로 이동
-            self.currentIndex += 1
-            if currentIndex > imageViews.count-1 {
-                //애니메이션 없이 확 바뀜
+    func startSlider() {
+        print("🍉🍎\(self.imageView.frame.width)")
+        print("🍉🍎\(self.view.frame.width)")
+        DispatchQueue.global().async {
+            Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { [weak self] _ in
+                guard let self = self else { return }
                 
-                currentIndex = 0
-                let xOffset: CGFloat = 0
-                scrollView.setContentOffset(CGPoint(x: xOffset, y: 0), animated: false)
-            }
-            
-            
-            else{
-                UIView.animate(withDuration: 0.3, animations: {
-                    print("🍎\(self.currentIndex)")
-                    let xOffset = CGFloat(self.currentIndex) * 200
-                    self.scrollView.setContentOffset(CGPoint(x: xOffset, y: 0), animated: false)
-                    if (self.currentIndex) == 1{
-                        sleep(UInt32(1.0))
-                    }
-                    else{
-                        print("🍎🍎\(self.currentIndex)")
-                        sleep(2)
-                        // print("🍎\(self.currentIndex)")
-                        
-                    }
+                self.currentIndex += 1
+                if self.currentIndex > self.imageViews.count - 1 {
+                    self.currentIndex = 0
+                    let xOffset: CGFloat = 0
                     
-                })
-                
-                
+                    DispatchQueue.main.async {
+
+                        self.scrollView.setContentOffset(CGPoint(x: xOffset, y: 0), animated: false)
+                    }
+                } else {
+                    DispatchQueue.main.async {
+                            UIView.animate(withDuration: 0.5, animations: {
+                            let xOffset = CGFloat(self.currentIndex) * self.view.frame.width
+                            self.scrollView.setContentOffset(CGPoint(x: xOffset, y: 0), animated: false)
+                        })
+                      
+                    }
+                }
             }
-            
+            RunLoop.current.run()
         }
     }
+    
 }
-
+//        Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+//            guard let self = self else { return }
+//
+//
+//            // print("🍎🍎\(imageViews.count)")
+//
+//            // 다음 페이지로 이동
+//            self.currentIndex += 1
+//            if currentIndex > imageViews.count-1 {
+//                //애니메이션 없이 확 바뀜
+//
+//                currentIndex = 0
+//                let xOffset: CGFloat = 0
+//                scrollView.setContentOffset(CGPoint(x: xOffset, y: 0), animated: false)
+//            }
+//
+//
+//            else{
+//                UIView.animate(withDuration: 0.3, animations: {
+//                    print("🍎\(self.currentIndex)")
+//                    let xOffset = CGFloat(self.currentIndex) * 200
+//                    self.scrollView.setContentOffset(CGPoint(x: xOffset, y: 0), animated: false)
+//                    if (self.currentIndex) == 1{
+//                        sleep(UInt32(1.0))
+//                    }
+//                    else{
+//                        print("🍎🍎\(self.currentIndex)")
+//                        sleep(2)
+//                        // print("🍎\(self.currentIndex)")
+//
+//                    }
+//
+//                })
+//
+//
+//            }
+//
+//        }
+//    }
+//}
+//

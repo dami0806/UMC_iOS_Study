@@ -30,6 +30,7 @@ final class ViewController: UIViewController {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = true
         scrollView.tag = 0
+        
         return scrollView
     }()
     
@@ -101,7 +102,7 @@ final class ViewController: UIViewController {
     private lazy var bannerView : UIView = {
         let uiView = UIView()
         uiView.layer.cornerRadius = 8
-        uiView.backgroundColor = .gray
+        uiView.backgroundColor = .clear
         return uiView
     }()
     // BannerViewController 인스턴스
@@ -111,7 +112,7 @@ final class ViewController: UIViewController {
     private lazy var topViewLastView : UIView = {
         let uiView = UIView()
         uiView.layer.cornerRadius = 8
-        uiView.backgroundColor = .gray
+    
         return uiView
     }()
     private lazy var topViewLastImage : UIImageView = {
@@ -119,6 +120,7 @@ final class ViewController: UIViewController {
         uiImage.image = UIImage(named: "topViewLastImage")
         return uiImage
     }()
+    
     //큰뷰
     //4개이미지
     private lazy var martShopptingImagesStackView: UIStackView = {
@@ -158,8 +160,8 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
-        
+        scrollView.delegate = self
+        bannerViewController.scrollView.delegate = self
         dataManager.makeShopData()
         shopsDataArray = dataManager.getShopData()
         
@@ -169,6 +171,8 @@ final class ViewController: UIViewController {
         addSubviews()
         settingNaviItem()
      
+      
+        
         //탭바 맨위로
         view.bringSubviewToFront(customTabBarController.view)
 
@@ -225,7 +229,6 @@ final class ViewController: UIViewController {
         view.addSubview(customTabBarController.view)
         customTabBarController.didMove(toParent: self)
         view.addSubview(scrollView)
-        
         scrollView.addSubview(contentView)
         contentView.addSubview(topView)
         contentView.addSubview(midView)
@@ -244,15 +247,16 @@ final class ViewController: UIViewController {
         topView.addSubview(stackView)
         topView.addSubview(customItemView)
         
+       // topView.addSubview(bannerView)
         topView.addSubview(bannerView)
-        
-        // BannerViewController의 뷰를 bannerView에 추가
+
               bannerView.addSubview(bannerViewController.view)
               
               // BannerViewController를 부모 뷰 컨트롤러로 설정
               addChild(bannerViewController)
               bannerViewController.didMove(toParent: self)
-       // bannerView.addSubview(bannerViewController)
+      bannerViewController.scrollView.isScrollEnabled = false
+
         topView.addSubview(topViewLastView)
         topViewLastView.addSubview(topViewLastImage)
         
@@ -332,7 +336,7 @@ final class ViewController: UIViewController {
         bannerView.snp.makeConstraints { make in
             make.top.equalTo(customItemView.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview().inset(8)
-            make.height.equalTo(bannerView.snp.width).multipliedBy(0.33)
+            make.height.equalTo(bannerView.snp.width).multipliedBy(0.35)
         }
         bannerViewController.view.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -515,4 +519,13 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDelegateFlow
         
             return CGSize(width: collectionView.bounds.width / 4 - 10, height: collectionView.bounds.height)
         }
+}
+extension ViewController : UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == self.scrollView {
+            print("  🍉 ")                }
+        else if scrollView == bannerViewController.scrollView {
+                   print("  🍉  🍉")
+                }
+    }
 }
