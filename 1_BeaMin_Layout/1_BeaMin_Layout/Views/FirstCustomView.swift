@@ -41,12 +41,11 @@ class FirstCustomView: UIView {
         super.init(coder: coder)
     }
     private func addSubview(){
+        
         addSubview(titleLabel)
         addSubview(subtitleLabel)
         addSubview(imageView)
         configureConstraints()
-
-
     }
    
 

@@ -8,17 +8,21 @@ import SnapKit
 
 
 class BannerViewController: UIViewController {
-    
-    private lazy var scrollView : UIScrollView = {
-        
+    var height = 0.0
+    var width = 0.0
+    lazy var scrollView : UIScrollView = {
+  
         let scrollView = UIScrollView()
         scrollView.isPagingEnabled = true
         scrollView.showsHorizontalScrollIndicator = false
+        scrollView.tag = 1
+
         return scrollView
     }()
     
     private var imageViews: [UIImageView] = []
     private var currentIndex = 0
+    
     private let currentIndexLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -36,7 +40,8 @@ class BannerViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        height = view.frame.height
+        width = view.frame.width
         view.backgroundColor = .white
         
         let images = [UIImage(named: "배너"), UIImage(named: "배너 1"), UIImage(named: "배너 2"), UIImage(named: "배너 3"),UIImage(named: "배너 4"),UIImage(named: "배너 5"),UIImage(named: "배너") ].compactMap { $0 }
@@ -132,3 +137,4 @@ class BannerViewController: UIViewController {
         }
     }
 }
+

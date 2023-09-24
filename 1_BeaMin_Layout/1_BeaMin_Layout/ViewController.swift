@@ -13,7 +13,7 @@ final class ViewController: UIViewController {
     let dataManager = ShopDataManager()
     var shopsDataArray: [ShopSection] = []
     
-    
+   
     let topViewfourDataManager = TopViewfourDataManager()
     var topViewfourDataArray: [ShopItem] = []
     
@@ -102,22 +102,10 @@ final class ViewController: UIViewController {
         let uiView = UIView()
         uiView.layer.cornerRadius = 8
         uiView.backgroundColor = .gray
-        //        // 배너 이미지 슬라이드 쇼를 bannerView에 추가
-        //               let bannerViewController = BannerViewController()
-        //               addChild(bannerViewController)
-        //               uiView.addSubview(bannerViewController.view)
-        //               bannerViewController.didMove(toParent: self)
-        //        // bannerView의 크기를 bannerScrollView에 맞추기
-        //             bannerViewController.view.snp.makeConstraints { make in
-        //                 make.edges.equalToSuperview()
-        //             }
-        
         return uiView
     }()
-    
-    
-    var currentIndex = 0
-    
+    // BannerViewController 인스턴스
+       private let bannerViewController = BannerViewController()
     //4가지 쿠폰
     
     private lazy var topViewLastView : UIView = {
@@ -134,13 +122,13 @@ final class ViewController: UIViewController {
     //큰뷰
     //4개이미지
     private lazy var martShopptingImagesStackView: UIStackView = {
-        let stackView = UIStackView()
+            let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.alignment = .center
-        stackView.spacing = 3
-        return stackView
+            stackView.spacing = 3
+            return stackView
     }()
-    
+
     //그 아래뷰하나 근데 custom 이미지와 text, 가격 3개
     private lazy var bottomViewaddImage : UIImageView = {
         let uiImage = UIImageView()
@@ -155,15 +143,15 @@ final class ViewController: UIViewController {
     
     
     //image로 넣고 그안에 셀 넣기
-    private lazy var topViewLastcollectionView: UICollectionView = {
+  private lazy var topViewLastcollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.register(SecondCustomCollectionCell.self, forCellWithReuseIdentifier: SecondCustomCollectionCell.reuseIdentifier)
-        
+       collectionView.register(SecondCustomCollectionCell.self, forCellWithReuseIdentifier: SecondCustomCollectionCell.reuseIdentifier)
+      
         return collectionView
     }()
     
@@ -180,19 +168,19 @@ final class ViewController: UIViewController {
         setupViews()
         addSubviews()
         settingNaviItem()
-        
+     
         //탭바 맨위로
         view.bringSubviewToFront(customTabBarController.view)
-        
+
     }
-    
+
     private func setupViews(){
         shopTableView.dataSource = self
         shopTableView.delegate = self
         shopTableView.register(FastdeliveryTableViewCell.self, forCellReuseIdentifier: FastdeliveryTableViewCell.reuseIdentifier)
         
         shopTableView.register(SaleTableViewCell.self, forCellReuseIdentifier: SaleTableViewCell.reuseIdentifier)
-        
+
         shopTableView.register(ShopTableHeaderView.self, forHeaderFooterViewReuseIdentifier: ShopTableHeaderView.reuseIdentifier)
         shopTableView.register(GiveMindTableViewCell.self, forCellReuseIdentifier: GiveMindTableViewCell.reuseIdentifier)
         
@@ -257,6 +245,14 @@ final class ViewController: UIViewController {
         topView.addSubview(customItemView)
         
         topView.addSubview(bannerView)
+        
+        // BannerViewController의 뷰를 bannerView에 추가
+              bannerView.addSubview(bannerViewController.view)
+              
+              // BannerViewController를 부모 뷰 컨트롤러로 설정
+              addChild(bannerViewController)
+              bannerViewController.didMove(toParent: self)
+       // bannerView.addSubview(bannerViewController)
         topView.addSubview(topViewLastView)
         topViewLastView.addSubview(topViewLastImage)
         
@@ -291,7 +287,7 @@ final class ViewController: UIViewController {
             make.top.leading.trailing.equalToSuperview()
             make.bottom.equalTo(searchBar.snp.bottom).offset(10)
         }
-        
+       
         topView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
             make.bottom.equalTo(topViewLastcollectionView.snp.bottom).offset(20)
@@ -338,11 +334,15 @@ final class ViewController: UIViewController {
             make.leading.trailing.equalToSuperview().inset(8)
             make.height.equalTo(bannerView.snp.width).multipliedBy(0.33)
         }
+        bannerViewController.view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+               }
+        
         topViewLastView.snp.makeConstraints { make in
             make.top.equalTo(bannerView.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(bannerView.snp.width).multipliedBy(0.33)
-            
+
         }
         topViewLastImage.snp.makeConstraints { make in
             make.edges.equalToSuperview()
@@ -492,27 +492,27 @@ extension ViewController: UITableViewDelegate {
 }
 extension ViewController: UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("🍎\(topViewfourDataArray.count)")
-        return topViewfourDataArray.count
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecondCustomCollectionCell.reuseIdentifier, for: indexPath) as? SecondCustomCollectionCell else {
-            return UICollectionViewCell()
-        }
-        
-        let shopItem = topViewfourDataArray[indexPath.item]
-        cell.configure(image: shopItem.image!, title: shopItem.text)
-        
-        return cell
-    }
-    
+          print("🍎\(topViewfourDataArray.count)")
+          return topViewfourDataArray.count
+      }
+      
+   
+      func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+          guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SecondCustomCollectionCell.reuseIdentifier, for: indexPath) as? SecondCustomCollectionCell else {
+              return UICollectionViewCell()
+          }
+          
+          let shopItem = topViewfourDataArray[indexPath.item]
+          cell.configure(image: shopItem.image!, title: shopItem.text)
+          
+          return cell
+      }
+      
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 4
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return CGSize(width: collectionView.bounds.width / 4 - 10, height: collectionView.bounds.height)
-    }
+            return CGSize(width: collectionView.bounds.width / 4 - 10, height: collectionView.bounds.height)
+        }
 }

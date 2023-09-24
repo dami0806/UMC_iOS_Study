@@ -15,7 +15,7 @@ class ShopTableHeaderView: UITableViewHeaderFooterView{
     private let imageView = UIImageView()
     private let button = UIButton()
     
-
+    
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         contentView.backgroundColor = .white
@@ -36,12 +36,12 @@ class ShopTableHeaderView: UITableViewHeaderFooterView{
         contentView.addSubview(imageView)
         // 버튼 설정
         button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
-     
-
+        
+        
         button.tintColor = .black
         contentView.addSubview(button)
         
-
+        
         
     }
     
@@ -54,7 +54,7 @@ class ShopTableHeaderView: UITableViewHeaderFooterView{
             make.leading.equalTo(titleLabel.snp.trailing).offset(4.5)
             make.height.width.equalTo(titleLabel.snp.height)
             make.centerY.equalToSuperview()
-
+            
         }
         button.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(16)
@@ -73,7 +73,7 @@ class ShopTableHeaderView: UITableViewHeaderFooterView{
 //MARK: -FastdeliveryTableViewCell
 class FastdeliveryTableViewCell: UITableViewCell {
     static let reuseIdentifier = "FastdeliveryTableViewCell"
-
+    
     private let collectionView: UICollectionView
     
     let storeDataManager = StoreDataManager()
@@ -87,7 +87,7 @@ class FastdeliveryTableViewCell: UITableViewCell {
         collectionView.reloadData()
         setupViews()
         setupConstraints()
-
+        
         storeDataManager.makeStoreData()
         storeDataArray = storeDataManager.getStoreData()
         
@@ -113,9 +113,9 @@ class FastdeliveryTableViewCell: UITableViewCell {
             //make.edges.equalToSuperview()
             make.left.right.equalToSuperview()
             make.top.bottom.equalToSuperview()
-         //   make.height.equalTo(contentView.snp.width).multipliedBy(0.8)
+            //   make.height.equalTo(contentView.snp.width).multipliedBy(0.8)
         }
-
+        
         
         
     }
@@ -138,7 +138,7 @@ extension FastdeliveryTableViewCell: UICollectionViewDelegate, UICollectionViewD
         let deliveryTipLabel = storeDataArray[1].items[indexPath.item].deliveryTipLabel
         let deliveryTipTextLabel = storeDataArray[1].items[indexPath.item].deliveryTipTextLabel
         let uiImageView = storeDataArray[1].items[indexPath.item].uiImageView
-
+        
         cell.foodImageView.image = foodImageView
         cell.storeLabel.text = storeLabel
         cell.scoreLabel.text = scoreLabel
@@ -164,7 +164,7 @@ extension FastdeliveryTableViewCell: UICollectionViewDelegate, UICollectionViewD
 //MARK: -SaleTableViewCell:오늘의 할인
 class SaleTableViewCell: UITableViewCell {
     static let reuseIdentifier = "SaleTableViewCell"
-
+    
     
     let shopDataManager = ShopDataManager()
     var shopDataArray: [ShopSection] = []
@@ -173,7 +173,7 @@ class SaleTableViewCell: UITableViewCell {
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
-
+        
         return collectionView
     }()
     
@@ -222,7 +222,7 @@ extension SaleTableViewCell: UICollectionViewDelegate, UICollectionViewDataSourc
         let height = contentView.bounds.height
         return CGSize(width: width, height: height)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 20
     }
@@ -231,9 +231,9 @@ extension SaleTableViewCell: UICollectionViewDelegate, UICollectionViewDataSourc
 //MARK: - MartShoppingTableViewCell :B마트 특가
 class MartShoppingTableViewCell: UITableViewCell {
     static let reuseIdentifier = "MartShoppingTableViewCell"
-
+    
     private var selectedCellIndexPath: IndexPath?
-
+    
     let martShoppingDataManager = MarkShoppingDataManager()
     var martShoppingpDataArray: [MartShoppingSection] = []
     
@@ -244,9 +244,9 @@ class MartShoppingTableViewCell: UITableViewCell {
         collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
-
+    
     private lazy var martShoppingContentView = B_MartView()//커스터
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupCollectionView()
@@ -254,7 +254,7 @@ class MartShoppingTableViewCell: UITableViewCell {
         let initialIndexPath = IndexPath(item: 0, section: 0)
         collectionView.selectItem(at: initialIndexPath, animated: false, scrollPosition: .top)
         collectionView(collectionView, didSelectItemAt: initialIndexPath)
-
+        
         
     }
     
@@ -286,13 +286,13 @@ class MartShoppingTableViewCell: UITableViewCell {
         martShoppingContentView.snp.makeConstraints { make in
             make.top.equalTo(collectionView.snp.bottom).offset(3)
             make.leading.trailing.equalToSuperview().inset(10)
-         //   make.bottom.equalToSuperview().inset(100)//.offset(collectionView.bounds.width*0.4 - 10)//multipliedBy(0.5)//(martShoppingContentView.snp.width).multipliedBy(0.6)
-
+            //   make.bottom.equalToSuperview().inset(100)//.offset(collectionView.bounds.width*0.4 - 10)//multipliedBy(0.5)//(martShoppingContentView.snp.width).multipliedBy(0.6)
+            
             
         }
     }
-
- 
+    
+    
     
 }
 extension MartShoppingTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
@@ -302,7 +302,7 @@ extension MartShoppingTableViewCell: UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MartShoppingCollectionViewCell.reuseIdentifier, for: indexPath) as! MartShoppingCollectionViewCell
         let foodImageView = martShoppingpDataArray[0].items[indexPath.item].foodImageView
-
+        
         
         cell.imageView.image = foodImageView
         return cell
@@ -349,7 +349,7 @@ extension MartShoppingTableViewCell: UICollectionViewDelegate, UICollectionViewD
 //MARK: -GiveMindTableViewCell:마음을 선물
 class GiveMindTableViewCell: UITableViewCell {
     static let reuseIdentifier = "GiveMindTableViewCell"
-
+    
     
     let shopDataManager = ShopDataManager()
     var shopDataArray: [ShopSection] = []
@@ -384,7 +384,7 @@ class GiveMindTableViewCell: UITableViewCell {
         }
         
     }
- 
+    
     
 }
 extension GiveMindTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
@@ -408,7 +408,7 @@ extension GiveMindTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
         let height = contentView.bounds.height  
         return CGSize(width: width, height: height)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
@@ -417,7 +417,7 @@ extension GiveMindTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
 //MARK: -GoodTasteTableViewCell:전국의 별미
 class GoodTasteTableViewCell: UITableViewCell {
     static let reuseIdentifier = "GoodTasteTableViewCell"
-
+    
     
     let shopDataManager = ShopDataManager()
     var shopDataArray: [ShopSection] = []
@@ -426,7 +426,7 @@ class GoodTasteTableViewCell: UITableViewCell {
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
-
+        
         return collectionView
     }()
     
@@ -475,98 +475,98 @@ extension GoodTasteTableViewCell: UICollectionViewDelegate, UICollectionViewData
         let height = contentView.bounds.height
         return CGSize(width: width, height: height)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
-  
+    
 }
 //MARK: -DoThisWorkTableViewCell: 이런 일도 한답니다
 class DoThisWorkTableViewCell: UITableViewCell {
-   
-        static let reuseIdentifier = "DoThisWorkTableViewCell"
-
+    
+    static let reuseIdentifier = "DoThisWorkTableViewCell"
+    
+    
+    let shopDataManager = ShopDataManager()
+    var shopDataArray: [ShopSection] = []
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
         
-        let shopDataManager = ShopDataManager()
-        var shopDataArray: [ShopSection] = []
-        private lazy var collectionView: UICollectionView = {
-            let layout = UICollectionViewFlowLayout()
-            layout.scrollDirection = .horizontal
-            let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-            collectionView.showsHorizontalScrollIndicator = false
-
-            return collectionView
-        }()
+        return collectionView
+    }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupCollectionView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupCollectionView(){
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
-        override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-            super.init(style: style, reuseIdentifier: reuseIdentifier)
-            setupCollectionView()
+        collectionView.register(DoThisWorkCollectionViewCell.self, forCellWithReuseIdentifier: DoThisWorkCollectionViewCell.reuseIdentifier)
+        contentView.addSubview(collectionView)
+        
+        shopDataManager.makeShopData()
+        shopDataArray = shopDataManager.getShopData()
+        
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+    }
+    
+}
+extension DoThisWorkTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("🍎\(shopDataArray[6])")
+        return shopDataArray[6].items.count
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DoThisWorkCollectionViewCell.reuseIdentifier, for: indexPath) as! DoThisWorkCollectionViewCell
+        let image = shopDataArray[6].items[indexPath.item].image
+        let text = shopDataArray[6].items[indexPath.item].text
+        cell.imageView.image = image
+        cell.label.text = text
+        
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let height: CGFloat
+        
+        switch indexPath.item {
+        case 0:
+            height = contentView.bounds.width * 0.4
+        case 1:
+            height = contentView.bounds.width *  0.56
+        case 2:
+            height = contentView.bounds.width * 0.56
+        case 3:
+            height = contentView.bounds.width * 0.4
+        default:
+            height = 0.0
         }
         
-        required init?(coder: NSCoder) {
-            fatalError("init(coder:) has not been implemented")
-        }
+        let width = contentView.bounds.width * 0.5 - 18
+        return CGSize(width: width, height: height)
         
-        private func setupCollectionView(){
-            collectionView.delegate = self
-            collectionView.dataSource = self
-            
-            collectionView.register(DoThisWorkCollectionViewCell.self, forCellWithReuseIdentifier: DoThisWorkCollectionViewCell.reuseIdentifier)
-            contentView.addSubview(collectionView)
-            
-            shopDataManager.makeShopData()
-            shopDataArray = shopDataManager.getShopData()
-            
-            collectionView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-        }
         
     }
-    extension DoThisWorkTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
-        func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            print("🍎\(shopDataArray[6])")
-            return shopDataArray[6].items.count
-        }
-        func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DoThisWorkCollectionViewCell.reuseIdentifier, for: indexPath) as! DoThisWorkCollectionViewCell
-            let image = shopDataArray[6].items[indexPath.item].image
-            let text = shopDataArray[6].items[indexPath.item].text
-            cell.imageView.image = image
-            cell.label.text = text
-            
-            return cell
-        }
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-            return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
-        }
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            let height: CGFloat
-                
-                switch indexPath.item {
-                case 0:
-                    height = contentView.bounds.width * 0.4
-                case 1:
-                    height = contentView.bounds.width *  0.56
-                case 2:
-                    height = contentView.bounds.width * 0.56
-                case 3:
-                    height = contentView.bounds.width * 0.4
-                default:
-                    height = 0.0
-                }
-                
-            let width = contentView.bounds.width * 0.5 - 18
-                return CGSize(width: width, height: height)
-            
-            
-        }
-
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-            return 10
-        }
-        func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-            return 15
-        }
-      
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 10
     }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 15
+    }
+    
+}
