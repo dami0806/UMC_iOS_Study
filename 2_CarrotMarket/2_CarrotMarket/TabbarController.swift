@@ -24,10 +24,10 @@ class TabbarController: UITabBarController {
         
         let myPageVC = UINavigationController(rootViewController: MyPageViewController())
         myPageVC.tabBarItem = UITabBarItem(title: "나의 당근", image:UIImage(systemName: "person"), selectedImage: UIImage(systemName: "person"))
-                               
+        
         self.viewControllers = [homeVC, neigborVC, nearVC, chatVC, myPageVC]
     }
-
+    
     private func settingView(){
         view.layer.borderWidth = 1
         view.layer.borderColor = UIColor.gray.cgColor
