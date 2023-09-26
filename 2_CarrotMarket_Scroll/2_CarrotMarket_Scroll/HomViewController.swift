@@ -74,6 +74,7 @@ class HomeViewController: UIViewController {
         homeCategoryDataManager.makeHomeCategoryData()
         homeCagetoryDataArray = homeCategoryDataManager.gethomeCagegoryDataArrayCellData()
     }
+
     //MARK: - addSubviews()
     private func addSubviews() {
         view.addSubview(scrollView)
@@ -106,20 +107,22 @@ private func configureConstraints() {
     bottomView.snp.makeConstraints { make in
         make.top.equalTo(topView.snp.bottom)
         make.leading.trailing.equalToSuperview()
-        make.height.equalTo(view.snp.width).multipliedBy(3)
-        
+        make.bottom.equalTo(tableView.snp.bottom)
     }
     categoryCollectionView.snp.makeConstraints { make in
         make.edges.equalToSuperview()
     }
     tableView.snp.makeConstraints { make in
-        make.edges.equalToSuperview()
-        make.height.equalTo(view.snp.width).multipliedBy(3)//(calculateTableViewHeight())
+        make.top.leading.trailing.equalToSuperview()
+        make.height.equalTo(1000)
 
     }
 
 }
     private func calculateTableViewHeight() -> CGFloat {
+        let tableHeight = tableView.contentSize.height
+        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: tableHeight + contentView.frame.height)
+        
            let numberOfCells =  homeGoodsDataArray.count
            let cellHeight: CGFloat = view.frame.width*0.3
            let totalHeight = CGFloat(numberOfCells) * cellHeight
@@ -180,13 +183,13 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         
         if (homeCagetoryDataArray[indexPath.row].text == "" ){
-            print("asdf")
-            let cellHeight: CGFloat = collectionView.frame.height
+           
+            let cellHeight: CGFloat = collectionView.frame.height * 0.85
             
             return CGSize(width: cellHeight, height: cellHeight)
         }
         else{
-            let cellPadding: CGFloat = 10// 원하는 패딩 값 설정
+            let cellPadding: CGFloat = 15
             
             
             let text = homeCagetoryDataArray[indexPath.row].text
@@ -200,7 +203,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             ])
             
             let cellWidth = labelSize.width*2 + 2 * cellPadding
-            let cellHeight: CGFloat = collectionView.frame.height
+            let cellHeight: CGFloat = collectionView.frame.height * 0.85
             
             return CGSize(width: cellWidth, height: cellHeight)
         }
@@ -216,7 +219,7 @@ extension HomeViewController: UITableViewDataSource,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 3{
+        if indexPath.row == 6{
             let cell = tableView.dequeueReusableCell(withIdentifier: HomeAdTableViewCell.reuseIdentifier, for: indexPath) as! HomeAdTableViewCell
             return cell
         }else {
@@ -231,13 +234,15 @@ extension HomeViewController: UITableViewDataSource,UITableViewDelegate {
         }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 3{
-            return view.frame.width*0.35
+        if indexPath.row == 6{
+            return view.frame.width*0.8
 
         }else{
             return view.frame.width*0.3
         }
     }
+    
+    
 }
 
 

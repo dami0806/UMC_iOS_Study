@@ -13,7 +13,7 @@ class HomeCategoryCollectionViewCell : UICollectionViewCell {
     
     lazy var view: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = UIColor.categoryGray
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
         return view
@@ -29,7 +29,7 @@ class HomeCategoryCollectionViewCell : UICollectionViewCell {
     
     lazy var imageView:UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     lazy var label: UILabel = {
@@ -62,11 +62,10 @@ class HomeCategoryCollectionViewCell : UICollectionViewCell {
         }
         stackView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            //  make.edges.equalToSuperview().inset(3)
         }
         
         imageView.snp.makeConstraints { make in
-            make.height.width.equalTo(view.snp.height).multipliedBy(0.5)
+            make.height.width.equalTo(view.snp.height).multipliedBy(0.3)
         }
         
         
@@ -130,22 +129,30 @@ class HomeAdCollectionViewCell : UICollectionViewCell {
     
     private func setupImageView() {
         contentView.addSubview(view)
-        view.addSubview(stackView)
-        stackView.addArrangedSubview(goodsImage)
-        stackView.addArrangedSubview(goodsTitle)
-        stackView.addArrangedSubview(goodsPrice)
+        view.addSubview(goodsImage)
+        view.addSubview(goodsTitle)
+        view.addSubview(goodsPrice)
+ 
         
         view.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalToSuperview().inset(5)
+            make.edges.equalToSuperview()
         }
-        stackView.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-        }
+       
         
         goodsImage.snp.makeConstraints { make in
-            make.height.width.equalTo(view.snp.height).multipliedBy(0.5)
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(goodsImage.snp.width)
         }
         
-        
+        goodsTitle.snp.makeConstraints { make in
+            make.top.equalTo(goodsImage.snp.bottom).offset(8)
+            make.leading.trailing.equalTo(view)
+        }
+        goodsPrice.snp.makeConstraints { make in
+            make.top.equalTo(goodsTitle.snp.bottom).offset(8)
+            make.leading.trailing.equalTo(view)
+            
+
+        }
     }
 }

@@ -88,10 +88,31 @@ class HomeTableViewCell : UITableViewCell {
     }
 }
 
+//광고성 테이블뷰 셀
 class HomeAdTableViewCell : UITableViewCell {
     static let reuseIdentifier = "HomeAdTableViewCell"
     let homeCellDataManager = HomeCellDataManager()
     var homeGoodsDataArray: [Goods] = []
+    
+    lazy var adLabel: UILabel = {
+        let label = UILabel()
+        label.text = "우리동네 한가위 선물세트"
+        label.font = UIFont.systemFont(ofSize: 19, weight: .bold)
+        label.textColor = .black
+        return label
+    }()
+    lazy var adimageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "달")
+        
+        return imageView
+    }()
+    lazy var adbutton: UIButton = {
+        let button = UIButton()
+        button.tintColor = .black
+        button.setImage(UIImage(systemName: "chevron.right"), for: .normal)
+        return button
+    }()
     
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -123,16 +144,33 @@ class HomeAdTableViewCell : UITableViewCell {
     }
     
     private func addSubviews() {
-        
+        contentView.addSubview(adLabel)
+        contentView.addSubview(adimageView)
+        contentView.addSubview(adbutton)
+
         contentView.addSubview(collectionView)
         
         configureConstraints()
     }
     
     private func configureConstraints() {
-        
+        adLabel.snp.makeConstraints { make in
+            make.leading.top.equalToSuperview().inset(10)
+        }
+        adimageView.snp.makeConstraints { make in
+            make.leading.equalTo(adLabel.snp.trailing).offset(3)
+            make.centerY.equalTo(adLabel.snp.centerY)
+            make.height.width.equalTo(contentView.snp.width).multipliedBy(0.08)
+        }
+        adbutton.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(10)
+            make.centerY.equalTo(adLabel.snp.centerY)
+            make.height.width.equalTo(contentView.snp.width).multipliedBy(0.08)
+
+        }
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.top.equalTo(adLabel.snp.bottom).offset(20)
+            make.leading.trailing.bottom.equalToSuperview()
             
         }
     }
@@ -157,12 +195,12 @@ extension HomeAdTableViewCell: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 3
+        return 10
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
             
-            return CGSize(width: 100, height: 100)
+        return CGSize(width: contentView.frame.width*0.3, height: contentView.frame.width*0.5)
         }
     
 }
