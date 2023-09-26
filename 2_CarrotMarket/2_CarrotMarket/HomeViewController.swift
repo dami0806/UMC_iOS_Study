@@ -17,12 +17,36 @@ class HomeViewController: UIViewController {
     let homeCategoryDataManager = HomeCategoryDataManager()
     var homeCagetoryDataArray: [Category] = []
     
+    private lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsVerticalScrollIndicator = true
+        return scrollView
+    }()
+    
+    private lazy var contentView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
+    private lazy var topView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .red
+        return view
+    }()
+    
+    private lazy var bottomView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .blue
+        return view
+    }()
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
     }()
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.white
@@ -40,14 +64,40 @@ class HomeViewController: UIViewController {
     }
     //MARK: - addSubviews()
     private func addSubviews() {
-        view.addSubview(tableView)
+        view.addSubview(scrollView)
+        scrollView.addSubview(contentView)
+        contentView.addSubview(topView)
+        contentView.addSubview(bottomView)
+        bottomView.addSubview(tableView)
+        
         
         
         configureConstraints()
     }
     //MARK: - configureConstraints()
     private func configureConstraints() {
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            
+        }
         
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalToSuperview()
+            make.bottom.equalTo(bottomView.snp.bottom)
+        }
+        
+        topView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(200)
+        }
+        
+//        bottomView.snp.makeConstraints { make in
+//            make.top.equalTo(topView.snp.bottom)
+//            make.leading.trailing.equalToSuperview()
+//            make.height.equalTo(view.snp.width).multipliedBy(500)
+//        }
+    
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
