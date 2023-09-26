@@ -13,6 +13,8 @@ import SnapKit
 ///MARK: HomeViewController
 class HomeViewController: UIViewController {
     
+    final let deliverViewHeight = 60
+    final let deliverViewWeight = 180
     let homeCellDataManager = HomeCellDataManager()
     var homeGoodsDataArray: [Goods] = []
     
@@ -42,7 +44,7 @@ class HomeViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.alwaysBounceHorizontal = true
-
+        
         collectionView.delegate = self
         collectionView.dataSource = self
         return collectionView
@@ -61,6 +63,42 @@ class HomeViewController: UIViewController {
         tableView.isScrollEnabled = false
         return tableView
     }()
+    //글쓰기
+    private lazy var writeView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .orange
+        view.layer.cornerRadius =  CGFloat(30)
+        return view
+    }()
+    private lazy var writeStackView: UIStackView = {
+        let st = UIStackView()
+        st.axis = .horizontal
+        st.alignment = .center
+        st.spacing = 3
+        st.distribution = .equalSpacing
+        writeView.addSubview(st)
+        return st
+    }()
+    
+    private lazy var deliverImage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "plus")
+        imageView.tintColor = .white
+        imageView.contentMode = .scaleAspectFit
+        writeStackView.addArrangedSubview(imageView)
+        return imageView
+    }()
+    private lazy var deliverLabel: UILabel = {
+        let label = UILabel()
+        label.text = "글쓰기"
+        label.textColor = UIColor.white
+        label.font = UIFont.boldSystemFont(ofSize: 13)
+        label.setContentHuggingPriority(.required, for: .vertical)
+        label.setContentCompressionResistancePriority(.required, for: .vertical)
+        writeStackView.addArrangedSubview(label)
+        return label
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -68,13 +106,13 @@ class HomeViewController: UIViewController {
         addSubviews()
         setTableView()
         setCollectionView()
-        
+        scrollView.delegate = self
         homeCellDataManager.makeHomeData()
         homeGoodsDataArray = homeCellDataManager.gethomeGoodsDataArrayCellData()
         homeCategoryDataManager.makeHomeCategoryData()
         homeCagetoryDataArray = homeCategoryDataManager.gethomeCagegoryDataArrayCellData()
     }
-
+    
     //MARK: - addSubviews()
     private func addSubviews() {
         view.addSubview(scrollView)
@@ -83,51 +121,77 @@ class HomeViewController: UIViewController {
         contentView.addSubview(bottomView)
         topView.addSubview(categoryCollectionView)
         bottomView.addSubview(tableView)
-        configureConstraints()
-    
-}
-//MARK: - configureConstraints()
-private func configureConstraints() {
-    
-    scrollView.snp.makeConstraints { make in
-        make.edges.equalToSuperview()
-    }
-    
-    contentView.snp.makeConstraints { make in
-        make.edges.equalToSuperview()
-        make.width.equalToSuperview()
-        make.bottom.equalTo(bottomView.snp.bottom)
-    }
-    
-    topView.snp.makeConstraints { make in
-        make.top.leading.trailing.equalToSuperview()
-        make.height.equalTo(view.snp.width).multipliedBy(0.15)
-    }
-    
-    bottomView.snp.makeConstraints { make in
-        make.top.equalTo(topView.snp.bottom)
-        make.leading.trailing.equalToSuperview()
-        make.bottom.equalTo(tableView.snp.bottom)
-    }
-    categoryCollectionView.snp.makeConstraints { make in
-        make.edges.equalToSuperview()
-    }
-    tableView.snp.makeConstraints { make in
-        make.top.leading.trailing.equalToSuperview()
-        make.height.equalTo(1000)
-
-    }
-
-}
-    private func calculateTableViewHeight() -> CGFloat {
-        let tableHeight = tableView.contentSize.height
-        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: tableHeight + contentView.frame.height)
         
-           let numberOfCells =  homeGoodsDataArray.count
-           let cellHeight: CGFloat = view.frame.width*0.3
-           let totalHeight = CGFloat(numberOfCells) * cellHeight
-           return totalHeight
-       }
+        bottomView.addSubview(writeView)
+        
+        configureConstraints()
+    }
+    //MARK: - configureConstraints()
+    private func configureConstraints() {
+        
+        scrollView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        contentView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            make.width.equalToSuperview()
+            make.bottom.equalTo(bottomView.snp.bottom)
+        }
+        
+        topView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(view.snp.width).multipliedBy(0.15)
+        }
+        
+        bottomView.snp.makeConstraints { make in
+            make.top.equalTo(topView.snp.bottom)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(tableView.snp.bottom)
+        }
+        categoryCollectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        tableView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.height.equalTo(1500)
+            
+        }
+        writeView.snp.makeConstraints { make in
+            make.trailing.equalToSuperview().inset(20) // 오른쪽으로 20만큼 여백
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.width.equalTo(deliverViewWeight) // 너비 설정
+            make.height.equalTo(deliverViewHeight) // 높이 설정
+            writeView.clipsToBounds = true //잘라내기
+        }
+        writeStackView.snp.makeConstraints { make in
+            make.top.bottom.equalTo(writeView).inset(10)
+            make.leading.trailing.equalTo(writeView).inset(30)
+            
+        }
+        
+        deliverImage.snp.makeConstraints { make in
+            make.width.height.equalTo(deliverViewHeight-20)
+        }
+        deliverLabel.isHidden = false
+        
+    }
+    private func calculateTableViewHeight() -> CGFloat {
+       
+        let numberOfCells =  homeGoodsDataArray.count
+        let cellHeight: CGFloat = view.frame.width*0.3
+        let totalHeight = CGFloat(numberOfCells-1) * cellHeight + view.frame.width*0.8
+        return totalHeight
+    }
+    // 테이블뷰 높이를 계산하고 업데이트하는 메서드
+    private func updateTableViewHeight() {
+        let newHeight = calculateTableViewHeight()
+        tableView.snp.updateConstraints { make in
+            make.height.equalTo(newHeight)
+        }
+        scrollView.layoutIfNeeded()
+        tableView.reloadData() // 테이블뷰를 다시 로드
+    }
     
     private func setCollectionView() {
         categoryCollectionView.register(HomeCategoryCollectionViewCell.self, forCellWithReuseIdentifier: HomeCategoryCollectionViewCell.reuseIdentifier)
@@ -135,7 +199,7 @@ private func configureConstraints() {
         categoryCollectionView.showsHorizontalScrollIndicator = false
     }
     
-//테이블뷰 세팅
+    //테이블뷰 세팅
     func setTableView(){
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.reuseIdentifier)
         tableView.register(HomeAdTableViewCell.self, forCellReuseIdentifier: HomeAdTableViewCell.reuseIdentifier)
@@ -166,7 +230,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeCategoryCollectionViewCell.reuseIdentifier, for: indexPath) as! HomeCategoryCollectionViewCell
-        print(homeCagetoryDataArray[indexPath.row].text)
         cell.imageView.image = homeCagetoryDataArray[indexPath.row].image
         cell.label.text = homeCagetoryDataArray[indexPath.row].text
         return cell
@@ -183,7 +246,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         
         if (homeCagetoryDataArray[indexPath.row].text == "" ){
-           
+            
             let cellHeight: CGFloat = collectionView.frame.height * 0.85
             
             return CGSize(width: cellHeight, height: cellHeight)
@@ -207,9 +270,9 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
             
             return CGSize(width: cellWidth, height: cellHeight)
         }
-
+        
     }
-
+    
 }
 
 extension HomeViewController: UITableViewDataSource,UITableViewDelegate {
@@ -236,7 +299,7 @@ extension HomeViewController: UITableViewDataSource,UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 6{
             return view.frame.width*0.8
-
+            
         }else{
             return view.frame.width*0.3
         }
@@ -245,5 +308,66 @@ extension HomeViewController: UITableViewDataSource,UITableViewDelegate {
     
 }
 
+extension HomeViewController : UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(scrollView.contentOffset.y)
+        
+        updateTableViewHeight()
+        //네비게이션 탭바 + collectionViewHeight
+//        guard let navi = self.navigationController?.navigationBar else {
+//            let topContentOffsetY = navigationController!.navigationBar.frame.height + topView.frame.height
+//
+//            print(-topContentOffsetY)
+//        }
+        guard let navi =  self.navigationController?.navigationBar else {
+           return
+        }
+        let topContentOffsetY = navi.frame.height + 50 //+ categoryCollectionView.frame.height*0.8
+     
+        if scrollView.contentOffset.y <= -topContentOffsetY{
+            // 스크롤이 맨 위일 때
 
+            writeView.snp.updateConstraints { make in
+                make.width.equalTo(deliverViewWeight)
+            }
+            writeStackView.snp.remakeConstraints { make in
+                make.center.equalTo(writeView.snp.center)
+            }
+            
+            deliverImage.snp.remakeConstraints{make in
+                make.width.height.equalTo(deliverViewHeight-20)
+                
+            }
+            deliverLabel.isHidden = false
+       
+        }else {
+            // 스크롤이 아래로 내려갔을 때
+
+            writeView.snp.updateConstraints { make in
+                make.width.equalTo(deliverViewHeight)
+                make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+
+                
+            }
+            
+            writeStackView.snp.remakeConstraints { make in
+                //make.edges.equalTo(deliverView).inset(10)
+                make.center.equalTo(writeView.snp.center)
+                
+            }
+            deliverImage.snp.remakeConstraints{make in
+                make.width.height.equalTo(deliverViewHeight-20)
+                // make.center.equalTo(deliverView.snp.center)
+                
+                
+            }
+            deliverLabel.isHidden = true
+       
+        }
+        UIView.animate(withDuration: 0.16) {
+            self.view.layoutIfNeeded()
+        }
+        
+    }
+}
 

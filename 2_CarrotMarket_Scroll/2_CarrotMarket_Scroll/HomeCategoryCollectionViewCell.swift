@@ -80,7 +80,7 @@ class HomeAdCollectionViewCell : UICollectionViewCell {
     
     lazy var view: UIView = {
         let view = UIView()
-        view.backgroundColor = .lightGray
+        view.backgroundColor = .white
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
         return view
@@ -103,14 +103,15 @@ class HomeAdCollectionViewCell : UICollectionViewCell {
     
     lazy var goodsTitle: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         label.textColor = .darkGray
+        label.numberOfLines = 2
         return label
     }()
     
     lazy var goodsPrice: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         label.textColor = .black
         return label
     }()

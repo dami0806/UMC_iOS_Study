@@ -97,7 +97,7 @@ class HomeAdTableViewCell : UITableViewCell {
     lazy var adLabel: UILabel = {
         let label = UILabel()
         label.text = "우리동네 한가위 선물세트"
-        label.font = UIFont.systemFont(ofSize: 19, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         label.textColor = .black
         return label
     }()
@@ -126,7 +126,7 @@ class HomeAdTableViewCell : UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        homeCellDataManager.makeHomeData()
+        homeCellDataManager.makeHomeAdData()
         homeGoodsDataArray = homeCellDataManager.gethomeGoodsDataArrayCellData()
         
         addSubviews()
@@ -155,7 +155,8 @@ class HomeAdTableViewCell : UITableViewCell {
     
     private func configureConstraints() {
         adLabel.snp.makeConstraints { make in
-            make.leading.top.equalToSuperview().inset(10)
+            make.top.equalToSuperview().inset(30)
+            make.leading.equalToSuperview().inset(10)
         }
         adimageView.snp.makeConstraints { make in
             make.leading.equalTo(adLabel.snp.trailing).offset(3)
@@ -170,7 +171,8 @@ class HomeAdTableViewCell : UITableViewCell {
         }
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(adLabel.snp.bottom).offset(20)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview().inset(30)
             
         }
     }
