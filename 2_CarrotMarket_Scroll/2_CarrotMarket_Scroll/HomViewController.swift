@@ -36,7 +36,7 @@ class HomeViewController: UIViewController {
         return view
     }()
     
-    lazy var collectionView: UICollectionView = {
+    lazy var categoryCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -80,7 +80,7 @@ class HomeViewController: UIViewController {
         scrollView.addSubview(contentView)
         contentView.addSubview(topView)
         contentView.addSubview(bottomView)
-        topView.addSubview(collectionView)
+        topView.addSubview(categoryCollectionView)
         bottomView.addSubview(tableView)
         configureConstraints()
     
@@ -106,10 +106,10 @@ private func configureConstraints() {
     bottomView.snp.makeConstraints { make in
         make.top.equalTo(topView.snp.bottom)
         make.leading.trailing.equalToSuperview()
-        make.height.equalTo(view.snp.width).multipliedBy(1.5)
+        make.height.equalTo(view.snp.width).multipliedBy(3)
         
     }
-    collectionView.snp.makeConstraints { make in
+    categoryCollectionView.snp.makeConstraints { make in
         make.edges.equalToSuperview()
     }
     tableView.snp.makeConstraints { make in
@@ -121,22 +121,15 @@ private func configureConstraints() {
 }
     private func calculateTableViewHeight() -> CGFloat {
            let numberOfCells =  homeGoodsDataArray.count
-           let tableViewcellHeight: CGFloat = view.frame.width * 0.3
-           let collectionViewcellHeight: CGFloat = view.frame.width*1.5
-
-           let totalHeight = CGFloat(numberOfCells) * tableViewcellHeight + collectionViewcellHeight
-        print(homeGoodsDataArray.count)
-        print(view.frame.width * 0.3)
-
-        print(view.frame.width*1.5)
-
+           let cellHeight: CGFloat = view.frame.width*0.3
+           let totalHeight = CGFloat(numberOfCells) * cellHeight
            return totalHeight
        }
     
     private func setCollectionView() {
-        collectionView.register(HomeCategoryCollectionViewCell.self, forCellWithReuseIdentifier: HomeCategoryCollectionViewCell.reuseIdentifier)
-        collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
+        categoryCollectionView.register(HomeCategoryCollectionViewCell.self, forCellWithReuseIdentifier: HomeCategoryCollectionViewCell.reuseIdentifier)
+        categoryCollectionView.backgroundColor = .clear
+        categoryCollectionView.showsHorizontalScrollIndicator = false
     }
     
 //테이블뷰 세팅
