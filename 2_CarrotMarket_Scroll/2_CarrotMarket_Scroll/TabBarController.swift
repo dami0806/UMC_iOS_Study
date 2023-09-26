@@ -15,6 +15,7 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         settingTabbar()
+
         // 홈 뷰 컨트롤러 생성
         let homeVC = UINavigationController(rootViewController: HomeViewController())
         homeVC.tabBarItem = UITabBarItem(title: "홈", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house"))
@@ -35,6 +36,8 @@ class TabBarController: UITabBarController {
     
     }
     private func settingTabbar(){
+        view.backgroundColor = .white
+        
         UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.gray], for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.gray], for: .selected)
     }

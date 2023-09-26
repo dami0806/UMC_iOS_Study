@@ -114,7 +114,7 @@ private func configureConstraints() {
     }
     tableView.snp.makeConstraints { make in
         make.edges.equalToSuperview()
-        make.height.equalTo(calculateTableViewHeight())
+        make.height.equalTo(view.snp.width).multipliedBy(3)//(calculateTableViewHeight())
 
     }
 
@@ -135,7 +135,10 @@ private func configureConstraints() {
 //테이블뷰 세팅
     func setTableView(){
         tableView.register(HomeTableViewCell.self, forCellReuseIdentifier: HomeTableViewCell.reuseIdentifier)
+        tableView.register(HomeAdTableViewCell.self, forCellReuseIdentifier: HomeAdTableViewCell.reuseIdentifier)
+        
     }
+    
     private func settingNaviItem(){
         let placeText = UIBarButtonItem(title: "도림동", style: .plain, target: self, action: #selector(buttonTapped))
         let bellButton = UIBarButtonItem(image: UIImage(systemName: "bell"), style: .plain, target: self, action: #selector(buttonTapped))
@@ -213,7 +216,10 @@ extension HomeViewController: UITableViewDataSource,UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
- 
+        if indexPath.row == 3{
+            let cell = tableView.dequeueReusableCell(withIdentifier: HomeAdTableViewCell.reuseIdentifier, for: indexPath) as! HomeAdTableViewCell
+            return cell
+        }else {
             let cell = tableView.dequeueReusableCell(withIdentifier: HomeTableViewCell.reuseIdentifier, for: indexPath) as! HomeTableViewCell
             cell.goodsImage.image = homeGoodsDataArray[indexPath.row].goodsImage
             cell.goodsTitle.text = homeGoodsDataArray[indexPath.row].goodsTitle
@@ -221,13 +227,16 @@ extension HomeViewController: UITableViewDataSource,UITableViewDelegate {
             cell.goodsPrice.text = homeGoodsDataArray[indexPath.row].goodsPrice
             
             return cell
-        
-        
+            
+        }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    
+        if indexPath.row == 3{
+            return view.frame.width*0.35
+
+        }else{
             return view.frame.width*0.3
-        
+        }
     }
 }
 

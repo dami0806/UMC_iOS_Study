@@ -87,3 +87,82 @@ class HomeTableViewCell : UITableViewCell {
         
     }
 }
+
+class HomeAdTableViewCell : UITableViewCell {
+    static let reuseIdentifier = "HomeAdTableViewCell"
+    let homeCellDataManager = HomeCellDataManager()
+    var homeGoodsDataArray: [Goods] = []
+    
+    lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        return collectionView
+    }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        homeCellDataManager.makeHomeData()
+        homeGoodsDataArray = homeCellDataManager.gethomeGoodsDataArrayCellData()
+        
+        addSubviews()
+        setupCollectionView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupCollectionView() {
+        collectionView.register(HomeAdCollectionViewCell.self, forCellWithReuseIdentifier: HomeAdCollectionViewCell.reuseIdentifier)
+        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+    }
+    
+    private func addSubviews() {
+        
+        contentView.addSubview(collectionView)
+        
+        configureConstraints()
+    }
+    
+    private func configureConstraints() {
+        
+        collectionView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+            
+        }
+    }
+}
+
+extension HomeAdTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return homeGoodsDataArray.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: HomeAdCollectionViewCell.reuseIdentifier, for: indexPath) as! HomeAdCollectionViewCell
+        
+        cell.goodsImage.image = homeGoodsDataArray[indexPath.row].goodsImage
+        cell.goodsPrice.text = homeGoodsDataArray[indexPath.row].goodsPrice
+        cell.goodsTitle.text =  homeGoodsDataArray[indexPath.row].goodsTitle
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 3
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+            
+            return CGSize(width: 100, height: 100)
+        }
+    
+}
