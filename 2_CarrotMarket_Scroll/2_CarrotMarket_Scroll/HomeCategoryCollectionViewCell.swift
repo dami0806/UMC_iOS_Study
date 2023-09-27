@@ -36,7 +36,7 @@ class HomeCategoryCollectionViewCell : UICollectionViewCell {
         let label = UILabel()
         label.textAlignment = .left
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        label.textColor = .gray
+        label.textColor = .darkGray
         return label
     }()
     override init(frame: CGRect) {
@@ -59,14 +59,15 @@ class HomeCategoryCollectionViewCell : UICollectionViewCell {
         stackView.addArrangedSubview(label)
         
         view.snp.makeConstraints { make in
-            make.top.bottom.leading.trailing.equalToSuperview().inset(5)
+            make.top.bottom.equalToSuperview().inset(5)
+            make.leading.trailing.equalToSuperview()
         }
         stackView.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
         
         imageView.snp.makeConstraints { make in
-            make.height.width.equalTo(view.snp.height).multipliedBy(0.3)
+            make.height.width.equalTo(view.snp.height).multipliedBy(0.4)
         }
         
         

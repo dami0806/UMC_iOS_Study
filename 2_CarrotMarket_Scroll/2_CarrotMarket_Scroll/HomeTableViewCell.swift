@@ -45,8 +45,8 @@ class HomeTableViewCell : UITableViewCell {
         return label
     }()
     
-    //customView로 넣기 하트,대화..
-   private lazy var ratingCustomView = RatingCustomView()
+    //customView로 넣기 하트,대화.. 콜렉셔ㅇ
+  lazy var ratingCustomView = RatingCustomView()
 //
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -76,7 +76,7 @@ class HomeTableViewCell : UITableViewCell {
         }
         goodsTitle.snp.makeConstraints { make in
             make.leading.equalTo(goodsImage.snp.trailing).offset(10)
-            make.top.trailing.equalToSuperview().inset(10)
+            make.top.trailing.equalToSuperview().inset(15)
         }
         locationLabel.snp.makeConstraints { make in
             make.leading.equalTo(goodsImage.snp.trailing).offset(10)
@@ -92,7 +92,7 @@ class HomeTableViewCell : UITableViewCell {
             make.leading.equalTo(goodsImage.snp.trailing).offset(10)
             make.trailing.equalToSuperview().inset(10)
             make.height.equalTo(goodsImage.snp.height).multipliedBy(0.18)
-            make.bottom.equalToSuperview().inset(10)
+            make.bottom.equalToSuperview().inset(15)
             
         }
 
@@ -200,6 +200,8 @@ extension HomeAdTableViewCell: UICollectionViewDelegate, UICollectionViewDataSou
         cell.goodsImage.image = homeGoodsDataArray[indexPath.row].goodsImage
         cell.goodsPrice.text = homeGoodsDataArray[indexPath.row].goodsPrice
         cell.goodsTitle.text =  homeGoodsDataArray[indexPath.row].goodsTitle
+      
+
         return cell
     }
     

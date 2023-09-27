@@ -12,13 +12,13 @@ import SnapKit
 final class RatingCustomView: UIView {
 
 
-    private lazy var heartImageView: UIImageView = {
+    lazy var heartImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "heart")
         imageView.tintColor = .gray
         return imageView
     }()
-    private lazy var heartCount : UILabel = {
+   lazy var heartCount : UILabel = {
         let label = UILabel()
         label.text = "3"
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
@@ -26,13 +26,13 @@ final class RatingCustomView: UIView {
         return label
     }()
     
-    private lazy var talkImageView: UIImageView = {
+    lazy var talkImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "bubble.left.and.bubble.right")
         imageView.tintColor = .gray
         return imageView
     }()
-    private lazy var talkCount : UILabel = {
+   lazy var talkCount : UILabel = {
         let label = UILabel()
         label.text = "3"
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
@@ -72,6 +72,7 @@ final class RatingCustomView: UIView {
                 make.top.bottom.equalToSuperview()
                 make.width.equalTo(heartImageView.snp.height)
             }
+        
             talkCount.snp.makeConstraints { make in
                 make.trailing.equalTo(heartImageView.snp.leading).offset(-2)
                 make.top.bottom.equalToSuperview()

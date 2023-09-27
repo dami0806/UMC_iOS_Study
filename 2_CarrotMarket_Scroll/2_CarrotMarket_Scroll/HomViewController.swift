@@ -205,21 +205,33 @@ class HomeViewController: UIViewController {
         tableView.register(HomeAdTableViewCell.self, forCellReuseIdentifier: HomeAdTableViewCell.reuseIdentifier)
         
     }
-    
+  private lazy var placeBtn: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("도림동 ", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+      button.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+      button.semanticContentAttribute = .forceRightToLeft
+        button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+      button.tintColor = .black
+        return button
+    }()
+ 
+
     private func settingNaviItem(){
-        let placeText = UIBarButtonItem(title: "도림동", style:.plain , target: self, action: #selector(buttonTapped))
+    
+        let placeButton = UIBarButtonItem(customView: placeBtn)
+
         let bellButton = UIBarButtonItem(image: UIImage(systemName: "bell"), style: .plain, target: self, action: #selector(buttonTapped))
         let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(buttonTapped))
-        placeText.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .bold)], for: .normal)
-
-        placeText.tintColor = .black
+    
         
         bellButton.tintColor = .black
         searchButton.tintColor = .black
         navigationController?.navigationBar.barTintColor = .white
         
         navigationItem.rightBarButtonItems = [bellButton,searchButton]
-        navigationItem.leftBarButtonItem = placeText
+        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: placeBtn)
     }
     @objc func buttonTapped(){
         
@@ -243,7 +255,7 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 3
+        return 0
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
@@ -293,6 +305,10 @@ extension HomeViewController: UITableViewDataSource,UITableViewDelegate {
             cell.goodsTitle.text = homeGoodsDataArray[indexPath.row].goodsTitle
             cell.locationLabel.text = homeGoodsDataArray[indexPath.row].locationLabel
             cell.goodsPrice.text = homeGoodsDataArray[indexPath.row].goodsPrice
+//            cell.ratingCustomView.heartImageView.image = homeGoodsDataArray[indexPath.row].rating.heartImage
+//            cell.ratingCustomView.heartCount.text = homeGoodsDataArray[indexPath.row].rating.heartNum
+//            cell.ratingCustomView.talkImageView.image = homeGoodsDataArray[indexPath.row].rating.talkImageView
+//            cell.ratingCustomView.talkCount.text = homeGoodsDataArray[indexPath.row].rating.talkCount
             
             return cell
             
