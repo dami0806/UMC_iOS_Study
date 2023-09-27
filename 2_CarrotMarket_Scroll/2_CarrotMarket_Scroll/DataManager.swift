@@ -30,23 +30,29 @@ struct Goods{
     let locationLabel: String
     let reservationImage: UIImage?
     let goodsPrice: String
-    
+}
+
+struct Rating{
+    let talkImage: UIImage?
+    let talkNum: String
+    let heartImage: UIImage?
+    let heartNum : String
 }
 class HomeCellDataManager {
     private var homeDataArray: [Goods] = []
     func makeHomeData(){
         homeDataArray = [Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 . 1분 전", reservationImage: UIImage(named: "예약중")!, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 . 1분 전", reservationImage: UIImage(named: "예약중")!, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 . 1분 전", reservationImage: UIImage(named: "예약중")!, goodsPrice: "100,000원")
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: UIImage(named: "예약중")!, goodsPrice: "100,000원"),
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: UIImage(named: "예약중")!, goodsPrice: "100,000원"),
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: UIImage(named: "예약중")!, goodsPrice: "100,000원")
 
                          
                          

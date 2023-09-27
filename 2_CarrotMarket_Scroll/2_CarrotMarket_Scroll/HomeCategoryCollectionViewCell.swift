@@ -43,6 +43,7 @@ class HomeCategoryCollectionViewCell : UICollectionViewCell {
         super.init(frame: frame)
         setupImageView()
         
+
     }
     
     required init?(coder: NSCoder) {
@@ -70,6 +71,7 @@ class HomeCategoryCollectionViewCell : UICollectionViewCell {
         
         
     }
+ 
     
 }
 

@@ -13,8 +13,8 @@ import SnapKit
 ///MARK: HomeViewController
 class HomeViewController: UIViewController {
     
-    final let deliverViewHeight = 60
-    final let deliverViewWeight = 180
+    final let writeViewHeight = 50
+    final let deliverViewWeight = 100
     let homeCellDataManager = HomeCellDataManager()
     var homeGoodsDataArray: [Goods] = []
     
@@ -67,7 +67,7 @@ class HomeViewController: UIViewController {
     private lazy var writeView: UIView = {
         let view = UIView()
         view.backgroundColor = .orange
-        view.layer.cornerRadius =  CGFloat(30)
+        view.layer.cornerRadius = CGFloat(writeViewHeight)*0.5
         return view
     }()
     private lazy var writeStackView: UIStackView = {
@@ -80,7 +80,7 @@ class HomeViewController: UIViewController {
         return st
     }()
     
-    private lazy var deliverImage: UIImageView = {
+    private lazy var writeImage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "plus")
         imageView.tintColor = .white
@@ -88,7 +88,7 @@ class HomeViewController: UIViewController {
         writeStackView.addArrangedSubview(imageView)
         return imageView
     }()
-    private lazy var deliverLabel: UILabel = {
+    private lazy var writeLabel: UILabel = {
         let label = UILabel()
         label.text = "글쓰기"
         label.textColor = UIColor.white
@@ -154,14 +154,14 @@ class HomeViewController: UIViewController {
         }
         tableView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
-            make.height.equalTo(1500)
+            make.height.equalTo(500)//임의의 수 ->적용 안됨
             
         }
         writeView.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(20) // 오른쪽으로 20만큼 여백
             make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
             make.width.equalTo(deliverViewWeight) // 너비 설정
-            make.height.equalTo(deliverViewHeight) // 높이 설정
+            make.height.equalTo(writeViewHeight) // 높이 설정
             writeView.clipsToBounds = true //잘라내기
         }
         writeStackView.snp.makeConstraints { make in
@@ -170,10 +170,10 @@ class HomeViewController: UIViewController {
             
         }
         
-        deliverImage.snp.makeConstraints { make in
-            make.width.height.equalTo(deliverViewHeight-20)
+        writeImage.snp.makeConstraints { make in
+            make.width.height.equalTo(writeViewHeight-20)
         }
-        deliverLabel.isHidden = false
+        writeLabel.isHidden = false
         
     }
     private func calculateTableViewHeight() -> CGFloat {
@@ -207,10 +207,13 @@ class HomeViewController: UIViewController {
     }
     
     private func settingNaviItem(){
-        let placeText = UIBarButtonItem(title: "도림동", style: .plain, target: self, action: #selector(buttonTapped))
+        let placeText = UIBarButtonItem(title: "도림동", style:.plain , target: self, action: #selector(buttonTapped))
         let bellButton = UIBarButtonItem(image: UIImage(systemName: "bell"), style: .plain, target: self, action: #selector(buttonTapped))
         let searchButton = UIBarButtonItem(image: UIImage(systemName: "magnifyingglass"), style: .plain, target: self, action: #selector(buttonTapped))
+        placeText.setTitleTextAttributes([NSAttributedString.Key.font: UIFont.systemFont(ofSize: 20, weight: .bold)], for: .normal)
+
         placeText.tintColor = .black
+        
         bellButton.tintColor = .black
         searchButton.tintColor = .black
         navigationController?.navigationBar.barTintColor = .white
@@ -246,7 +249,6 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         
         
         if (homeCagetoryDataArray[indexPath.row].text == "" ){
-            
             let cellHeight: CGFloat = collectionView.frame.height * 0.85
             
             return CGSize(width: cellHeight, height: cellHeight)
@@ -301,7 +303,7 @@ extension HomeViewController: UITableViewDataSource,UITableViewDelegate {
             return view.frame.width*0.8
             
         }else{
-            return view.frame.width*0.3
+            return view.frame.width*0.37
         }
     }
     
@@ -313,12 +315,7 @@ extension HomeViewController : UIScrollViewDelegate {
         print(scrollView.contentOffset.y)
         
         updateTableViewHeight()
-        //네비게이션 탭바 + collectionViewHeight
-//        guard let navi = self.navigationController?.navigationBar else {
-//            let topContentOffsetY = navigationController!.navigationBar.frame.height + topView.frame.height
-//
-//            print(-topContentOffsetY)
-//        }
+
         guard let navi =  self.navigationController?.navigationBar else {
            return
         }
@@ -334,20 +331,19 @@ extension HomeViewController : UIScrollViewDelegate {
                 make.center.equalTo(writeView.snp.center)
             }
             
-            deliverImage.snp.remakeConstraints{make in
-                make.width.height.equalTo(deliverViewHeight-20)
+            writeImage.snp.remakeConstraints{make in
+                make.width.height.equalTo(writeViewHeight-20)
                 
             }
-            deliverLabel.isHidden = false
+            writeLabel.isHidden = false
        
         }else {
             // 스크롤이 아래로 내려갔을 때
 
             writeView.snp.updateConstraints { make in
-                make.width.equalTo(deliverViewHeight)
+                make.width.equalTo(writeViewHeight)
                 make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
 
-                
             }
             
             writeStackView.snp.remakeConstraints { make in
@@ -355,13 +351,11 @@ extension HomeViewController : UIScrollViewDelegate {
                 make.center.equalTo(writeView.snp.center)
                 
             }
-            deliverImage.snp.remakeConstraints{make in
-                make.width.height.equalTo(deliverViewHeight-20)
-                // make.center.equalTo(deliverView.snp.center)
-                
-                
+            writeImage.snp.remakeConstraints{make in
+                make.width.height.equalTo(writeViewHeight-20)
+
             }
-            deliverLabel.isHidden = true
+            writeLabel.isHidden = true
        
         }
         UIView.animate(withDuration: 0.16) {

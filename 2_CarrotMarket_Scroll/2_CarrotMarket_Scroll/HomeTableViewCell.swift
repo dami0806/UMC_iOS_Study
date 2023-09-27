@@ -45,6 +45,10 @@ class HomeTableViewCell : UITableViewCell {
         return label
     }()
     
+    //customView로 넣기 하트,대화..
+   private lazy var ratingCustomView = RatingCustomView()
+//
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubviews()
@@ -60,14 +64,14 @@ class HomeTableViewCell : UITableViewCell {
         contentView.addSubview(goodsTitle)
         contentView.addSubview(locationLabel)
         contentView.addSubview(goodsPrice)
-        
-        
+        contentView.addSubview(ratingCustomView)
+
         configureConstraints()
     }
     
     private func configureConstraints() {
         goodsImage.snp.makeConstraints { make in
-            make.leading.top.bottom.equalToSuperview().inset(10)
+            make.leading.top.bottom.equalToSuperview().inset(15)
             make.width.equalTo(goodsImage.snp.height)
         }
         goodsTitle.snp.makeConstraints { make in
@@ -84,7 +88,14 @@ class HomeTableViewCell : UITableViewCell {
             make.trailing.equalToSuperview().inset(10)
             make.top.equalTo(locationLabel.snp.bottom).offset(10)
         }
-        
+        ratingCustomView.snp.makeConstraints { make in
+            make.leading.equalTo(goodsImage.snp.trailing).offset(10)
+            make.trailing.equalToSuperview().inset(10)
+            make.height.equalTo(goodsImage.snp.height).multipliedBy(0.18)
+            make.bottom.equalToSuperview().inset(10)
+            
+        }
+
     }
 }
 
