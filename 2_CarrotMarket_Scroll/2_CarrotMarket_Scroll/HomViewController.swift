@@ -111,6 +111,8 @@ class HomeViewController: UIViewController {
         homeGoodsDataArray = homeCellDataManager.gethomeGoodsDataArrayCellData()
         homeCategoryDataManager.makeHomeCategoryData()
         homeCagetoryDataArray = homeCategoryDataManager.gethomeCagegoryDataArrayCellData()
+        
+   
     }
     
     //MARK: - addSubviews()
@@ -294,7 +296,8 @@ extension HomeViewController: UITableViewDataSource,UITableViewDelegate {
         
         return homeGoodsDataArray.count
     }
-    
+
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 6{
             let cell = tableView.dequeueReusableCell(withIdentifier: HomeAdTableViewCell.reuseIdentifier, for: indexPath) as! HomeAdTableViewCell
@@ -305,15 +308,15 @@ extension HomeViewController: UITableViewDataSource,UITableViewDelegate {
             cell.goodsTitle.text = homeGoodsDataArray[indexPath.row].goodsTitle
             cell.locationLabel.text = homeGoodsDataArray[indexPath.row].locationLabel
             cell.goodsPrice.text = homeGoodsDataArray[indexPath.row].goodsPrice
-//            cell.ratingCustomView.heartImageView.image = homeGoodsDataArray[indexPath.row].rating.heartImage
-//            cell.ratingCustomView.heartCount.text = homeGoodsDataArray[indexPath.row].rating.heartNum
-//            cell.ratingCustomView.talkImageView.image = homeGoodsDataArray[indexPath.row].rating.talkImageView
-//            cell.ratingCustomView.talkCount.text = homeGoodsDataArray[indexPath.row].rating.talkCount
-            
+            cell.ratingCustomView.talkImageView.image = homeGoodsDataArray[indexPath.row].rating.talkImage
+            cell.ratingCustomView.talkCount.text = homeGoodsDataArray[indexPath.row].rating.talkNum
+            cell.ratingCustomView.heartImageView.image = homeGoodsDataArray[indexPath.row].rating.heartImage
+            cell.ratingCustomView.heartCount.text = homeGoodsDataArray[indexPath.row].rating.heartNum
             return cell
-            
+
         }
     }
+  
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 6{
             return view.frame.width*0.8

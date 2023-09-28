@@ -47,10 +47,11 @@ class HomeTableViewCell : UITableViewCell {
     
     //customView로 넣기 하트,대화.. 콜렉셔ㅇ
   lazy var ratingCustomView = RatingCustomView()
-//
+
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         addSubviews()
     }
     
@@ -70,6 +71,7 @@ class HomeTableViewCell : UITableViewCell {
     }
     
     private func configureConstraints() {
+        
         goodsImage.snp.makeConstraints { make in
             make.leading.top.bottom.equalToSuperview().inset(15)
             make.width.equalTo(goodsImage.snp.height)
@@ -200,7 +202,6 @@ extension HomeAdTableViewCell: UICollectionViewDelegate, UICollectionViewDataSou
         cell.goodsImage.image = homeGoodsDataArray[indexPath.row].goodsImage
         cell.goodsPrice.text = homeGoodsDataArray[indexPath.row].goodsPrice
         cell.goodsTitle.text =  homeGoodsDataArray[indexPath.row].goodsTitle
-      
 
         return cell
     }

@@ -30,6 +30,7 @@ struct Goods{
     let locationLabel: String
     let reservationImage: UIImage?
     let goodsPrice: String
+    let rating: Rating
 }
 
 struct Rating{
@@ -41,18 +42,26 @@ struct Rating{
 class HomeCellDataManager {
     private var homeDataArray: [Goods] = []
     func makeHomeData(){
-        homeDataArray = [Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: UIImage(named: "예약중")!, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: UIImage(named: "예약중")!, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원"),
-                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: UIImage(named: "예약중")!, goodsPrice: "100,000원")
+        homeDataArray = [Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "100,000원",rating:Rating(talkImage: UIImage(systemName: "bubble.left.and.bubble.right"), talkNum: "1", heartImage: UIImage(systemName: "heart"), heartNum: "3")),
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원",rating:Rating(talkImage: UIImage(systemName: "bubble.left.and.bubble.right"), talkNum: "2", heartImage: UIImage(systemName: "heart"), heartNum: "5")),
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원", rating:Rating(talkImage: UIImage(systemName: "bubble.left.and.bubble.right"), talkNum: "3", heartImage: UIImage(systemName: "heart"), heartNum: "1")),
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: UIImage(named: "예약중")!, goodsPrice: "100,000원", rating:Rating(talkImage: .none, talkNum: "", heartImage: UIImage(systemName: "heart"), heartNum: "3")),
+                         
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원", rating:Rating(talkImage: UIImage(systemName: "bubble.left.and.bubble.right"), talkNum: "5", heartImage: .none, heartNum: "")),
+                         
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원", rating:Rating(talkImage: UIImage(systemName: "bubble.left.and.bubble.right"), talkNum: "5", heartImage: UIImage(systemName: "heart"), heartNum: "3")),
+                         
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원", rating:Rating(talkImage: UIImage(systemName: "bubble.left.and.bubble.right"), talkNum: "5", heartImage: UIImage(systemName: "heart"), heartNum: "3")),
+                         
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: UIImage(named: "예약중")!, goodsPrice: "100,000원", rating:Rating(talkImage: UIImage(systemName: "bubble.left.and.bubble.right"), talkNum: "5", heartImage: UIImage(systemName: "heart"), heartNum: "3")),
+                         
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원", rating:Rating(talkImage: UIImage(systemName: "bubble.left.and.bubble.right"), talkNum: "5", heartImage: UIImage(systemName: "heart"), heartNum: "3")),
+                         
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원", rating:Rating(talkImage: UIImage(systemName: "bubble.left.and.bubble.right"), talkNum: "5", heartImage: UIImage(systemName: "heart"), heartNum: "3")),
+                         
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: .none, goodsPrice: "100,000원", rating:Rating(talkImage: UIImage(systemName: "bubble.left.and.bubble.right"), talkNum: "5", heartImage: UIImage(systemName: "heart"), heartNum: "3")),
+                         
+                         Goods(goodsImage: UIImage(named: "goods")!, goodsTitle: "에어팟 프로 1세대", locationLabel: "논현동 ・ 1분 전", reservationImage: UIImage(named: "예약중")!, goodsPrice: "100,000원", rating:Rating(talkImage: UIImage(systemName: "bubble.left.and.bubble.right"), talkNum: "5", heartImage: UIImage(systemName: "heart"), heartNum: "3"))
 
                          
                          
@@ -62,15 +71,16 @@ class HomeCellDataManager {
     }
     
     func makeHomeAdData(){
-        homeDataArray = [Goods(goodsImage: UIImage(named: "광고")!, goodsTitle: "스팸 복합 1호 추석 명절 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "15,000원"),
-                         Goods(goodsImage: UIImage(named: "광고 1")!, goodsTitle: "오희숙명인 찹쌀부각세트 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "13,000원"),
-                         Goods(goodsImage: UIImage(named: "광고 2")!, goodsTitle: "서산시 명인 생강한과 추석선물 명절 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "14,000원"),
-                         Goods(goodsImage: UIImage(named: "광고")!, goodsTitle: "스팸 복합 1호 추석 명절 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "15,000원"),
-                         Goods(goodsImage: UIImage(named: "광고 1")!, goodsTitle: "오희숙명인 찹쌀부각세트 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "13,000원"),
-                         Goods(goodsImage: UIImage(named: "광고 2")!, goodsTitle: "서산시 명인 생강한과 추석선물 명절 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "14,000원"),
-                         Goods(goodsImage: UIImage(named: "광고")!, goodsTitle: "스팸 복합 1호 추석 명절 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "15,000원"),
-                         Goods(goodsImage: UIImage(named: "광고 1")!, goodsTitle: "오희숙명인 찹쌀부각세트 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "13,000원"),
-                         Goods(goodsImage: UIImage(named: "광고 2")!, goodsTitle: "서산시 명인 생강한과 추석선물 명절 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "14,000원")]
+        homeDataArray = [Goods(goodsImage: UIImage(named: "광고")!, goodsTitle: "스팸 복합 1호 추석 명절 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "15,000원",rating: Rating(talkImage: .none, talkNum: "", heartImage: .none, heartNum: "")),
+                         Goods(goodsImage: UIImage(named: "광고 1")!, goodsTitle: "오희숙명인 찹쌀부각세트 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "13,000원",rating: Rating(talkImage: .none, talkNum: "", heartImage: .none, heartNum: "")),
+                         Goods(goodsImage: UIImage(named: "광고 2")!, goodsTitle: "서산시 명인 생강한과 추석선물 명절 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "14,000원",rating: Rating(talkImage: .none, talkNum: "", heartImage: .none, heartNum: "")),
+                         Goods(goodsImage: UIImage(named: "광고")!, goodsTitle: "스팸 복합 1호 추석 명절 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "15,000원",rating: Rating(talkImage: .none, talkNum: "", heartImage: .none, heartNum: "")),
+                         Goods(goodsImage: UIImage(named: "광고 1")!, goodsTitle: "오희숙명인 찹쌀부각세트 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "13,000원",rating: Rating(talkImage: .none, talkNum: "", heartImage: .none, heartNum: "")),
+                         Goods(goodsImage: UIImage(named: "광고 2")!, goodsTitle: "서산시 명인 생강한과 추석선물 명절 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "14,000원",rating: Rating(talkImage: .none, talkNum: "", heartImage: .none, heartNum: "")),
+                         
+                         Goods(goodsImage: UIImage(named: "광고")!, goodsTitle: "스팸 복합 1호 추석 명절 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "15,000원",rating: Rating(talkImage: .none, talkNum: "", heartImage: .none, heartNum: "")),
+                         Goods(goodsImage: UIImage(named: "광고 1")!, goodsTitle: "오희숙명인 찹쌀부각세트 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "13,000원",rating: Rating(talkImage: .none, talkNum: "", heartImage: .none, heartNum: "")),
+                         Goods(goodsImage: UIImage(named: "광고 2")!, goodsTitle: "서산시 명인 생강한과 추석선물 명절 선물세트", locationLabel: "논현동 . 1분 전", reservationImage: .none, goodsPrice: "14,000원",rating: Rating(talkImage: .none, talkNum: "", heartImage: .none, heartNum: ""))]
     }
     
     func gethomeGoodsDataArrayCellData() -> [Goods] {
