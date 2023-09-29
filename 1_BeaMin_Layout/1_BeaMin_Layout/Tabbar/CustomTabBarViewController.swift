@@ -16,14 +16,15 @@ final class CustomTabBarController: UITabBarController {
         
         settingView()
         settingTabbar()
-        
+       
+
         let searchVC = UINavigationController(rootViewController: SearchViewController())
         searchVC.tabBarItem = UITabBarItem(title: "검색", image: UIImage(named: "1"), selectedImage: nil)
         
         let wishlistVC = UINavigationController(rootViewController: WishlistViewController())
         wishlistVC.tabBarItem = UITabBarItem(title: "찜", image: UIImage(named: "2"), selectedImage: nil)
         
-        let homeVC = UINavigationController(rootViewController: HomeViewController())
+        let homeVC = UINavigationController(rootViewController: ViewController())
         homeVC.tabBarItem = UITabBarItem(title: "", image: UIImage(named: "3"), selectedImage: nil)
         
         let ordersVC = UINavigationController(rootViewController: OrdersViewController())
@@ -41,19 +42,25 @@ final class CustomTabBarController: UITabBarController {
         
         self.viewControllers = [searchVC, wishlistVC, homeVC, ordersVC, myBaeminVC]
     }
+    
+    //homeVC 처음 로딩
+    override func viewDidAppear(_ animated: Bool) {
+            super.viewDidAppear(animated)
+            self.selectedIndex = 2
+        }
     private func settingView(){
-        view.backgroundColor = .white
-        view.layer.shadowColor = UIColor.gray.cgColor
-        view.layer.shadowOpacity = 0.2
-        view.layer.shadowOffset = CGSize(width: 0, height: -3)
-        view.layer.shadowRadius = 1.5
-        
+        tabBar.backgroundColor = .white
+        tabBar.layer.shadowColor = UIColor.gray.cgColor
+        tabBar.layer.shadowOpacity = 0.2
+        tabBar.layer.shadowOffset = CGSize(width: 0, height: -3)
+        tabBar.layer.shadowRadius = 1.5
         view.layer.masksToBounds = false
         
     }
     private func settingTabbar(){
         UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.gray], for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.gray], for: .selected)
+        
     }
     
 }
@@ -61,16 +68,33 @@ final class CustomTabBarController: UITabBarController {
 
 
 class SearchViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        
+    }
 }
 
 class WishlistViewController: UIViewController {
-}
-
-class HomeViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        
+    }
 }
 
 class OrdersViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        
+    }
 }
 
 class MyBaeminViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        
+    }
 }

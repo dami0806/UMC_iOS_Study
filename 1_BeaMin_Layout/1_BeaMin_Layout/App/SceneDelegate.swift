@@ -8,24 +8,18 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
-    var navigationController: UINavigationController?
-
+    var customTabBarController: CustomTabBarController?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-
         guard let windowScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: windowScene)
-        let rootViewController = ViewController()
-                navigationController = UINavigationController(rootViewController: rootViewController)
-                window?.rootViewController = navigationController
-
-
-        
-        //화면 보이게 윈도우 키 윈도우 설정
+        customTabBarController = CustomTabBarController()
+        window?.rootViewController = customTabBarController
         window?.makeKeyAndVisible()
     }
+
+
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.

@@ -17,7 +17,8 @@ final class ViewController: UIViewController {
     let topViewfourDataManager = TopViewfourDataManager()
     var topViewfourDataArray: [ShopItem] = []
     
-    let customTabBarController = CustomTabBarController()
+    //let customTabBarController = CustomTabBarController()
+    
     private lazy var shopTableView : UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = UIColor.interSpaceColor
@@ -171,7 +172,7 @@ final class ViewController: UIViewController {
         settingNaviItem()
         
         //탭바 맨위로
-        view.bringSubviewToFront(customTabBarController.view)
+       // view.bringSubviewToFront(customTabBarController.view)
         
     }
     
@@ -223,9 +224,7 @@ final class ViewController: UIViewController {
     //MARK: - addSubviews()
     private func addSubviews() {
         
-        addChild(customTabBarController)
-        view.addSubview(customTabBarController.view)
-        customTabBarController.didMove(toParent: self)
+    
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(topView)
@@ -265,12 +264,7 @@ final class ViewController: UIViewController {
     //MARK: - configureConstraints()
     private func configureConstraints() {
         
-        customTabBarController.view.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview()
-            make.bottom.equalToSuperview()
-            make.top.equalTo(customTabBarController.tabBar.snp.top)
-        }
-        
+      
         scrollView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }

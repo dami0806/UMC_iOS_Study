@@ -254,6 +254,7 @@ class MartShoppingTableViewCell: UITableViewCell {
         let initialIndexPath = IndexPath(item: 0, section: 0)
         collectionView.selectItem(at: initialIndexPath, animated: false, scrollPosition: .top)
         collectionView(collectionView, didSelectItemAt: initialIndexPath)
+    
         
         
     }
@@ -286,9 +287,7 @@ class MartShoppingTableViewCell: UITableViewCell {
         martShoppingContentView.snp.makeConstraints { make in
             make.top.equalTo(collectionView.snp.bottom).offset(3)
             make.leading.trailing.equalToSuperview().inset(10)
-            //   make.bottom.equalToSuperview().inset(100)//.offset(collectionView.bounds.width*0.4 - 10)//multipliedBy(0.5)//(martShoppingContentView.snp.width).multipliedBy(0.6)
-            
-            
+    
         }
     }
     
