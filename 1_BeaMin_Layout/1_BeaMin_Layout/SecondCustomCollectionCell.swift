@@ -50,10 +50,7 @@ class SecondCustomCollectionCell: UICollectionViewCell {
             titleLabel.snp.makeConstraints { make in
                 make.top.equalTo(imageView.snp.bottom).offset(5)
                 make.centerX.equalTo(imageView.snp.centerX)
-                
             }
-            
-            
         }
         
         

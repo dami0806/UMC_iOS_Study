@@ -52,7 +52,7 @@ struct StoreSection{
     let headerImage :UIImage
     let headerButton:UIImage?
     let items: [StoreItem]
-   
+    
 }
 class SecondCellDataManager {
     private var secondDataArray: [ShopItem] = []
@@ -94,7 +94,7 @@ class TopViewfourDataManager {
     }
 }
 
-
+//우리 동네 빠른 배달,최근에 주문했어요
 class StoreDataManager{
     private var storeDataArray: [StoreSection] = []
     func makeStoreData() {
@@ -115,46 +115,7 @@ class StoreDataManager{
                             StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달")),
                             StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달")),
                             
-                            
-                         ]),
-            StoreSection(headerTitle: "오늘의 할인 ",headerImage: UIImage(named: "header 3")!, headerButton: UIImage(systemName: "chevron.right"), items: [
-                StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달")),
-                StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달")),
-                StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달")),
-                StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달"))
-                
-                
-                
-            ]),
-            StoreSection(headerTitle: "최근에 주문했어요",headerImage: UIImage(named: "header 2")!, headerButton: UIImage(systemName: "chevron.right"), items: [
-                StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달")),
-                StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달"))
-                
-                
-            ]),
-            StoreSection(headerTitle: "오늘의 할인 ",headerImage: UIImage(named: "header 3")!, headerButton: UIImage(systemName: "chevron.right"), items: [
-                StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달")),
-                StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달"))
-                
-                
-            ]),
-            StoreSection(headerTitle: "B마트 장보기 특가",headerImage: UIImage(named: "header 4")!, headerButton:
-                            UIImage(systemName: "chevron.right"), items: [
-                                StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달")),
-                                StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달"))
-                            ]),
-            StoreSection(headerTitle: "마음을 선물해보세요",headerImage: UIImage(named: "header 5")!, headerButton: UIImage(systemName: "chevron.right"), items: [
-                StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달")),
-                StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달"))
-            ]),
-            StoreSection(headerTitle: "전국의 별미가 한가득",headerImage: UIImage(named: "header 6")!, headerButton: UIImage(systemName: "chevron.right"), items: [
-                StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달")),
-                StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달"))
-            ]),
-            StoreSection(headerTitle: "이런 일도 한답니다",headerImage: UIImage(named: "header 7")!, headerButton: UIImage(systemName: "chevron.right"), items: [
-                StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달")),
-                StoreItem(foodImageView: UIImage(named: "짜장면"), storeLabel: "짬뽕타임", scoreLabel: "⭐️4.8", deliveryLabel: "배달", deliveryTextLabel: "15~43분", deliveryTipLabel: "배달팁", deliveryTipTextLabel: "0원~3,000원", uiImageView: UIImage(named: "알뜰배달"))
-            ])
+                         ])
             
         ]
     }
