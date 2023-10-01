@@ -42,8 +42,6 @@ class HomeCategoryCollectionViewCell : UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupImageView()
-        
-
     }
     
     required init?(coder: NSCoder) {

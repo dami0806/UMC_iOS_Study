@@ -24,6 +24,7 @@ class HomeViewController: UIViewController {
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = true
+        scrollView.tag = 1
         return scrollView
     }()
     
@@ -44,7 +45,6 @@ class HomeViewController: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.alwaysBounceHorizontal = true
-        
         collectionView.delegate = self
         collectionView.dataSource = self
         return collectionView
@@ -269,18 +269,14 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         }
         else{
             let cellPadding: CGFloat = 15
-            
-            
             let text = homeCagetoryDataArray[indexPath.row].text
             
             // 라벨 폰트를 설정
             let font = UIFont.systemFont(ofSize: 12, weight: .regular)
-            
             // 라벨의 예상 크기를 계산
             let labelSize = (text as NSString).size(withAttributes: [
                 NSAttributedString.Key.font: font
             ])
-            
             let cellWidth = labelSize.width*2 + 2 * cellPadding
             let cellHeight: CGFloat = collectionView.frame.height * 0.85
             
@@ -331,56 +327,53 @@ extension HomeViewController: UITableViewDataSource,UITableViewDelegate {
 
 extension HomeViewController : UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        print(scrollView.contentOffset.y)
-        
         updateTableViewHeight()
-
-        guard let navi =  self.navigationController?.navigationBar else {
-           return
-        }
-        let topContentOffsetY = navi.frame.height + 50 //+ categoryCollectionView.frame.height*0.8
-     
-        if scrollView.contentOffset.y <= -topContentOffsetY{
-            // 스크롤이 맨 위일 때
-
-            writeView.snp.updateConstraints { make in
-                make.width.equalTo(deliverViewWeight)
-            }
-            writeStackView.snp.remakeConstraints { make in
-                make.center.equalTo(writeView.snp.center)
-            }
-            
-            writeImage.snp.remakeConstraints{make in
-                make.width.height.equalTo(writeViewHeight-20)
-                
-            }
-            writeLabel.isHidden = false
-       
-        }else {
-            // 스크롤이 아래로 내려갔을 때
-
-            writeView.snp.updateConstraints { make in
-                make.width.equalTo(writeViewHeight)
-                make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
-
-            }
-            
-            writeStackView.snp.remakeConstraints { make in
-                //make.edges.equalTo(deliverView).inset(10)
-                make.center.equalTo(writeView.snp.center)
-                
-            }
-            writeImage.snp.remakeConstraints{make in
-                make.width.height.equalTo(writeViewHeight-20)
-
-            }
-            writeLabel.isHidden = true
-       
-        }
-        UIView.animate(withDuration: 0.16) {
-            self.view.layoutIfNeeded()
-        }
         
+        guard let navi =  self.navigationController?.navigationBar else {
+            return
+        }
+        if scrollView.tag == 1{ // 콜렉션뷰의 스크롤을 만질때 테이블스크롤의 위치가 맨위라도 인식인 안되는 문제해결
+            // 스크롤이 맨 위일 때
+            if scrollView.contentOffset.y <= -view.safeAreaInsets.top{
+                writeView.snp.updateConstraints { make in
+                    make.width.equalTo(deliverViewWeight)
+                }
+                writeStackView.snp.remakeConstraints { make in
+                    make.center.equalTo(writeView.snp.center)
+                }
+                
+                writeImage.snp.remakeConstraints{make in
+                    make.width.height.equalTo(writeViewHeight-20)
+                    
+                }
+                writeLabel.isHidden = false
+                
+            }else {
+                // 스크롤이 아래로 내려갔을 때
+                
+                writeView.snp.updateConstraints { make in
+                    make.width.equalTo(writeViewHeight)
+                    make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+                    
+                }
+                
+                writeStackView.snp.remakeConstraints { make in
+                    //make.edges.equalTo(deliverView).inset(10)
+                    make.center.equalTo(writeView.snp.center)
+                    
+                }
+                writeImage.snp.remakeConstraints{make in
+                    make.width.height.equalTo(writeViewHeight-20)
+                    
+                }
+                writeLabel.isHidden = true
+                
+            }
+            UIView.animate(withDuration: 0.16) {
+                self.view.layoutIfNeeded()
+            }
+            
+        }
     }
 }
 

@@ -14,34 +14,31 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        settingTabbar()
-
-        // 홈 뷰 컨트롤러 생성
-        let homeVC = UINavigationController(rootViewController: HomeViewController())
-        homeVC.tabBarItem = UITabBarItem(title: "홈", image: UIImage(systemName: "house"), selectedImage: UIImage(systemName: "house.fill"))
-        let neigborVC = UINavigationController(rootViewController: NeighborhoodLifeViewController())
-        neigborVC.tabBarItem = UITabBarItem(title: "동네생활", image: UIImage(systemName: "newspaper"), selectedImage: UIImage(systemName: "newspaper.fill"))
-        
-        let nearVC = UINavigationController(rootViewController: NearPlacesViewController())
-        nearVC.tabBarItem = UITabBarItem(title: "내 근처", image:  UIImage(systemName: "mappin.and.ellipse"), selectedImage:  UIImage(systemName: "mappin.and.ellipse.fill"))
-        
-        let chatVC = UINavigationController(rootViewController: ChattingViewController())
-        chatVC.tabBarItem = UITabBarItem(title: "채팅", image: UIImage(systemName: "bubble.left.and.bubble.right"), selectedImage: UIImage(systemName: "bubble.left.and.bubble.right.fill"))
-        
-        let myPageVC = UINavigationController(rootViewController: MyPageViewController())
-        myPageVC.tabBarItem = UITabBarItem(title: "나의 당근", image:UIImage(systemName: "person"), selectedImage: UIImage(systemName: "person.fill"))
-        
-        self.viewControllers = [homeVC, neigborVC, nearVC, chatVC, myPageVC]
-        
-    
+  
+        setupTabBarAppearance()
+        setupViewControllers()
     }
-    private func settingTabbar(){
+    
+    private func setupTabBarAppearance() {
         UITabBar.appearance().tintColor = .black
-
-        view.backgroundColor = .white
-        tabBarController?.tabBar.tintColor = .black
         UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.gray], for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes([.foregroundColor: UIColor.gray], for: .selected)
+    }
+    
+    private func setupViewControllers() {
+        let homeVC = createNavigationController(rootViewController: HomeViewController(), title: "홈", imageName: "house")
+        let neighborhoodVC = createNavigationController(rootViewController: NeighborhoodLifeViewController(), title: "동네생활", imageName: "newspaper")
+        let nearPlacesVC = createNavigationController(rootViewController: NearPlacesViewController(), title: "내 근처", imageName: "mappin.and.ellipse")
+        let chatVC = createNavigationController(rootViewController: ChattingViewController(), title: "채팅", imageName: "bubble.left.and.bubble.right")
+        let myPageVC = createNavigationController(rootViewController: MyPageViewController(), title: "나의 당근", imageName: "person")
+        
+        viewControllers = [homeVC, neighborhoodVC, nearPlacesVC, chatVC, myPageVC]
+    }
+    
+    private func createNavigationController(rootViewController: UIViewController, title: String, imageName: String) -> UINavigationController {
+        let navigationController = UINavigationController(rootViewController: rootViewController)
+        navigationController.tabBarItem = UITabBarItem(title: title, image: UIImage(systemName: imageName), selectedImage: UIImage(systemName: "\(imageName).fill"))
+        return navigationController
     }
 }
 

@@ -48,12 +48,9 @@ final class RatingCustomView: UIView {
         label.textColor = .gray
         return label
     }()
-    
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         super.backgroundColor = .white
-        
         addSubview()
         
     }
