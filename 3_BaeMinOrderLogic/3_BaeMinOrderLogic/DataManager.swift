@@ -73,29 +73,22 @@ class MenuCheckBoxDataManager{
         menuCheckBoxDataArray = [
             MenuCheckBoxSection(menu: [
                 MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 3000),
-                MenuCheckBox(checkBoxSelected: false, menu: "고구마크러스트", price: 3000),
-                MenuCheckBox(checkBoxSelected: false, menu: "골드", price: 3000),
-                MenuCheckBox(checkBoxSelected: false, menu: "소보로", price: 3000)]),
+                MenuCheckBox(checkBoxSelected: false, menu: "고구마크러스트", price: 5000),
+                MenuCheckBox(checkBoxSelected: false, menu: "골드", price: 6000),
+                MenuCheckBox(checkBoxSelected: false, menu: "소보로", price: 2000)]),
             
             MenuCheckBoxSection(menu: [
               
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈 추가", price: 3000)]),
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈 추가", price: 3600)]),
             
             MenuCheckBoxSection(menu: [
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈오븐스파게티", price: 3000),
-                MenuCheckBox(checkBoxSelected: false, menu: "치킨텐더 9조각", price: 3000),
-                MenuCheckBox(checkBoxSelected: false, menu: "치킨텐더 18조각", price: 3000),
-                MenuCheckBox(checkBoxSelected: false, menu: "버팔로핫윙10조각", price: 3000)]),
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈오븐스파게티", price: 2000),
+                MenuCheckBox(checkBoxSelected: false, menu: "치킨텐더 9조각", price: 6000),
+                MenuCheckBox(checkBoxSelected: false, menu: "치킨텐더 18조각", price: 5700),
+                MenuCheckBox(checkBoxSelected: false, menu: "버팔로핫윙10조각", price: 2300)]),
             MenuCheckBoxSection(menu: [
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 3000),
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 3000)]),
-            MenuCheckBoxSection(menu: [
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 3000),
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 3000)]),
-            
-            MenuCheckBoxSection(menu: [
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 3000),
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 3000)])
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 35800),
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 34320)])
             
             
         ]
@@ -103,4 +96,13 @@ class MenuCheckBoxDataManager{
     func getMenuCheckBoxData() -> [MenuCheckBoxSection] {
         return menuCheckBoxDataArray
     }
+}
+
+class TotalPriceManager {
+    static let shared = TotalPriceManager()
+    
+    private init() {}
+    
+    var totalPrice: Int = 0 
+    var totalCount: Int = 1
 }

@@ -50,7 +50,6 @@ class ViewController: UIViewController {
         tableView.separatorStyle = .none
         return tableView
     }()
-    
     let bottomGetView = BottomGetView()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -143,17 +142,24 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        if section == headerDataArray.count-1{
+            let headerView = CountHeaderView()
+            let headerData = headerDataArray[section]
+            
+            return headerView
+        }
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeaderView.reuseIdentifier) as! TableHeaderView
-        
         let headerData = headerDataArray[section]
         
         headerView.configure(headerTitle: headerData.headerTitle, subTitle: headerData.subTitle, selectImage: headerData.selectImage)
-        
         return headerView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 100
+        if section == headerDataArray.count-1 {
+            return 80
+        }
+        return 80
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -162,6 +168,9 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
         }
         else if section == 1 {
             return menuRadioDataArray.count
+        }
+        else if section == headerDataArray.count-1{
+            return 0
         }
         else{
            
@@ -192,9 +201,12 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
                   let checkBoxData = menuCheckBoxDataArray[indexPath.section-2]
                   
                   let menuItem = checkBoxData.menu[indexPath.row]
-            checkBoxTableViewCell.selectionStyle = .none
+                    checkBoxTableViewCell.selectionStyle = .none
 
                   checkBoxTableViewCell.configure(menu: menuItem.menu, price: menuItem.price, checkBoxSelected: menuItem.checkBoxSelected)
+            checkBoxTableViewCell.menuCheckBoxDataArray = menuCheckBoxDataArray
+            print(menuItem.checkBoxSelected)
+
                   return checkBoxTableViewCell
       
 
