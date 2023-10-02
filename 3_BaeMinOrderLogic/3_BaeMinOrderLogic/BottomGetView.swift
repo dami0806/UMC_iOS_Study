@@ -32,7 +32,7 @@ class BottomGetView:UIView {
     }()
     lazy var getLabel : UILabel = {
         let lb = UILabel()
-        lb.text = "10,000담기"
+     lb.text = "10,000원 담기"
 
         return lb
     }()
@@ -73,5 +73,6 @@ class BottomGetView:UIView {
         }
         
     }
+
     
 }

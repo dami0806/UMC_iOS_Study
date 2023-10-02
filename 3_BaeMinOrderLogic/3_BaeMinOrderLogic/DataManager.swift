@@ -22,7 +22,7 @@ struct MenuCheckBox {
 }
 
 struct MenuCheckBoxSection{
-    let menu: [MenuCheckBox]
+    var menu: [MenuCheckBox]
 }
 
 struct Header{

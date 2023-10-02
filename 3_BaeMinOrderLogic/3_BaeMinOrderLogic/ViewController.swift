@@ -67,7 +67,7 @@ class ViewController: UIViewController {
         tableView.register(CheckBoxTableViewCell.self, forCellReuseIdentifier: CheckBoxTableViewCell.reuseIdentifier)
         tableView.register(TableHeaderView.self, forHeaderFooterViewReuseIdentifier: TableHeaderView.reuseIdentifier)
         tableView.register(RadioBoxTableViewCell.self, forCellReuseIdentifier: RadioBoxTableViewCell.reuseIdentifier)
-        
+        bottomGetView.getLabel.text = "새로운 텍스트"
         view.bringSubviewToFront(bottomGetView)
 
     }

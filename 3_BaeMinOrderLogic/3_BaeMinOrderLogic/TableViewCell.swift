@@ -77,8 +77,6 @@ class TableHeaderView: UITableViewHeaderFooterView{
     }
 }
 //수량셀
-
-
     class CountHeaderView: UIView {
         private let headerTitle : UILabel = {
             let lb = UILabel()
@@ -192,6 +190,8 @@ class TableHeaderView: UITableViewHeaderFooterView{
             count += 1
             TotalPriceManager.shared.totalPrice = count * CheckBoxTableViewCell.totalPrice
             print("총가격: \(TotalPriceManager.shared.totalPrice)")
+            BottomGetView().getLabel.text = "\(TotalPriceManager.shared.totalPrice)원 담아두기"
+
         }
     }
 
@@ -199,27 +199,43 @@ class TableHeaderView: UITableViewHeaderFooterView{
 
 
 
-
+//라디오버튼
 class RadioBoxTableViewCell: UITableViewCell {
     static let reuseIdentifier = "RadioBoxTableViewCell"
     var radioButtonSelected :Bool = false
     let radioButtonView = UIView()
+    var menuCheckBoxDataArray: [MenuRadio]?
+   
+    var priceNum: Int = 0
+    static var totalPrice: Int = 0
+    
+    private lazy var checkButtonView: UIButton = {
+        let button = UIButton(type: .system)
+        button.addTarget(self, action: #selector(toggleButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    // 체크 이미지 뷰 추가
+    private let checkImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(systemName: "checkmark")
+        imageView.contentMode = .scaleAspectFit
+        imageView.isHidden = true // 기본적으로는 숨김 상태로 시작
+        return imageView
+    }()
+    
     
     private let menu : UILabel = {
         let lb = UILabel()
-        lb.text = "고구마피자"
         lb.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         lb.textColor = .black
         return lb
     }()
     private let price : UILabel = {
         let lb = UILabel()
-        lb.text = "최대 1개 선택"
         lb.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         lb.textColor = .lightGray
         return lb
     }()
-    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -229,34 +245,63 @@ class RadioBoxTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    
     private func addSubviews() {
-        contentView.addSubview(radioButtonView)
+        contentView.addSubview(checkButtonView)
         contentView.addSubview(menu)
         contentView.addSubview(price)
+        checkButtonView.addSubview(checkImageView)
         
         configureConstraints()
     }
     private func configureConstraints() {
-        radioButtonView.snp.makeConstraints { make in
+        checkButtonView.snp.makeConstraints { make in
             make.leading.top.equalToSuperview().inset(10)
             make.height.width.equalTo(30)
         }
         menu.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(10)
-            make.leading.equalTo(radioButtonView.snp.trailing).offset(10)
+            make.leading.equalTo(checkButtonView.snp.trailing).offset(10)
             
         }
+        
         price.snp.makeConstraints { make in
             make.trailing.top.equalToSuperview().inset(10)
         }
+        checkImageView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
     }
     
-    func configure(menu: String,price: Int, radioButtonSelected:Bool) {
+    
+    @objc private func toggleButtonTapped() {
+        // 토글 버튼을 누를 때마다 checkBoxSelected 토글
+        radioButtonSelected = !radioButtonSelected
+       // print(radioButtonSelected)
+        checkImageView.isHidden = !radioButtonSelected
+        if let menu = menu.text {
+            // 아이템이 체크된 경우 가격을 더하고, 체크 해제된 경우 가격을 빼기
+           // let itemPrice = radioButtonSelected ? priceNum : -priceNum
+         //   TotalPriceManager.shared.totalPrice += itemPrice * TotalPriceManager.shared.totalCount
+        }
+
+        CheckBoxTableViewCell.totalPrice = TotalPriceManager.shared.totalPrice
+        // 총 가격을 출력
+        print("총개수: \(TotalPriceManager.shared.totalCount)")
+
+        print("총가격: \(CheckBoxTableViewCell.totalPrice)")
+        print("checkBoxSelected: \(radioButtonSelected)")
+    }
+    func configure(menu: String, price: Int, radioButtonSelected: Bool) {
         self.menu.text = menu
+        self.priceNum = price
         self.price.text = "\(price)원"
         self.radioButtonSelected = radioButtonSelected
+        
     }
-    
+
 }
 
 
@@ -352,6 +397,7 @@ class CheckBoxTableViewCell: UITableViewCell {
         print("총개수: \(TotalPriceManager.shared.totalCount)")
 
         print("총가격: \(CheckBoxTableViewCell.totalPrice)")
+        
         
     }
     func configure(menu: String, price: Int, checkBoxSelected: Bool) {
