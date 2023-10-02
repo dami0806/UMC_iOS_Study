@@ -10,12 +10,7 @@ import SnapKit
 
 //MARK: - BannerViewController
 class BannerViewController: UIViewController {
-    
-//    private var imageView : UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.contentMode = .scaleAspectFill
-//        return imageView
-//    }()
+
     private var imageView = UIImageView()
     private var imageViews: [UIImageView] = []
     let images = [UIImage(named: "배너 1"), UIImage(named: "배너 2"), UIImage(named: "배너 3"), UIImage(named: "배너 4"),UIImage(named: "배너 5"),UIImage(named: "배너 3"),UIImage(named: "배너 1") ]

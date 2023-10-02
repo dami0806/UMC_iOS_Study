@@ -1,25 +1,25 @@
 //
 //  SceneDelegate.swift
-//  1_BeaMin_Layout
+//  2_CarrotMarket_Scroll
 //
-//  Created by 박다미 on 2023/09/19.
+//  Created by 박다미 on 2023/09/26.
 //
 
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
+
+ 
     var window: UIWindow?
-    var customTabBarController: CustomTabBarController?
+    var tabBarController: TabBarController?
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        self.window = UIWindow(windowScene: windowScene)
-        customTabBarController = CustomTabBarController()
-        window?.rootViewController = customTabBarController
+        window = UIWindow(windowScene: windowScene)
+        tabBarController = TabBarController()
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
     }
-
-
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
