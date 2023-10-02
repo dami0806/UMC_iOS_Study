@@ -14,18 +14,18 @@ class TableHeaderView: UITableViewHeaderFooterView{
     static let reuseIdentifier = "TableHeaderView"
     
     private let headerTitle : UILabel = {
-        let ld = UILabel()
-        ld.text = "고구마피자"
-        ld.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        ld.textColor = .black
-        return ld
+        let lb = UILabel()
+        lb.text = "고구마피자"
+        lb.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        lb.textColor = .black
+        return lb
     }()
     private let subTitle : UILabel = {
-        let ld = UILabel()
-        ld.text = "최대 1개 선택"
-        ld.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        ld.textColor = .lightGray
-        return ld
+        let lb = UILabel()
+        lb.text = "최대 1개 선택"
+        lb.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        lb.textColor = .lightGray
+        return lb
     }()
     private let selectImage : UIImageView = {
         let imageView = UIImageView()
@@ -62,8 +62,8 @@ class TableHeaderView: UITableViewHeaderFooterView{
         }
         selectImage.snp.makeConstraints { make in
             make.centerY.equalTo(headerTitle.snp.centerY)
-            make.trailing.equalToSuperview()
-            make.height.width.equalTo(20)
+            make.trailing.equalToSuperview().inset(10)
+            make.height.width.equalTo(30)
         }
     
     }
@@ -77,26 +77,85 @@ class TableHeaderView: UITableViewHeaderFooterView{
 }
 
 
+class RadioBoxTableViewCell: UITableViewCell {
+    static let reuseIdentifier = "RadioBoxTableViewCell"
+    var radioButtonSelected :Bool = false
+    let radioButtonView = CheckBoxButtonView()
+
+    private let menu : UILabel = {
+        let lb = UILabel()
+        lb.text = "고구마피자"
+        lb.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        lb.textColor = .black
+        return lb
+    }()
+    private let price : UILabel = {
+        let lb = UILabel()
+        lb.text = "최대 1개 선택"
+        lb.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        lb.textColor = .lightGray
+        return lb
+    }()
+
+ 
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        addSubviews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    private func addSubviews() {
+        contentView.addSubview(radioButtonView)
+        contentView.addSubview(menu)
+        contentView.addSubview(price)
+
+        configureConstraints()
+    }
+    private func configureConstraints() {
+        radioButtonView.snp.makeConstraints { make in
+            make.leading.top.equalToSuperview().inset(10)
+            make.height.width.equalTo(30)
+        }
+        menu.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(10)
+            make.leading.equalTo(radioButtonView.snp.trailing).offset(10)
+
+        }
+        price.snp.makeConstraints { make in
+            make.trailing.top.equalToSuperview().inset(10)
+        }
+    }
+    
+    func configure(menu: String,price: Int, radioButtonSelected:Bool) {
+        self.menu.text = menu
+        self.price.text = "\(price)원"
+        self.radioButtonSelected = radioButtonSelected
+    }
+
+}
+
 
 //체크박스 테이블셀
-
 class CheckBoxTableViewCell: UITableViewCell {
     static let reuseIdentifier = "CheckBoxTableViewCell"
     var checkBoxSelected :Bool = false
+    let checkButtonView = CheckBoxButtonView()
 
     private let menu : UILabel = {
-        let ld = UILabel()
-        ld.text = "asdf"
-        ld.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        ld.textColor = .black
-        return ld
+        let lb = UILabel()
+        lb.text = "asdf"
+        lb.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        lb.textColor = .black
+        return lb
     }()
     private let price : UILabel = {
-        let ld = UILabel()
-        ld.text = "pp"
-        ld.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        ld.textColor = .lightGray
-        return ld
+        let lb = UILabel()
+        lb.text = "pp"
+        lb.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        lb.textColor = .lightGray
+        return lb
     }()
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -111,84 +170,35 @@ class CheckBoxTableViewCell: UITableViewCell {
 
     
     private func addSubviews() {
- 
+        contentView.addSubview(checkButtonView)
         contentView.addSubview(menu)
         contentView.addSubview(price)
 
         configureConstraints()
     }
     private func configureConstraints() {
-        
-        menu.snp.makeConstraints { make in
+        checkButtonView.snp.makeConstraints { make in
             make.leading.top.equalToSuperview().inset(10)
+            make.height.width.equalTo(30)
+        }
+        menu.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(10)
+            make.leading.equalTo(checkButtonView.snp.trailing).offset(10)
 
         }
+     
         price.snp.makeConstraints { make in
             make.trailing.top.equalToSuperview().inset(10)
         }
     }
     
-    func configure(menu: String,price: String, checkBoxSelected: Bool) {
+    func configure(menu: String, price: Int, checkBoxSelected: Bool) {
         self.menu.text = menu
-        self.price.text = price
+        self.price.text = "+\(price)원"
         self.checkBoxSelected = checkBoxSelected
 
     }
 
 }
 
-
-class RadioBoxTableViewCell: UITableViewCell {
-    static let reuseIdentifier = "RadioBoxTableViewCell"
-    var radioButtonSelected :Bool = false
-
-    private let menu : UILabel = {
-        let ld = UILabel()
-        ld.text = "고구마피자"
-        ld.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        ld.textColor = .black
-        return ld
-    }()
-    private let price : UILabel = {
-        let ld = UILabel()
-        ld.text = "최대 1개 선택"
-        ld.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        ld.textColor = .lightGray
-        return ld
-    }()
-
- 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        addSubviews()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    private func addSubviews() {
- 
-        contentView.addSubview(menu)
-        contentView.addSubview(price)
-
-        configureConstraints()
-    }
-    private func configureConstraints() {
-        
-        menu.snp.makeConstraints { make in
-            make.leading.top.equalToSuperview().inset(10)
-
-        }
-        price.snp.makeConstraints { make in
-            make.trailing.top.equalToSuperview().inset(10)
-        }
-    }
-    
-    func configure(menu: String,price: String, radioButtonSelected:Bool) {
-        self.menu.text = menu
-        self.price.text = price
-        self.radioButtonSelected = radioButtonSelected
-    }
-
-}
 

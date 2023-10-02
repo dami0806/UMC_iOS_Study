@@ -12,13 +12,13 @@ import UIKit
 struct MenuRadio {
     var radioButtonSelected: Bool
     var menu: String
-    var price: String
+    var price: Int
 }
 //체크박스
 struct MenuCheckBox {
     var checkBoxSelected: Bool
     var menu: String
-    var price: String
+    var price: Int
 }
 
 struct MenuCheckBoxSection{
@@ -56,8 +56,8 @@ class MenuRadioDataManager{
     private var menuRadioDataArray: [MenuRadio] = []
     func makeMenuRadioData() {
         menuRadioDataArray = [
-            MenuRadio(radioButtonSelected: false, menu: "M", price: "18,900원"),
-            MenuRadio(radioButtonSelected: false, menu: "L", price: "20,900원")
+            MenuRadio(radioButtonSelected: true, menu: "M", price: 18900),
+            MenuRadio(radioButtonSelected: false, menu: "L", price: 20900)
             
         ]
     }
@@ -72,29 +72,30 @@ class MenuCheckBoxDataManager{
     func makeMenuCheckBoxData() {
         menuCheckBoxDataArray = [
             MenuCheckBoxSection(menu: [
-                MenuCheckBox(checkBoxSelected: false, menu: "a", price: "3,000원"),
-                MenuCheckBox(checkBoxSelected: false, menu: "aa", price: "3,000원"),
-                MenuCheckBox(checkBoxSelected: false, menu: "aaa", price: "3,000원")]),
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 3000),
+                MenuCheckBox(checkBoxSelected: false, menu: "고구마크러스트", price: 3000),
+                MenuCheckBox(checkBoxSelected: false, menu: "골드", price: 3000),
+                MenuCheckBox(checkBoxSelected: false, menu: "소보로", price: 3000)]),
             
             MenuCheckBoxSection(menu: [
-                MenuCheckBox(checkBoxSelected: false, menu: "b", price: "3,000원"),
-                MenuCheckBox(checkBoxSelected: false, menu: "bb", price: "3,000원")]),
+              
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈 추가", price: 3000)]),
             
             MenuCheckBoxSection(menu: [
-                MenuCheckBox(checkBoxSelected: false, menu: "bbb", price: "3,000원"),
-                MenuCheckBox(checkBoxSelected: false, menu: "bbbb", price: "3,000원"),
-                MenuCheckBox(checkBoxSelected: false, menu: "bbbbb", price: "3,000원"),
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: "3,000원")]),
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈오븐스파게티", price: 3000),
+                MenuCheckBox(checkBoxSelected: false, menu: "치킨텐더 9조각", price: 3000),
+                MenuCheckBox(checkBoxSelected: false, menu: "치킨텐더 18조각", price: 3000),
+                MenuCheckBox(checkBoxSelected: false, menu: "버팔로핫윙10조각", price: 3000)]),
             MenuCheckBoxSection(menu: [
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: "3,000원"),
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: "3,000원")]),
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 3000),
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 3000)]),
             MenuCheckBoxSection(menu: [
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: "3,000원"),
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: "3,000원")]),
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 3000),
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 3000)]),
             
             MenuCheckBoxSection(menu: [
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: "3,000원"),
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: "3,000원")])
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 3000),
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 3000)])
             
             
         ]

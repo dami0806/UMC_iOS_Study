@@ -47,9 +47,11 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.isScrollEnabled = false
+        tableView.separatorStyle = .none
         return tableView
     }()
     
+    let bottomGetView = BottomGetView()
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubviews()
@@ -67,12 +69,15 @@ class ViewController: UIViewController {
         tableView.register(TableHeaderView.self, forHeaderFooterViewReuseIdentifier: TableHeaderView.reuseIdentifier)
         tableView.register(RadioBoxTableViewCell.self, forCellReuseIdentifier: RadioBoxTableViewCell.reuseIdentifier)
         
+        view.bringSubviewToFront(bottomGetView)
+
     }
     private func addSubviews() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubview(bottomView)
         bottomView.addSubview(tableView)
+        view.addSubview(bottomGetView)
         configureConstraints()
     }
     private func configureConstraints() {
@@ -98,6 +103,13 @@ class ViewController: UIViewController {
             make.edges.equalToSuperview()
             make.height.equalTo(2000)
             
+        }
+        bottomGetView.snp.makeConstraints { make in
+                make.leading.trailing.equalToSuperview()
+                make.bottom.equalToSuperview()
+            make.height.equalTo(view.snp.width).multipliedBy(0.25)
+            
+
         }
     }
     private func settingNaviItem(){
@@ -170,6 +182,7 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
             let radioData = menuRadioDataArray[indexPath.row]
             
             radioTableViewCell.configure(menu: radioData.menu, price: radioData.price, radioButtonSelected: radioData.radioButtonSelected)
+            radioTableViewCell.selectionStyle = .none
             return radioTableViewCell
             
         } else {
@@ -179,8 +192,8 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
                   let checkBoxData = menuCheckBoxDataArray[indexPath.section-2]
                   
                   let menuItem = checkBoxData.menu[indexPath.row]
-            print(indexPath.row)
-            //print(checkBoxData.menu[indexPath.row])
+            checkBoxTableViewCell.selectionStyle = .none
+
                   checkBoxTableViewCell.configure(menu: menuItem.menu, price: menuItem.price, checkBoxSelected: menuItem.checkBoxSelected)
                   return checkBoxTableViewCell
       

@@ -16,6 +16,10 @@
 		37846D7B2AC977D900E4D948 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37846D7A2AC977D900E4D948 /* Test.swift */; };
 		37846D7D2AC9820E00E4D948 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37846D7C2AC9820E00E4D948 /* TableViewCell.swift */; };
 		37846D7F2ACA5B4300E4D948 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37846D7E2ACA5B4300E4D948 /* DataManager.swift */; };
+		37846D812ACA7B9E00E4D948 /* RoundRadioButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37846D802ACA7B9E00E4D948 /* RoundRadioButtonView.swift */; };
+		37846D832ACA7BAD00E4D948 /* CheckBoxButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37846D822ACA7BAD00E4D948 /* CheckBoxButtonView.swift */; };
+		37846D852ACA852D00E4D948 /* BottomGetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37846D842ACA852D00E4D948 /* BottomGetView.swift */; };
+		37846D872ACA9E2B00E4D948 /* UIColor+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37846D862ACA9E2B00E4D948 /* UIColor+Ex.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +33,10 @@
 		37846D7A2AC977D900E4D948 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 		37846D7C2AC9820E00E4D948 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		37846D7E2ACA5B4300E4D948 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		37846D802ACA7B9E00E4D948 /* RoundRadioButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundRadioButtonView.swift; sourceTree = "<group>"; };
+		37846D822ACA7BAD00E4D948 /* CheckBoxButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxButtonView.swift; sourceTree = "<group>"; };
+		37846D842ACA852D00E4D948 /* BottomGetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomGetView.swift; sourceTree = "<group>"; };
+		37846D862ACA9E2B00E4D948 /* UIColor+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ex.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +79,10 @@
 				37846D7A2AC977D900E4D948 /* Test.swift */,
 				37846D7C2AC9820E00E4D948 /* TableViewCell.swift */,
 				37846D7E2ACA5B4300E4D948 /* DataManager.swift */,
+				37846D802ACA7B9E00E4D948 /* RoundRadioButtonView.swift */,
+				37846D822ACA7BAD00E4D948 /* CheckBoxButtonView.swift */,
+				37846D842ACA852D00E4D948 /* BottomGetView.swift */,
+				37846D862ACA9E2B00E4D948 /* UIColor+Ex.swift */,
 			);
 			path = 3_BaeMinOrderLogic;
 			sourceTree = "<group>";
@@ -152,8 +164,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				37846D7D2AC9820E00E4D948 /* TableViewCell.swift in Sources */,
+				37846D832ACA7BAD00E4D948 /* CheckBoxButtonView.swift in Sources */,
+				37846D872ACA9E2B00E4D948 /* UIColor+Ex.swift in Sources */,
 				37846D7F2ACA5B4300E4D948 /* DataManager.swift in Sources */,
+				37846D852ACA852D00E4D948 /* BottomGetView.swift in Sources */,
 				37846D682AC93D3B00E4D948 /* ViewController.swift in Sources */,
+				37846D812ACA7B9E00E4D948 /* RoundRadioButtonView.swift in Sources */,
 				37846D7B2AC977D900E4D948 /* Test.swift in Sources */,
 				37846D642AC93D3B00E4D948 /* AppDelegate.swift in Sources */,
 				37846D662AC93D3B00E4D948 /* SceneDelegate.swift in Sources */,
