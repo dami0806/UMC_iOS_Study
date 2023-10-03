@@ -19,6 +19,7 @@
 		37846D872ACA9E2B00E4D948 /* UIColor+Ex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37846D862ACA9E2B00E4D948 /* UIColor+Ex.swift */; };
 		37846D932ACB9C1C00E4D948 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 37846D922ACB9C1C00E4D948 /* RxCocoa */; };
 		37846D952ACBD7EC00E4D948 /* MyCartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37846D942ACBD7EC00E4D948 /* MyCartViewController.swift */; };
+		37846D992ACC31A700E4D948 /* CountBtnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37846D982ACC31A700E4D948 /* CountBtnView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		37846D842ACA852D00E4D948 /* BottomGetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomGetView.swift; sourceTree = "<group>"; };
 		37846D862ACA9E2B00E4D948 /* UIColor+Ex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Ex.swift"; sourceTree = "<group>"; };
 		37846D942ACBD7EC00E4D948 /* MyCartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCartViewController.swift; sourceTree = "<group>"; };
+		37846D982ACC31A700E4D948 /* CountBtnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountBtnView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 				37846D842ACA852D00E4D948 /* BottomGetView.swift */,
 				37846D862ACA9E2B00E4D948 /* UIColor+Ex.swift */,
 				37846D942ACBD7EC00E4D948 /* MyCartViewController.swift */,
+				37846D982ACC31A700E4D948 /* CountBtnView.swift */,
 			);
 			path = 3_BaeMinOrderLogic;
 			sourceTree = "<group>";
@@ -164,6 +167,7 @@
 				37846D7D2AC9820E00E4D948 /* TableViewCell.swift in Sources */,
 				37846D872ACA9E2B00E4D948 /* UIColor+Ex.swift in Sources */,
 				37846D7F2ACA5B4300E4D948 /* DataManager.swift in Sources */,
+				37846D992ACC31A700E4D948 /* CountBtnView.swift in Sources */,
 				37846D852ACA852D00E4D948 /* BottomGetView.swift in Sources */,
 				37846D682AC93D3B00E4D948 /* ViewController.swift in Sources */,
 				37846D642AC93D3B00E4D948 /* AppDelegate.swift in Sources */,

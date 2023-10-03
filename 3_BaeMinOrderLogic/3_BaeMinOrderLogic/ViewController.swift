@@ -128,7 +128,7 @@ class ViewController: UIViewController {
         }
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            make.height.equalTo(1500)
+            make.height.equalTo(2500)
             
         }
         bottomGetView.snp.makeConstraints { make in
@@ -223,14 +223,16 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
         }
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeaderView.reuseIdentifier) as! TableHeaderView
         let headerData = headerDataArray[section]
-        
-        headerView.configure(headerTitle: headerData.headerTitle, subTitle: headerData.subTitle, selectImage: headerData.selectImage)
+        if section == 0 {
+            headerView.headerconfigure(headerTitle: headerData.headerTitle, subTitle: headerData.subTitle, selectImage: headerData.selectImage)
+        }else{
+            headerView.configure(headerTitle: headerData.headerTitle, subTitle: headerData.subTitle, selectImage: headerData.selectImage)}
         return headerView
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == headerDataArray.count-1 {
-            return 80
+            return 120
         }
         return 80
     }

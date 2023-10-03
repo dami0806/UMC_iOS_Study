@@ -14,16 +14,29 @@ import SnapKit
 class TableHeaderView: UITableViewHeaderFooterView{
     static let reuseIdentifier = "TableHeaderView"
     
+    private let headerTopTitle : UILabel = {
+        let lb = UILabel()
+        lb.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        lb.textColor = .black
+        return lb
+    }()
+    private let detailTitle : UILabel = {
+        let lb = UILabel()
+        lb.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        lb.textColor = .lightGray
+        lb.numberOfLines = 0
+        return lb
+    }()
+    
     private let headerTitle : UILabel = {
         let lb = UILabel()
-        lb.text = "고구마피자"
         lb.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         lb.textColor = .black
         return lb
     }()
+
     private let subTitle : UILabel = {
         let lb = UILabel()
-        lb.text = "최대 1개 선택"
         lb.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         lb.textColor = .lightGray
         return lb
@@ -47,18 +60,34 @@ class TableHeaderView: UITableViewHeaderFooterView{
     }
     
     private func addSubviews() {
+        contentView.addSubview(headerTopTitle)
+
         contentView.addSubview(headerTitle)
         contentView.addSubview(subTitle)
+        contentView.addSubview(detailTitle)
         contentView.addSubview(selectImage)
+        contentView.addSubview(headerTopTitle)
         
         configureConstraints()
     }
     private func configureConstraints() {
+        //맨위일때
+        headerTopTitle.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(10)
+            make.leading.equalToSuperview().inset(20)
+            
+        }
+        detailTitle.snp.makeConstraints { make in
+            make.leading.equalToSuperview().inset(10)
+            make.top.equalTo(headerTopTitle.snp.bottom).offset(10)
+        }
+        //그 이후 셀
         headerTitle.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(10)
             make.leading.equalToSuperview().inset(20)
             
         }
+      
         subTitle.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(20)
             make.top.equalTo(headerTitle.snp.bottom).offset(10)
@@ -68,6 +97,12 @@ class TableHeaderView: UITableViewHeaderFooterView{
             make.trailing.equalToSuperview().inset(20)
             make.height.width.equalTo(contentView.snp.width).multipliedBy(0.08)
         }
+    }
+    func headerconfigure(headerTitle: String,subTitle: String, selectImage: UIImage!) {
+        self.headerTopTitle.text = headerTitle
+        self.detailTitle.text = subTitle
+        self.selectImage.image = selectImage
+    
     }
     
     func configure(headerTitle: String,subTitle: String, selectImage: UIImage!) {
@@ -335,14 +370,14 @@ class CheckBoxTableViewCell: UITableViewCell {
     
      let menu : UILabel = {
         let lb = UILabel()
-        lb.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        lb.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         lb.textColor = .black
         return lb
     }()
      let price : UILabel = {
         let lb = UILabel()
-        lb.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        lb.textColor = .lightGray
+        lb.font = UIFont.systemFont(ofSize: 16, weight: .regular)
+        lb.textColor = .black
         return lb
     }()
     
@@ -426,7 +461,7 @@ class CheckBoxTableViewCell: UITableViewCell {
     func configure(menu: String, price: Int, checkBoxSelected: Bool,sectionNum : Int) {
         self.menu.text = menu
         self.priceNum = price
-        self.price.text = "\(price)원"
+        self.price.text = "+\(price)원"
         self.checkBoxSelected = checkBoxSelected
         self.sectionNum = sectionNum
        
@@ -509,6 +544,8 @@ class CartTableViewCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = .lightGray
         label.text = "・사이드 추가선택: "
+        label.numberOfLines = 0
+
         return label
     }()
     //기타
@@ -525,17 +562,32 @@ class CartTableViewCell: UITableViewCell {
     //총가격
     private lazy var totalPrice: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .regular)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         label.textColor = .black
         label.text = "37,000원"
         return label
     }()
     //옵션번경 버튼, 수량버튼
     private lazy var optionBtn: UIView = {
-        let view = UIView()
-        view.layer.cornerRadius = 10
-        view.layer.borderWidth = 1
-        view.layer.borderColor = UIColor.lightGray.cgColor
+            let view = UIView()
+            view.backgroundColor = .white
+            view.layer.borderWidth = 1
+            view.layer.cornerRadius = 5
+            view.layer.masksToBounds = true
+            view.layer.borderColor = UIColor.gray.cgColor
+            return view
+        }()
+    lazy var optionLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.textColor = .black
+        label.numberOfLines = 0
+        label.text = "옵션변경"
+        return label
+    }()
+    
+    private var countBtnView: CountBtnView = {
+        let view = CountBtnView()
         return view
     }()
     
@@ -573,8 +625,11 @@ class CartTableViewCell: UITableViewCell {
         stackView.addArrangedSubview(addPizza)
         stackView.addArrangedSubview(addSide)
         stackView.addArrangedSubview(addOther)
-        stackView.addArrangedSubview(totalPrice)
-
+        //stackView.addArrangedSubview(totalPrice)
+        contentView.addSubview(totalPrice)
+        contentView.addSubview(optionBtn)
+        optionBtn.addSubview(optionLabel)
+        contentView.addSubview(countBtnView)
         configureConstraints()
     }
     private func configureConstraints() {
@@ -595,6 +650,28 @@ class CartTableViewCell: UITableViewCell {
             make.top.equalTo(menuName.snp.bottom).offset(10)
             make.leading.equalTo(menuImage.snp.trailing).offset(10)
             make.trailing.equalToSuperview().inset(10)
+        }
+        totalPrice.snp.makeConstraints { make in
+            make.top.equalTo(stackView.snp.bottom).offset(10)
+            make.leading.equalTo(menuImage.snp.trailing).offset(10)
+            make.trailing.equalToSuperview().inset(10)
+
+        }
+     
+        countBtnView.snp.makeConstraints { make in
+          //  make.trailing.bottom.equalToSuperview().inset(10)
+            make.top.equalTo(totalPrice.snp.bottom).offset(10)
+            make.trailing.equalToSuperview().inset(10)
+            make.height.equalTo(40)
+            make.width.equalTo(countBtnView.snp.height).multipliedBy(2)
+        }
+        optionBtn.snp.makeConstraints { make in
+            make.top.equalTo(totalPrice.snp.bottom).offset(10)
+            make.trailing.equalTo(countBtnView.snp.leading).offset(-10)
+            make.height.equalTo(countBtnView.snp.height)
+        }
+        optionLabel.snp.makeConstraints { make in
+            make.edges.equalToSuperview().inset(10)
         }
     }
     func configure(addDough: String, addPizza: String, addSide: String,addOther: String,totalPrice:Int, sectionNum : Int) {
