@@ -588,6 +588,7 @@ class CartTableViewCell: UITableViewCell {
     
     private var countBtnView: CountBtnView = {
         let view = CountBtnView()
+        view.countLabel.text = "1"
         return view
     }()
     
@@ -674,13 +675,15 @@ class CartTableViewCell: UITableViewCell {
             make.edges.equalToSuperview().inset(10)
         }
     }
-    func configure(addDough: String, addPizza: String, addSide: String,addOther: String,totalPrice:Int, sectionNum : Int) {
+    func configure(addDough: String, addPizza: String, addSide: String,addOther: String,totalPrice:Int, sectionNum : Int, totalCount: Int) {
         self.addDough.text = "・도우 추가선택: \(addDough)"
         self.addPizza.text = "・피자 추가선택: \(addPizza)"
         self.addSide.text = "・사이드 추가선택: \(addSide)"
         self.addOther.text = "・기타 추가선택: \(addOther)"
         self.totalPrice.text = "\(totalPrice)원"
         self.sectionNum = sectionNum
+        self.countBtnView.countLabel.text = "\(totalCount)"
+        
         // 각 레이블을 데이터에 따라 숨김/표시 처리
            self.addDough.isHidden = addDough.isEmpty
            self.addPizza.isHidden = addPizza.isEmpty
@@ -690,3 +693,89 @@ class CartTableViewCell: UITableViewCell {
 
 }
 
+class CartTotalTableViewCell: UITableViewCell {
+    static let reuseIdentifier = "CartTotalTableViewCell"
+    //
+    lazy var payCost: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.textColor = .black
+        label.numberOfLines = 0
+        label.text = "총 주문금액"
+        return label
+    }()
+    lazy var payCostLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 15, weight: .regular)
+        label.textColor = .black
+        label.numberOfLines = 0
+        label.text = "옵션변경"
+        return label
+    }()
+    //
+    private lazy var lineView : UIView = {
+            let view = UIView()
+        view.backgroundColor = .lightGray
+            return view
+        }()
+    
+    //
+    lazy var finalPayCost: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        label.textColor = .black
+        label.numberOfLines = 0
+        label.text = "결제예정금액"
+        return label
+    }()
+    lazy var finalPayCostLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        label.textColor = .black
+        label.numberOfLines = 0
+        label.text = "옵션변경"
+        return label
+    }()
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+       // setupUI()
+        addSubviews()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    private func addSubviews(){
+        contentView.addSubview(payCost)
+        contentView.addSubview(payCostLabel)
+        contentView.addSubview(lineView)
+        contentView.addSubview(finalPayCost)
+        contentView.addSubview(finalPayCostLabel)
+
+        configureConstraints()
+    }
+    private func configureConstraints(){
+        payCost.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(10)
+            make.leading.equalToSuperview().inset(10)
+        }
+        payCostLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview().inset(10)
+            make.trailing.equalToSuperview().inset(10)
+        }
+        lineView.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(10)
+            make.top.equalTo(payCost.snp.bottom).offset(10)
+            make.height.equalTo(1)
+        }
+        finalPayCost.snp.makeConstraints { make in
+            make.top.equalTo(lineView.snp.bottom).offset(10)
+            make.leading.equalToSuperview().inset(10)
+        }
+        finalPayCostLabel.snp.makeConstraints { make in
+            make.top.equalTo(lineView.snp.bottom).offset(10)
+            make.trailing.equalToSuperview().inset(10)
+        }
+        
+    }
+}

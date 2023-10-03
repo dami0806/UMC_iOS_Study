@@ -245,8 +245,8 @@ class ViewController: UIViewController {
             cartCountLabel.text = "\(cartCount)"
         }
         TotalPriceManager.shared.selectedMenuArray.append(TotalPriceManager.shared.selectedMenuItems)
-        TotalPriceManager.shared.totalPriceArray.append(TotalPriceManager.shared.totalPrice)
-
+        TotalPriceManager.shared.totalPriceArray.append(TotalPriceManager.shared.totalPrice*TotalPriceManager.shared.totalCount)
+        TotalPriceManager.shared.sectionCountArray.append(TotalPriceManager.shared.totalCount)
         
     }
     @objc func cartBtnTapped(){

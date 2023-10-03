@@ -22,7 +22,7 @@ var count = 1
         return view
     }()
 
-    private var countLabel: UILabel = {
+     var countLabel: UILabel = {
         let label = UILabel()
         label.text = "1"
         label.textAlignment = .center

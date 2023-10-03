@@ -144,4 +144,5 @@ class TotalPriceManager {
     var selectedMenuArray: [[MenuCheckBox]] = []
     
     var totalPriceArray : [Int] = []
+    var sectionCountArray : [Int] = []
 }
