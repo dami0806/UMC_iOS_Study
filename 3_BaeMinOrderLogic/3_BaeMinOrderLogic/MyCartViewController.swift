@@ -88,12 +88,14 @@ class MyCartViewController: UIViewController, UITableViewDataSource, UITableView
               addPizza: addPizzaInfo,
               addSide: addSideInfo,
               addOther: addOtherInfo,
-              totalPrice: sectionTotalPrice,
+              totalPrice: Int(sectionTotalPrice),
               sectionNum: indexPath.section
           )
 return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+           return 200
+        
     }
+     
 }

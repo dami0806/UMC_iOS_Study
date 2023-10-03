@@ -45,7 +45,7 @@ class HeaderDataManager{
     private var headerDataArray: [Header] = []
     func makeHeaderData() {
         headerDataArray = [
-            Header(headerTitle: "고구마피자", subTitle: "달콤하고 부드러운 고구마 무스와  \n 고구마 다이스 토핑의 씹히는 맛의 피자", selectImage: UIImage(named: "selectImage1")),
+            Header(headerTitle: "고구마피자", subTitle: "달콤하고 부드러운 고구마 무스와 고구마 다이스 토핑의 씹히는 맛의 피자", selectImage: UIImage(named: "selectImage1")),
             Header(headerTitle: "가격", subTitle: "", selectImage: nil),
             Header(headerTitle: "도우 추가선택", subTitle: "최대 1개 선택", selectImage: UIImage(named: "선택")),
             Header(headerTitle: "피자 추가선택", subTitle: "최대 1개 선택", selectImage: UIImage(named: "선택")),
@@ -139,6 +139,7 @@ class TotalPriceManager {
        }
     //var totalPrice: Int = 0
     var totalCount: Int = 1
+    var totalPricePer : Int = 0
     var selectedMenuItems: [MenuCheckBox] = []
     var selectedMenuArray: [[MenuCheckBox]] = []
     

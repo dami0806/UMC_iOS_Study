@@ -24,10 +24,16 @@ class ViewController: UIViewController {
     var menuCheckBoxDataArray: [MenuCheckBoxSection] = []
     //
     var selectedCheckBoxData: [MenuCheckBox] = []
-    // MARK: - UI Elements
+    private lazy var uiimage: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "피자")
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsVerticalScrollIndicator = true
+        scrollView.tag = 1
         return scrollView
     }()
     
@@ -57,9 +63,19 @@ class ViewController: UIViewController {
     // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         setupUI()
         setupRx()
         fetchData()
+        scrollView.delegate = self
+        
+
+    }
+    override func viewDidAppear(_ animated: Bool) {
+       // super.viewDidAppear(animated)
+        
+        // 화면에 나타날 때마다 테이블 뷰의 높이를 업데이트
+        updateTableViewHeight()
     }
     
     private func setupUI(){
@@ -67,13 +83,13 @@ class ViewController: UIViewController {
         settingNaviItem()
     }
     private func setupRx() {
-        // Bind cart count to label
+        // 연결
         TotalPriceManager.shared._totalPrice
             .map { "\($0)원 담기" }
             .bind(to: bottomGetView.getLabel.rx.text)
             .disposed(by: disposeBag)
         
-        // Tap gesture on bottom view
+//바텀뷰 눌렀을때
         let getCartGestureRecognizer = UITapGestureRecognizer()
         bottomGetView.view.addGestureRecognizer(getCartGestureRecognizer)
         
@@ -100,8 +116,13 @@ class ViewController: UIViewController {
     }
     
     private func addSubviews() {
+      
         view.addSubview(scrollView)
+        scrollView.addSubview(uiimage)
         scrollView.addSubview(contentView)
+        
+        view.bringSubviewToFront(bottomView)
+
         contentView.addSubview(bottomView)
         bottomView.addSubview(tableView)
         view.addSubview(bottomGetView)
@@ -118,7 +139,7 @@ class ViewController: UIViewController {
             make.width.equalToSuperview()
             make.bottom.equalTo(bottomView.snp.bottom)
         }
-        
+      
         
         bottomView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(200)
@@ -126,9 +147,14 @@ class ViewController: UIViewController {
             make.bottom.equalTo(tableView.snp.bottom)
             
         }
+        uiimage.snp.makeConstraints { make in
+            make.top.leading.trailing.equalToSuperview()
+            make.bottom.equalTo(bottomView.snp.top)
+        }
+        
         tableView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
-            make.height.equalTo(2500)
+            make.height.equalTo(500)
             
         }
         bottomGetView.snp.makeConstraints { make in
@@ -139,6 +165,36 @@ class ViewController: UIViewController {
             
         }
     }
+    //데이터 섹션안에있는 모든행가져와서 개수가져오기
+        func getTotalcheckNumberOfCells() -> Int {
+            var total = 0
+            for section in menuCheckBoxDataArray{
+                total += section.menu.count
+            }
+            return total
+        }
+        private func calculateTableViewHeight() -> CGFloat {
+
+            let radioNumberOfCells = menuRadioDataArray.count
+            let checkNumberOfCells =  getTotalcheckNumberOfCells()
+            let headernumberOfCells = headerDataArray.count
+            
+            let cellHeight: CGFloat = view.frame.width*0.1
+            let headerCellHeight: CGFloat = view.frame.width*0.25
+            let totalHeight = CGFloat(headernumberOfCells)*headerCellHeight + CGFloat(radioNumberOfCells+checkNumberOfCells) * cellHeight + view.frame.width*0.8
+           
+            return totalHeight
+        }
+        // 테이블뷰 높이를 계산하고 업데이트하는 메서드
+        private func updateTableViewHeight() {
+            let newHeight = calculateTableViewHeight()
+            tableView.snp.updateConstraints { make in
+                make.height.equalTo(newHeight)
+            }
+            scrollView.layoutIfNeeded()
+        
+        }
+    
     private func settingNaviItem(){
         
         
@@ -223,16 +279,16 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
         }
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeaderView.reuseIdentifier) as! TableHeaderView
         let headerData = headerDataArray[section]
-        if section == 0 {
-            headerView.headerconfigure(headerTitle: headerData.headerTitle, subTitle: headerData.subTitle, selectImage: headerData.selectImage)
-        }else{
-            headerView.configure(headerTitle: headerData.headerTitle, subTitle: headerData.subTitle, selectImage: headerData.selectImage)}
-        return headerView
-    }
+        //        if section == 0 {
+        //            headerView.headerconfigure(headerTitle: headerData.headerTitle, subTitle: headerData.subTitle, selectImage: headerData.selectImage)
+        //        }else{
+        headerView.configure(headerTitle: headerData.headerTitle, subTitle: headerData.subTitle, selectImage: headerData.selectImage)
+    return headerView
+}
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == headerDataArray.count-1 {
-            return 120
+            return 80
         }
         return 80
     }
@@ -287,5 +343,31 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
             
         }
         
+    }
+}
+extension ViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    
+     
+        if scrollView.tag == 1{
+                    if scrollView.contentOffset.y < -97 {
+                        // contentOffset.y 값이 0보다 작아질 때 실행할 코드
+                        uiimage.snp.remakeConstraints { make in
+                            make.top.equalTo(view.snp.top)
+                            make.bottom.equalTo(bottomView.snp.top)
+                            make.width.equalTo(uiimage.snp.height).multipliedBy(1.5)
+                        }
+                    }else {
+                        uiimage.snp.remakeConstraints { make in
+                            make.top.leading.trailing.equalToSuperview()
+                         //   make.height.equalTo(100)
+                            make.bottom.equalTo(bottomView.snp.top)
+                          //  make.width.equalTo(uiimage.snp.height).multipliedBy(2)
+                        }
+                    }
+            
+        }
+
+
     }
 }

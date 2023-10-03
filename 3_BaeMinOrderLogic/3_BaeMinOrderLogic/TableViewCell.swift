@@ -216,7 +216,9 @@ class TableHeaderView: UITableViewHeaderFooterView{
         @objc private func minusButtonTapped() {
             if count > 1 {
                 count -= 1
-                TotalPriceManager.shared.totalPrice = count * (CheckBoxTableViewCell.totalPrice/(count+1))
+                TotalPriceManager.shared.totalCount = count
+                print(TotalPriceManager.shared.totalPricePer)
+                TotalPriceManager.shared.totalPrice = TotalPriceManager.shared.totalCount * (TotalPriceManager.shared.totalPricePer)
                // print("총가격: \(TotalPriceManager.shared.totalPrice)")
 
             }
@@ -224,9 +226,10 @@ class TableHeaderView: UITableViewHeaderFooterView{
         
         @objc private func plusButtonTapped() {
             count += 1
-            TotalPriceManager.shared.totalPrice = count * CheckBoxTableViewCell.totalPrice
+            TotalPriceManager.shared.totalCount = count
+
+            TotalPriceManager.shared.totalPrice = TotalPriceManager.shared.totalCount * (TotalPriceManager.shared.totalPricePer)
          //   print("총가격: \(TotalPriceManager.shared.totalPrice)")
-            BottomGetView().getLabel.text = "\(TotalPriceManager.shared.totalPrice)원 담아두기"
 
         }
     }
@@ -434,29 +437,26 @@ class CheckBoxTableViewCell: UITableViewCell {
         if let menu = menu.text {
             // 아이템이 체크된 경우 가격을 더하고, 체크 해제된 경우 가격을 빼기
             let itemPrice = checkBoxSelected ? priceNum : -priceNum
-            //  CheckBoxTableViewCell.totalPrice += itemPrice
-            TotalPriceManager.shared.totalPrice += itemPrice * TotalPriceManager.shared.totalCount
             
+            TotalPriceManager.shared.totalPricePer += itemPrice
+            TotalPriceManager.shared.totalPrice = TotalPriceManager.shared.totalPricePer * TotalPriceManager.shared.totalCount
             // TotalPriceManager의 선택된 메뉴 항목 배열을 업데이트
-                    if checkBoxSelected {
-                        TotalPriceManager.shared.selectedMenuItems.append(MenuCheckBox(checkBoxSelected: checkBoxSelected, menu: menu, price: priceNum, sectionNum: sectionNum))
-                    } else {
-                        // 만약 항목이 클릭 해제되면 배열에서 제거
-                        if let index = TotalPriceManager.shared.selectedMenuItems.firstIndex(where: { $0.menu == menu }) {
-                            TotalPriceManager.shared.selectedMenuItems.remove(at: index)
-                        }
-                    }
-                    
-                    // 총 가격을 다시 계산
-                    TotalPriceManager.shared.totalPrice = TotalPriceManager.shared.selectedMenuItems.reduce(0) { $0 + ($1.checkBoxSelected ? $1.price : 0) }
+            if checkBoxSelected {
+                TotalPriceManager.shared.selectedMenuItems.append(MenuCheckBox(checkBoxSelected: checkBoxSelected, menu: menu, price: priceNum, sectionNum: sectionNum))
+            } else {
+                // 만약 항목이 클릭 해제되면 배열에서 제거
+                if let index = TotalPriceManager.shared.selectedMenuItems.firstIndex(where: { $0.menu == menu }) {
+                    TotalPriceManager.shared.selectedMenuItems.remove(at: index)
                 }
-         
-        CheckBoxTableViewCell.totalPrice = TotalPriceManager.shared.totalPrice
-        // 총 가격을 출력
-      //  print("총배열: \(TotalPriceManager.shared.selectedMenuItems)")
-     //   print("총개수: \(TotalPriceManager.shared.totalCount)")
-      //  print("총가격: \(CheckBoxTableViewCell.totalPrice)")
-        
+            }
+            
+            // 총 가격을 다시 계산
+            //            TotalPriceManager.shared.totalPrice = TotalPriceManager.shared.selectedMenuItems.reduce(0) { $0 + ($1.checkBoxSelected ? $1.price : 0) }
+            //                }
+            TotalPriceManager.shared.totalPrice = TotalPriceManager.shared.selectedMenuItems.reduce(0) { $0 + ($1.checkBoxSelected ? $1.price * TotalPriceManager.shared.totalCount : 0) }
+            
+        }
+        CheckBoxTableViewCell.totalPrice = TotalPriceManager.shared.totalPricePer * TotalPriceManager.shared.totalCount
     }
     func configure(menu: String, price: Int, checkBoxSelected: Bool,sectionNum : Int) {
         self.menu.text = menu
