@@ -7,6 +7,8 @@
 
 import Foundation
 import UIKit
+import RxSwift
+import RxCocoa
 
 //라디오버튼, 라벨,라벨
 struct MenuRadio {
@@ -19,8 +21,15 @@ struct MenuCheckBox {
     var checkBoxSelected: Bool
     var menu: String
     var price: Int
+    var sectionNum: Int
 }
+//전체 가격, 개수, 체크박스정보
+struct getMenu{
+ var menu: [MenuCheckBox]
+    var totalPrice: Int
+    var totalNum : Int
 
+}
 struct MenuCheckBoxSection{
     var menu: [MenuCheckBox]
 }
@@ -37,12 +46,12 @@ class HeaderDataManager{
     func makeHeaderData() {
         headerDataArray = [
             Header(headerTitle: "고구마피자", subTitle: "서브타이틀 1", selectImage: UIImage(named: "selectImage1")),
-            Header(headerTitle: "가격", subTitle: "서브타이틀 1", selectImage: UIImage(named: "필수")),
-            Header(headerTitle: "도우 추가선택", subTitle: "서브타이틀 1", selectImage: UIImage(named: "선택")),
-            Header(headerTitle: "피자 추가선택", subTitle: "서브타이틀 1", selectImage: UIImage(named: "선택")),
-            Header(headerTitle: "사이드 추가선택", subTitle: "서브타이틀 1", selectImage: UIImage(named: "선택")),
-            Header(headerTitle: "기타 추가선택", subTitle: "서브타이틀 1", selectImage: UIImage(named: "선택")),
-            Header(headerTitle: "수량", subTitle: "서브타이틀 1", selectImage: nil)
+            Header(headerTitle: "가격", subTitle: "", selectImage: nil),
+            Header(headerTitle: "도우 추가선택", subTitle: "최대 1개 선택", selectImage: UIImage(named: "선택")),
+            Header(headerTitle: "피자 추가선택", subTitle: "최대 1개 선택", selectImage: UIImage(named: "선택")),
+            Header(headerTitle: "사이드 추가선택", subTitle: "최대 11개 선택", selectImage: UIImage(named: "선택")),
+            Header(headerTitle: "기타 추가선택", subTitle: "최대 3개 선택", selectImage: UIImage(named: "선택")),
+            Header(headerTitle: "수량", subTitle: "", selectImage: nil)
             
         ]
     }
@@ -72,23 +81,24 @@ class MenuCheckBoxDataManager{
     func makeMenuCheckBoxData() {
         menuCheckBoxDataArray = [
             MenuCheckBoxSection(menu: [
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 3000),
-                MenuCheckBox(checkBoxSelected: false, menu: "고구마크러스트", price: 5000),
-                MenuCheckBox(checkBoxSelected: false, menu: "골드", price: 6000),
-                MenuCheckBox(checkBoxSelected: false, menu: "소보로", price: 2000)]),
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 3000, sectionNum : 2),
+                MenuCheckBox(checkBoxSelected: false, menu: "고구마크러스트", price: 5000,sectionNum : 2),
+                MenuCheckBox(checkBoxSelected: false, menu: "골드", price: 6000, sectionNum : 2),
+                MenuCheckBox(checkBoxSelected: false, menu: "소보로", price: 2000, sectionNum : 2)]),
             
             MenuCheckBoxSection(menu: [
               
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈 추가", price: 3600)]),
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈 추가", price: 3600 , sectionNum : 3)]),
             
             MenuCheckBoxSection(menu: [
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈오븐스파게티", price: 2000),
-                MenuCheckBox(checkBoxSelected: false, menu: "치킨텐더 9조각", price: 6000),
-                MenuCheckBox(checkBoxSelected: false, menu: "치킨텐더 18조각", price: 5700),
-                MenuCheckBox(checkBoxSelected: false, menu: "버팔로핫윙10조각", price: 2300)]),
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈오븐스파게티", price: 2000, sectionNum : 4),
+                MenuCheckBox(checkBoxSelected: false, menu: "치킨텐더 9조각", price: 6000, sectionNum : 4),
+                MenuCheckBox(checkBoxSelected: false, menu: "치킨텐더 18조각", price: 5700, sectionNum : 4),
+                MenuCheckBox(checkBoxSelected: false, menu: "버팔로핫윙10조각", price: 2300, sectionNum : 4)]),
+                
             MenuCheckBoxSection(menu: [
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 35800),
-                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 34320)])
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 35800, sectionNum : 5),
+                MenuCheckBox(checkBoxSelected: false, menu: "치즈크러스트", price: 34320, sectionNum : 5)])
             
             
         ]
@@ -102,7 +112,20 @@ class TotalPriceManager {
     static let shared = TotalPriceManager()
     
     private init() {}
-    
-    var totalPrice: Int = 0 
+     let _totalPrice = BehaviorRelay<Int>(value: 0)
+       
+       var totalPrice: Int {
+           get {
+               return _totalPrice.value
+           }
+           set {
+               _totalPrice.accept(newValue)
+           }
+       }
+    //var totalPrice: Int = 0
     var totalCount: Int = 1
+    var selectedMenuItems: [MenuCheckBox] = []
+    var selectedMenuArray: [[MenuCheckBox]] = []
+    
+    var totalPriceArray : [Int] = []
 }

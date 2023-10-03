@@ -22,18 +22,22 @@ class BottomGetView:UIView {
         lb.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         lb.textColor = .black
         lb.text = "17,900원"
-
+        
         return lb
     }()
     lazy var view: UIView = {
         let view = UIView()
-        view.backgroundColor = .red
+        view.layer.cornerRadius = 10
+        view.backgroundColor = UIColor.logoColor
+        view.layer.masksToBounds = true
         return view
     }()
     lazy var getLabel : UILabel = {
         let lb = UILabel()
-     lb.text = "10,000원 담기"
-
+        lb.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        lb.textColor = .white
+        lb.text = "10,000원 담기"
+        
         return lb
     }()
     
@@ -45,7 +49,7 @@ class BottomGetView:UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-       
+        
     }
     private func addSubviews() {
         addSubview(minCostLabel)
@@ -56,15 +60,16 @@ class BottomGetView:UIView {
     }
     private func configureConstraints() {
         minCostLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(10)
+            make.top.equalToSuperview().inset(15)
             make.leading.equalToSuperview().inset(10)
         }
         minCost.snp.makeConstraints { make in
             make.top.equalTo(minCostLabel.snp.bottom).offset(10)
-            make.leading.equalToSuperview().inset(10)
+            make.leading.equalToSuperview().inset(15)
         }
         view.snp.makeConstraints { make in
-            make.top.bottom.equalToSuperview().inset(5)
+            make.top.equalToSuperview().inset(10)
+            make.bottom.equalTo(safeAreaLayoutGuide).inset(10)
             make.leading.equalTo(minCostLabel.snp.trailing).offset(10)
             make.trailing.equalToSuperview().inset(10)
         }
@@ -73,6 +78,6 @@ class BottomGetView:UIView {
         }
         
     }
-
+    
     
 }
