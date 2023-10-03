@@ -182,7 +182,7 @@ class TableHeaderView: UITableViewHeaderFooterView{
             if count > 1 {
                 count -= 1
                 TotalPriceManager.shared.totalPrice = count * (CheckBoxTableViewCell.totalPrice/(count+1))
-                print("총가격: \(TotalPriceManager.shared.totalPrice)")
+               // print("총가격: \(TotalPriceManager.shared.totalPrice)")
 
             }
         }
@@ -190,7 +190,7 @@ class TableHeaderView: UITableViewHeaderFooterView{
         @objc private func plusButtonTapped() {
             count += 1
             TotalPriceManager.shared.totalPrice = count * CheckBoxTableViewCell.totalPrice
-            print("총가격: \(TotalPriceManager.shared.totalPrice)")
+         //   print("총가격: \(TotalPriceManager.shared.totalPrice)")
             BottomGetView().getLabel.text = "\(TotalPriceManager.shared.totalPrice)원 담아두기"
 
         }
@@ -290,10 +290,10 @@ class RadioBoxTableViewCell: UITableViewCell {
 
         CheckBoxTableViewCell.totalPrice = TotalPriceManager.shared.totalPrice
         // 총 가격을 출력
-        print("총개수: \(TotalPriceManager.shared.totalCount)")
+     //   print("총개수: \(TotalPriceManager.shared.totalCount)")
 
-        print("총가격: \(CheckBoxTableViewCell.totalPrice)")
-        print("checkBoxSelected: \(radioButtonSelected)")
+      //  print("총가격: \(CheckBoxTableViewCell.totalPrice)")
+      //  print("checkBoxSelected: \(radioButtonSelected)")
     }
     func configure(menu: String, price: Int, radioButtonSelected: Bool) {
         self.menu.text = menu
@@ -392,9 +392,9 @@ class CheckBoxTableViewCell: UITableViewCell {
 
 
         // 선택된 항목을 출력
-        print("선택된 항목들:")
+      //  print("선택된 항목들:")
         for item in selectedItems {
-            print("메뉴: \(item.menu.text ?? ""), 가격: \(item.priceNum)원")
+      //      print("메뉴: \(item.menu.text ?? ""), 가격: \(item.priceNum)원")
         }
         if let menu = menu.text {
             // 아이템이 체크된 경우 가격을 더하고, 체크 해제된 경우 가격을 빼기
@@ -418,9 +418,9 @@ class CheckBoxTableViewCell: UITableViewCell {
          
         CheckBoxTableViewCell.totalPrice = TotalPriceManager.shared.totalPrice
         // 총 가격을 출력
-        print("총배열: \(TotalPriceManager.shared.selectedMenuItems)")
-        print("총개수: \(TotalPriceManager.shared.totalCount)")
-        print("총가격: \(CheckBoxTableViewCell.totalPrice)")
+      //  print("총배열: \(TotalPriceManager.shared.selectedMenuItems)")
+     //   print("총개수: \(TotalPriceManager.shared.totalCount)")
+      //  print("총가격: \(CheckBoxTableViewCell.totalPrice)")
         
     }
     func configure(menu: String, price: Int, checkBoxSelected: Bool,sectionNum : Int) {
@@ -604,7 +604,11 @@ class CartTableViewCell: UITableViewCell {
         self.addOther.text = "・기타 추가선택: \(addOther)"
         self.totalPrice.text = "\(totalPrice)원"
         self.sectionNum = sectionNum
-       
+        // 각 레이블을 데이터에 따라 숨김/표시 처리
+           self.addDough.isHidden = addDough.isEmpty
+           self.addPizza.isHidden = addPizza.isEmpty
+           self.addSide.isHidden = addSide.isEmpty
+           self.addOther.isHidden = addOther.isEmpty
     }
 
 }
