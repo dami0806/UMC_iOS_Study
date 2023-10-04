@@ -181,7 +181,7 @@ class ViewController: UIViewController {
             
             let cellHeight: CGFloat = view.frame.width*0.1
             let headerCellHeight: CGFloat = view.frame.width*0.25
-            let totalHeight = CGFloat(headernumberOfCells)*headerCellHeight + CGFloat(radioNumberOfCells+checkNumberOfCells) * cellHeight + view.frame.width*0.8
+            let totalHeight = CGFloat(headernumberOfCells+1)*headerCellHeight + CGFloat(radioNumberOfCells+checkNumberOfCells) * cellHeight + view.frame.width*0.8
            
             return totalHeight
         }

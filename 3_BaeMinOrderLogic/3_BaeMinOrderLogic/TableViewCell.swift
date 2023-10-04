@@ -16,7 +16,7 @@ class TableHeaderView: UITableViewHeaderFooterView{
     
     private let headerTopTitle : UILabel = {
         let lb = UILabel()
-        lb.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        lb.font = UIFont.systemFont(ofSize: 22, weight: .bold)
         lb.textColor = .black
         return lb
     }()
@@ -61,7 +61,7 @@ class TableHeaderView: UITableViewHeaderFooterView{
     
     private func addSubviews() {
         contentView.addSubview(headerTopTitle)
-
+        contentView.addSubview(detailTitle)
         contentView.addSubview(headerTitle)
         contentView.addSubview(subTitle)
         contentView.addSubview(detailTitle)
@@ -78,7 +78,7 @@ class TableHeaderView: UITableViewHeaderFooterView{
             
         }
         detailTitle.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(10)
+            make.leading.bottom.equalToSuperview().inset(10)
             make.top.equalTo(headerTopTitle.snp.bottom).offset(10)
         }
         //그 이후 셀
@@ -356,8 +356,17 @@ class CheckBoxTableViewCell: UITableViewCell {
     //선택된 배열
     var selectedItems: [CheckBoxTableViewCell] = []
 
+    lazy var checkUIView :UIView = {
+        let view = UIView()
+        view.layer.cornerRadius = 5
+        view.layer.borderColor = UIColor.lightGray.cgColor
+        view.layer.borderWidth = 2
+        view.backgroundColor = .white
+        return view
+    }()
     lazy var checkButtonView: UIButton = {
         let button = UIButton(type: .system)
+        button.tintColor = .clear
         button.addTarget(self, action: #selector(toggleButtonTapped), for: .touchUpInside)
         return button
     }()
@@ -366,6 +375,7 @@ class CheckBoxTableViewCell: UITableViewCell {
         let imageView = UIImageView()
         imageView.image = UIImage(systemName: "checkmark")
         imageView.contentMode = .scaleAspectFit
+        imageView.tintColor = .white
         imageView.isHidden = true // 기본적으로는 숨김 상태로 시작
         return imageView
     }()
@@ -396,7 +406,9 @@ class CheckBoxTableViewCell: UITableViewCell {
     
     
     private func addSubviews() {
-        contentView.addSubview(checkButtonView)
+        contentView.addSubview(checkUIView)
+        checkUIView.addSubview(checkButtonView)
+        
         contentView.addSubview(menu)
         contentView.addSubview(price)
         checkButtonView.addSubview(checkImageView)
@@ -404,21 +416,24 @@ class CheckBoxTableViewCell: UITableViewCell {
         configureConstraints()
     }
     private func configureConstraints() {
-        checkButtonView.snp.makeConstraints { make in
-            make.leading.top.equalToSuperview().inset(10)
-            make.height.width.equalTo(30)
+        checkUIView.snp.makeConstraints { make in
+            make.leading.top.bottom.equalToSuperview().inset(10)
+            make.width.equalTo(checkUIView.snp.height)
         }
         menu.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(10)
+            make.centerY.equalTo(checkUIView.snp.centerY)
             make.leading.equalTo(checkButtonView.snp.trailing).offset(10)
             
         }
-        
+        checkButtonView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
         price.snp.makeConstraints { make in
-            make.trailing.top.equalToSuperview().inset(10)
+            make.trailing.equalToSuperview().inset(10)
+            make.centerY.equalTo(checkUIView.snp.centerY)
         }
         checkImageView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.edges.equalToSuperview().inset(3)
         }
     }
     
@@ -427,7 +442,11 @@ class CheckBoxTableViewCell: UITableViewCell {
         // 토글 버튼을 누를 때마다 checkBoxSelected 토글
         checkBoxSelected = !checkBoxSelected
         checkImageView.isHidden = !checkBoxSelected
-
+        if checkBoxSelected {
+            checkUIView.backgroundColor = UIColor.logoColor
+           } else {
+               checkUIView.backgroundColor = .white
+           }
 
         // 선택된 항목을 출력
       //  print("선택된 항목들:")
@@ -663,13 +682,14 @@ class CartTableViewCell: UITableViewCell {
           //  make.trailing.bottom.equalToSuperview().inset(10)
             make.top.equalTo(totalPrice.snp.bottom).offset(10)
             make.trailing.equalToSuperview().inset(10)
-            make.height.equalTo(40)
+            make.height.equalTo(contentView.snp.width).multipliedBy(0.1)
             make.width.equalTo(countBtnView.snp.height).multipliedBy(2)
         }
         optionBtn.snp.makeConstraints { make in
             make.top.equalTo(totalPrice.snp.bottom).offset(10)
             make.trailing.equalTo(countBtnView.snp.leading).offset(-10)
             make.height.equalTo(countBtnView.snp.height)
+            make.bottom.equalToSuperview().inset(10)
         }
         optionLabel.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(10)
@@ -771,10 +791,13 @@ class CartTotalTableViewCell: UITableViewCell {
         finalPayCost.snp.makeConstraints { make in
             make.top.equalTo(lineView.snp.bottom).offset(10)
             make.leading.equalToSuperview().inset(10)
+            make.bottom.equalToSuperview().inset(10)
         }
         finalPayCostLabel.snp.makeConstraints { make in
             make.top.equalTo(lineView.snp.bottom).offset(10)
             make.trailing.equalToSuperview().inset(10)
+            make.bottom.equalToSuperview().inset(10)
+
         }
         
     }
