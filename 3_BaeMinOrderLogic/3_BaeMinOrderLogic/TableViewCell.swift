@@ -209,8 +209,8 @@ class CountHeaderView: UIView {
             count -= 1
             TotalPriceManager.shared.totalCount = count
             print(TotalPriceManager.shared.totalPricePer)
-            TotalPriceManager.shared.totalPrice = TotalPriceManager.shared.totalCount * (TotalPriceManager.shared.totalPricePer)
-            // print("총가격: \(TotalPriceManager.shared.totalPrice)")
+            TotalPriceManager.shared.totalPrice = (TotalPriceManager.shared.totalCount) * (TotalPriceManager.shared.totalPricePer-18900)
+             print("총가격: \(TotalPriceManager.shared.totalPrice)")
             
         }
     }
@@ -219,8 +219,8 @@ class CountHeaderView: UIView {
         count += 1
         TotalPriceManager.shared.totalCount = count
         
-        TotalPriceManager.shared.totalPrice = TotalPriceManager.shared.totalCount * (TotalPriceManager.shared.totalPricePer)
-        //   print("총가격: \(TotalPriceManager.shared.totalPrice)")
+        TotalPriceManager.shared.totalPrice = (TotalPriceManager.shared.totalCount) * (TotalPriceManager.shared.totalPricePer-18900)
+          print("🙌🏻총가격: \(TotalPriceManager.shared.totalPrice)")
         
     }
 }
@@ -423,7 +423,6 @@ class RadioBoxTableViewCell: UITableViewCell {
     }
 
     @objc private func toggleButtonTapped() {
-           // 현재 섹션 내의 라디오 버튼만을 고려하기 위해 sectionNum을 사용합니다.
            guard var sectionDataArray = menuRadioDataArray?[sectionNum - 1].menu else {
                return
            }
@@ -433,9 +432,59 @@ class RadioBoxTableViewCell: UITableViewCell {
             
         }else{
             radioButtonSelected.toggle()
+            
         }
-        calculate()
-       
+            var previousItemPrice = 0
+//        for data in sectionDataArray {
+//            if data.menu != menu.text {
+//                previousItemPrice = data.price
+//                TotalPriceManager.shared.totalPricePer -= previousItemPrice
+//                print("🙌🏻data\(data)")
+//
+//            }else{
+//                TotalPriceManager.shared.totalPricePer +=  data.price
+//            }
+//
+//        }
+  //      calculate()
+           
+        if radioButtonSelected {
+            guard var sectionDataArray = menuRadioDataArray?[sectionNum - 1].menu else {
+                return
+            }
+            for data in sectionDataArray {
+                if data.menu != menu.text {
+                    previousItemPrice = data.price
+                    TotalPriceManager.shared.totalPricePer -= previousItemPrice
+                   // print("🙌🏻data\(data)")
+                    
+                }else{
+                    TotalPriceManager.shared.totalPricePer +=  data.price
+                    
+                    //      if let menu = menu.text {
+                    // 아이템이 체크된 경우 가격을 더하고, 체크 해제된 경우 가격을 빼기
+                    //  let itemPrice = radioButtonSelected ? priceNum : -priceNum
+                    
+                    //    TotalPriceManager.shared.totalPricePer += itemPrice
+                    
+                    // 다른 인덱스의 버튼들을 해제합니다.
+                    //                for (index, var data) in sectionDataArray.enumerated() {
+                    //                    if index != self.tag {
+                    //                        data.checkBoxSelected = false
+                    //                    }
+                    //                    sectionDataArray[index] = data
+                    //                }
+                    //
+                    // TotalPriceManager의 선택된 메뉴 항목 배열을 업데이트
+                    TotalPriceManager.shared.selectedMenuItems.removeAll()
+                    TotalPriceManager.shared.selectedMenuItems.append(MenuCheckBox(checkBoxSelected: radioButtonSelected, menu: data.menu, price: priceNum, sectionNum: sectionNum))
+                    
+                    TotalPriceManager.shared.totalPrice = TotalPriceManager.shared.selectedMenuItems.reduce(0) { $0 + ($1.checkBoxSelected ? $1.price * TotalPriceManager.shared.totalCount : 0) }
+                    
+                }
+                
+            }
+        }
     }
     func configure(menu: String, price: Int, checkBoxSelected: Bool,sectionNum : Int) {
         self.menu.text = menu
@@ -470,7 +519,7 @@ class RadioBoxTableViewCell: UITableViewCell {
                 TotalPriceManager.shared.selectedMenuItems.append(MenuCheckBox(checkBoxSelected: radioButtonSelected, menu: menu, price: priceNum, sectionNum: sectionNum))
                 
                 TotalPriceManager.shared.totalPrice = TotalPriceManager.shared.selectedMenuItems.reduce(0) { $0 + ($1.checkBoxSelected ? $1.price * TotalPriceManager.shared.totalCount : 0) }
-                CheckBoxTableViewCell.totalPrice = TotalPriceManager.shared.totalPricePer * TotalPriceManager.shared.totalCount
+              
             }
         }
     }

@@ -304,18 +304,20 @@ class ViewController: UIViewController {
         // 선택된 라디오 버튼 인덱스 초기화
         selectedIndex = 0
     
-        
         // 라디오 버튼과 체크박스 UI 업데이트
         for row in 0..<menuRadioDataArray[0].menu.count {
-               let indexPath = IndexPath(row: row, section: 0)
+               let indexPath = IndexPath(row: row, section: 1)
             
                if let cell = tableView.cellForRow(at: indexPath) as? RadioBoxTableViewCell {
                    if indexPath.row == 0 {
                        cell.checkUIView.backgroundColor = .white
-                     
                    }
                    else{
-                       cell.checkUIView.backgroundColor = UIColor.logoColor                   }
+                       cell.checkUIView.backgroundColor = UIColor.logoColor
+
+                       print("🙌🏻cell\(cell.menu)")
+
+                   }
                }
            }
         // 체크박스 UI 업데이트
@@ -331,6 +333,37 @@ class ViewController: UIViewController {
             // 테이블 뷰 높이 업데이트
             updateTableViewHeight()
     }
+   
+            
+                   
+    func setInitcheckButton(){
+        // 라디오 버튼과 체크박스 UI 업데이트
+        for row in 0..<menuRadioDataArray[0].menu.count {
+            let indexPath = IndexPath(row: row, section: 1)
+            
+            if let cell = tableView.cellForRow(at: indexPath) as? RadioBoxTableViewCell {
+                if indexPath.row == 0 {
+                    cell.checkUIView.backgroundColor = .white
+                }
+                else{
+                    cell.checkUIView.backgroundColor = UIColor.logoColor
+                }
+            }
+        }
+        // 체크박스 UI 업데이트
+         for section in 0..<menuCheckBoxDataArray.count {
+             for row in 0..<menuCheckBoxDataArray[section].menu.count {
+                 let indexPath = IndexPath(row: row, section: section + 2)
+                 if let cell = tableView.cellForRow(at: indexPath) as? CheckBoxTableViewCell {
+                     cell.checkUIView.backgroundColor = .white
+                 }
+             }
+         }
+        tableView.reloadData()
+            // 테이블 뷰 높이 업데이트
+            updateTableViewHeight()
+        
+        }
 
     
 }
@@ -428,6 +461,22 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
             else {
               radioTableViewCell.checkUIView.backgroundColor = .white
             }
+//            for row in 0..<menuRadioDataArray[0].menu.count {
+//                   let indexPath = IndexPath(row: row, section: 0)
+//
+//                   if let cell = tableView.cellForRow(at: indexPath) as? RadioBoxTableViewCell {
+//                       if indexPath.row == 0 {
+//                           cell.checkUIView.backgroundColor = .white
+//                           print("🙌🏻🙌🏻cell\(cell.menu)")
+//                       }
+//                       else{
+//                           cell.checkUIView.backgroundColor = UIColor.logoColor
+//
+//                           print("🙌🏻🙌🏻cell\(cell.menu)")
+//
+//                       }
+//                   }
+             //  }
             radioTableViewCell.checkButtonView.tag = indexPath.row
             radioTableViewCell.checkButtonView.addTarget(self, action: #selector(RdoButtonTapped), for: .touchUpInside)
       
@@ -453,15 +502,35 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
     
 }
     @objc func RdoButtonTapped(_ sender: UIButton) {
-        print("🥲")
-        if sender.tag != selectedIndex {
-            let previousIndexPath = IndexPath(row: selectedIndex, section: 1)
-            selectedIndex = sender.tag
-            if let previousCell = tableView.cellForRow(at: previousIndexPath) as? RadioBoxTableViewCell {
-                previousCell.checkButtonView.backgroundColor = .white
+        for row in 0...menuRadioDataArray[0].menu.count {
+            let indexPath = IndexPath(row: row, section: 1)
+            if let cell = tableView.cellForRow(at: indexPath) as? RadioBoxTableViewCell {
+                // if menuRadioDataArray[0].menu  {
+                // previousItemPrice = data.price
+                //TotalPriceManager.shared.totalPricePer -= previousItemPrice
+                print("🙌🏻data\(menuRadioDataArray[0].menu[0])")
+                if sender.tag == 0{
+                    if indexPath.row == 0 {
+                        cell.checkUIView.backgroundColor = UIColor.logoColor
+                        
+                    }else {
+                        cell.checkUIView.backgroundColor = .white
+
+                    }
+                }
+                else if sender.tag == 1{
+                    if indexPath.row == 1 {
+                        cell.checkUIView.backgroundColor = UIColor.logoColor
+                        
+                    }else {
+                        cell.checkUIView.backgroundColor = .white
+
+                    }
+
+                }
             }
-           sender.backgroundColor = UIColor.logoColor
-        }
+            }
+   
     }
 }
 extension ViewController: UIScrollViewDelegate {
