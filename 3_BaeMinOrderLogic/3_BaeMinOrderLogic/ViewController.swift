@@ -96,11 +96,17 @@ class ViewController: UIViewController {
     }
     private func setupRx() {
         // 연결
-        TotalPriceManager.shared._totalPrice
-            .map { "\( numberWithComma($0))원 담기" }
-            .bind(to: bottomGetView.getLabel.rx.text)
-            .disposed(by: disposeBag)
-        TotalPriceManager.shared.totalPrice
+                Observable
+                    .combineLatest(
+                        TotalPriceManager.shared._totalPricePer.asObservable(),
+                        TotalPriceManager.shared._totalPrice.asObservable()
+                    )
+                    .map { totalPricePer, _ in
+                        let totalPrice = totalPricePer * TotalPriceManager.shared.totalCount
+                        return "\(numberWithComma(totalPrice))원 담기"
+                    }
+                    .bind(to: bottomGetView.getLabel.rx.text)
+                .disposed(by: disposeBag)
         
         //바텀뷰 눌렀을때
         let getCartGestureRecognizer = UITapGestureRecognizer()
