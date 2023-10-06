@@ -311,19 +311,19 @@ class ViewController: UIViewController {
             
                if let cell = tableView.cellForRow(at: indexPath) as? RadioBoxTableViewCell {
                    if indexPath.row == 0 {
-                       cell.checkButtonView.backgroundColor = .white
+                       cell.checkUIView.backgroundColor = .white
                      
                    }
                    else{
-                       cell.checkButtonView.backgroundColor = UIColor.logoColor                   }
+                       cell.checkUIView.backgroundColor = UIColor.logoColor                   }
                }
            }
         // 체크박스 UI 업데이트
          for section in 0..<menuCheckBoxDataArray.count {
              for row in 0..<menuCheckBoxDataArray[section].menu.count {
-                 let indexPath = IndexPath(row: row, section: section + 1)
+                 let indexPath = IndexPath(row: row, section: section + 2)
                  if let cell = tableView.cellForRow(at: indexPath) as? CheckBoxTableViewCell {
-                     cell.checkButtonView.backgroundColor = .white
+                     cell.checkUIView.backgroundColor = .white
                  }
              }
          }
