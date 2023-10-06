@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		372A34732ACDAC6200D09BBC /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 372A34722ACDAC6200D09BBC /* test.swift */; };
+		374FF4F52ACD30B300F6BAD8 /* ExtensionFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374FF4F42ACD30B300F6BAD8 /* ExtensionFunc.swift */; };
 		37846D642AC93D3B00E4D948 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37846D632AC93D3B00E4D948 /* AppDelegate.swift */; };
 		37846D662AC93D3B00E4D948 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37846D652AC93D3B00E4D948 /* SceneDelegate.swift */; };
 		37846D682AC93D3B00E4D948 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37846D672AC93D3B00E4D948 /* ViewController.swift */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		372A34722ACDAC6200D09BBC /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
+		374FF4F42ACD30B300F6BAD8 /* ExtensionFunc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionFunc.swift; sourceTree = "<group>"; };
 		37846D602AC93D3B00E4D948 /* 3_BaeMinOrderLogic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 3_BaeMinOrderLogic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37846D632AC93D3B00E4D948 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37846D652AC93D3B00E4D948 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -82,6 +86,8 @@
 				37846D862ACA9E2B00E4D948 /* UIColor+Ex.swift */,
 				37846D942ACBD7EC00E4D948 /* MyCartViewController.swift */,
 				37846D982ACC31A700E4D948 /* CountBtnView.swift */,
+				374FF4F42ACD30B300F6BAD8 /* ExtensionFunc.swift */,
+				372A34722ACDAC6200D09BBC /* test.swift */,
 			);
 			path = 3_BaeMinOrderLogic;
 			sourceTree = "<group>";
@@ -169,10 +175,12 @@
 				37846D7F2ACA5B4300E4D948 /* DataManager.swift in Sources */,
 				37846D992ACC31A700E4D948 /* CountBtnView.swift in Sources */,
 				37846D852ACA852D00E4D948 /* BottomGetView.swift in Sources */,
+				374FF4F52ACD30B300F6BAD8 /* ExtensionFunc.swift in Sources */,
 				37846D682AC93D3B00E4D948 /* ViewController.swift in Sources */,
 				37846D642AC93D3B00E4D948 /* AppDelegate.swift in Sources */,
 				37846D952ACBD7EC00E4D948 /* MyCartViewController.swift in Sources */,
 				37846D662AC93D3B00E4D948 /* SceneDelegate.swift in Sources */,
+				372A34732ACDAC6200D09BBC /* test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

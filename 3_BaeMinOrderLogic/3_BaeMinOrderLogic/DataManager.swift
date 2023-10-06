@@ -11,10 +11,8 @@ import RxSwift
 import RxCocoa
 
 //라디오버튼, 라벨,라벨
-struct MenuRadio {
-    var radioButtonSelected: Bool
-    var menu: String
-    var price: Int
+struct MenuRadioBoxSection {
+    var menu: [MenuCheckBox]
 }
 //체크박스
 struct MenuCheckBox {
@@ -25,10 +23,10 @@ struct MenuCheckBox {
 }
 //전체 가격, 개수, 체크박스정보
 struct getMenu{
- var menu: [MenuCheckBox]
+    var menu: [MenuCheckBox]
     var totalPrice: Int
     var totalNum : Int
-
+    
 }
 struct MenuCheckBoxSection{
     var menu: [MenuCheckBox]
@@ -46,7 +44,7 @@ class HeaderDataManager{
     func makeHeaderData() {
         headerDataArray = [
             Header(headerTitle: "고구마피자", subTitle: "달콤하고 부드러운 고구마 무스와 \n고구마 다이스 토핑의 씹히는 맛의 피자", selectImage: UIImage(named: "selectImage1")),
-            Header(headerTitle: "가격", subTitle: "", selectImage: nil),
+            Header(headerTitle: "가격", subTitle: "", selectImage: UIImage(named: "필수")),
             Header(headerTitle: "도우 추가선택", subTitle: "최대 1개 선택", selectImage: UIImage(named: "선택")),
             Header(headerTitle: "피자 추가선택", subTitle: "최대 1개 선택", selectImage: UIImage(named: "선택")),
             Header(headerTitle: "사이드 추가선택", subTitle: "최대 11개 선택", selectImage: UIImage(named: "선택")),
@@ -62,15 +60,13 @@ class HeaderDataManager{
 
 //라디오버튼
 class MenuRadioDataManager{
-    private var menuRadioDataArray: [MenuRadio] = []
+    private var menuRadioDataArray: [MenuRadioBoxSection] = []
     func makeMenuRadioData() {
         menuRadioDataArray = [
-            MenuRadio(radioButtonSelected: true, menu: "M", price: 18900),
-            MenuRadio(radioButtonSelected: false, menu: "L", price: 20900)
-            
+            MenuRadioBoxSection(menu: [MenuCheckBox(checkBoxSelected: true, menu: "M", price: 18900, sectionNum: 1), MenuCheckBox(checkBoxSelected: false, menu: "L", price: 20900, sectionNum: 1)])
         ]
     }
-    func getMenuRadioData() -> [MenuRadio] {
+    func getMenuRadioData() -> [MenuRadioBoxSection] {
         return menuRadioDataArray
     }
 }
@@ -88,7 +84,7 @@ class MenuCheckBoxDataManager{
                 MenuCheckBox(checkBoxSelected: false, menu: "소보로", price: 5000, sectionNum : 2)]),
             //피자 추가선택
             MenuCheckBoxSection(menu: [
-              
+                
                 MenuCheckBox(checkBoxSelected: false, menu: "치즈 추가", price: 2500 , sectionNum : 3)]),
             //사이드 추가선택
             MenuCheckBoxSection(menu: [
@@ -103,7 +99,7 @@ class MenuCheckBoxDataManager{
                 MenuCheckBox(checkBoxSelected: false, menu: "치즈스틱 6개", price: 5500, sectionNum : 4),
                 MenuCheckBox(checkBoxSelected: false, menu: "새우링 6개", price: 4000, sectionNum : 4),
                 MenuCheckBox(checkBoxSelected: false, menu: "새우링 10개", price: 7500, sectionNum : 4)]),
-                //기타추가선택
+            //기타추가선택
             MenuCheckBoxSection(menu: [
                 MenuCheckBox(checkBoxSelected: false, menu: "콜라 1.25L", price: 3000, sectionNum : 5),
                 MenuCheckBox(checkBoxSelected: false, menu: "콜라 500ml", price: 2000, sectionNum : 5),
@@ -127,22 +123,25 @@ class TotalPriceManager {
     static let shared = TotalPriceManager()
     
     private init() {}
-     let _totalPrice = BehaviorRelay<Int>(value: 0)
-       
-       var totalPrice: Int {
-           get {
-               return _totalPrice.value
-           }
-           set {
-               _totalPrice.accept(newValue)
-           }
-       }
+    let _totalPrice = BehaviorRelay<Int>(value: 0)
+    
+    var totalPrice: Int {
+        get {
+            return _totalPrice.value
+        }
+        set {
+            _totalPrice.accept(newValue)
+        }
+    }
     //var totalPrice: Int = 0
-    var totalCount: Int = 1
+    var totalCount: Int = 0
     var totalPricePer : Int = 0
     var selectedMenuItems: [MenuCheckBox] = []
     var selectedMenuArray: [[MenuCheckBox]] = []
-    
+
     var totalPriceArray : [Int] = []
     var sectionCountArray : [Int] = []
+    
+    //총개수
+    var totalCountArray : [Int] = []
 }

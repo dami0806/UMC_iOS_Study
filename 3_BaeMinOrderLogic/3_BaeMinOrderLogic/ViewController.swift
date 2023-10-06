@@ -18,12 +18,15 @@ class ViewController: UIViewController {
     var headerDataArray: [Header] = []
     
     let menuRadioDataManager = MenuRadioDataManager()
-    var menuRadioDataArray: [MenuRadio] = []
+    var menuRadioDataArray: [MenuRadioBoxSection] = []
     
     let menuCheckBoxDataManager = MenuCheckBoxDataManager()
     var menuCheckBoxDataArray: [MenuCheckBoxSection] = []
     //
+    var selectedIndex: Int = 0
+    
     var selectedCheckBoxData: [MenuCheckBox] = []
+    
     private lazy var uiimage: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "피자")
@@ -54,25 +57,34 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.isScrollEnabled = false
         tableView.separatorStyle = .none
+    
         return tableView
     }()
     
-    private let bottomGetView = BottomGetView()
-    
+
+    private let bottomGetView : BottomGetView = {
+        let view = BottomGetView()
+        view.layer.borderColor = UIColor.gray.cgColor
+        view.layer.borderWidth = 0.3
+        return view
+    }()
     //네비게이션 상위 버튼들
     // MARK: - View Lifecycle
+    override func viewWillAppear(_ animated: Bool) {
+        resetCheckBoxes()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.cellgray
         setupUI()
         setupRx()
         fetchData()
         scrollView.delegate = self
         
-
+        
     }
     override func viewDidAppear(_ animated: Bool) {
-       // super.viewDidAppear(animated)
+        // super.viewDidAppear(animated)
         
         // 화면에 나타날 때마다 테이블 뷰의 높이를 업데이트
         updateTableViewHeight()
@@ -85,17 +97,18 @@ class ViewController: UIViewController {
     private func setupRx() {
         // 연결
         TotalPriceManager.shared._totalPrice
-            .map { "\($0)원 담기" }
+            .map { "\( numberWithComma($0))원 담기" }
             .bind(to: bottomGetView.getLabel.rx.text)
             .disposed(by: disposeBag)
         
-//바텀뷰 눌렀을때
+        //바텀뷰 눌렀을때
         let getCartGestureRecognizer = UITapGestureRecognizer()
         bottomGetView.view.addGestureRecognizer(getCartGestureRecognizer)
         
         getCartGestureRecognizer.rx.event
             .subscribe(onNext: { [weak self] gestureRecognizer in
                 self?.getCartTapped()
+                TotalPriceManager.shared.totalCountArray.append(TotalPriceManager.shared.totalCount)
             })
             .disposed(by: disposeBag)
     }
@@ -112,17 +125,17 @@ class ViewController: UIViewController {
         tableView.register(CheckBoxTableViewCell.self, forCellReuseIdentifier: CheckBoxTableViewCell.reuseIdentifier)
         tableView.register(TableHeaderView.self, forHeaderFooterViewReuseIdentifier: TableHeaderView.reuseIdentifier)
         tableView.register(RadioBoxTableViewCell.self, forCellReuseIdentifier: RadioBoxTableViewCell.reuseIdentifier)
-        
+        tableView.register(TitleTableViewCell.self, forCellReuseIdentifier: TitleTableViewCell.reuseIdentifier)
     }
     
     private func addSubviews() {
-      
+        
         view.addSubview(scrollView)
         scrollView.addSubview(uiimage)
         scrollView.addSubview(contentView)
         
         view.bringSubviewToFront(bottomView)
-
+        
         contentView.addSubview(bottomView)
         bottomView.addSubview(tableView)
         view.addSubview(bottomGetView)
@@ -139,7 +152,7 @@ class ViewController: UIViewController {
             make.width.equalToSuperview()
             make.bottom.equalTo(bottomView.snp.bottom)
         }
-      
+        
         
         bottomView.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(200)
@@ -166,62 +179,61 @@ class ViewController: UIViewController {
         }
     }
     //데이터 섹션안에있는 모든행가져와서 개수가져오기
-        func getTotalcheckNumberOfCells() -> Int {
-            var total = 0
-            for section in menuCheckBoxDataArray{
-                total += section.menu.count
-            }
-            return total
+    func getTotalcheckNumberOfCells() -> Int {
+        var total = 0
+        for section in menuCheckBoxDataArray{
+            total += section.menu.count
         }
-        private func calculateTableViewHeight() -> CGFloat {
-
-            let radioNumberOfCells = menuRadioDataArray.count
-            let checkNumberOfCells =  getTotalcheckNumberOfCells()
-            let headernumberOfCells = headerDataArray.count
-            
-            let cellHeight: CGFloat = view.frame.width*0.1
-            let headerCellHeight: CGFloat = view.frame.width*0.25
-            let totalHeight = CGFloat(headernumberOfCells+1)*headerCellHeight + CGFloat(radioNumberOfCells+checkNumberOfCells) * cellHeight + view.frame.width*0.8
-           
-            return totalHeight
-        }
-        // 테이블뷰 높이를 계산하고 업데이트하는 메서드
-        private func updateTableViewHeight() {
-            let newHeight = calculateTableViewHeight()
-            tableView.snp.updateConstraints { make in
-                make.height.equalTo(newHeight)
-            }
-            scrollView.layoutIfNeeded()
+        return total
+    }
+    private func calculateTableViewHeight() -> CGFloat {
         
+        let radioNumberOfCells = menuRadioDataArray.count
+        let checkNumberOfCells =  getTotalcheckNumberOfCells()
+        let headernumberOfCells = headerDataArray.count
+        
+        let cellHeight: CGFloat = view.frame.width*0.1
+        let headerCellHeight: CGFloat = view.frame.width*0.25
+        let totalHeight = CGFloat(headernumberOfCells+1)*headerCellHeight + CGFloat(radioNumberOfCells+checkNumberOfCells) * cellHeight + view.frame.width * 0.85 + CGFloat(headernumberOfCells+1)*10
+        
+        return totalHeight
+    }
+    // 테이블뷰 높이를 계산하고 업데이트하는 메서드
+    private func updateTableViewHeight() {
+        let newHeight = calculateTableViewHeight()
+        tableView.snp.updateConstraints { make in
+            make.height.equalTo(newHeight)
         }
+        scrollView.layoutIfNeeded()
+        
+    }
     
     private func settingNaviItem(){
-        
+        navigationController?.navigationBar.tintColor = .black
         
         let backBtn = UIBarButtonItem(image: UIImage(systemName: "chevron.backward"), style: .plain, target: self, action: #selector(buttonTapped))
         let homeBtn = UIBarButtonItem(image: UIImage(systemName: "house"), style: .plain, target: self, action: #selector(buttonTapped))
         let shareBtn = UIBarButtonItem(image: UIImage(systemName: "square.and.arrow.up"), style: .plain, target: self, action: #selector(buttonTapped))
-        // "cart" 버튼을 위한 커스텀 뷰 생성
+
         let cartButtonView = UIView()
         cartButtonView.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         
-        // "cart" 버튼을 위한 커스텀 UIButton 생성
         let cartButton = UIButton(type: .custom)
-        cartButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        cartButton.frame = CGRect(x: 0, y: 2, width: 30, height: 30)
         cartButton.setImage(UIImage(systemName: "cart"), for: .normal)
         cartButton.addTarget(self, action: #selector(cartBtnTapped), for: .touchUpInside)
         
-        // 숫자를 표시하는 UILabel 생성
+        // 숫자를 표시
         let cartCountLabel = UILabel()
         cartCountLabel.frame = CGRect(x: 20, y: 0, width: 15, height: 15)
-        cartCountLabel.backgroundColor = .red
+        cartCountLabel.backgroundColor = .systemPink
         cartCountLabel.textColor = .white
         cartCountLabel.textAlignment = .center
-        cartCountLabel.font = UIFont.systemFont(ofSize: 10)
+        cartCountLabel.font = UIFont.systemFont(ofSize: 10, weight: .bold)
         cartCountLabel.layer.cornerRadius = 7.5
         cartCountLabel.layer.masksToBounds = true
         cartCountLabel.text = "\(cartCount)" // 초기 숫자 설정
-        
+        cartCountLabel.isHidden = true
         // 커스텀 뷰에 "cart" 버튼과 숫자 레이블 추가
         cartButtonView.addSubview(cartButton)
         cartButtonView.addSubview(cartCountLabel)
@@ -243,6 +255,10 @@ class ViewController: UIViewController {
         if let cartButtonView = navigationItem.rightBarButtonItem?.customView as? UIView,
            let cartCountLabel = cartButtonView.subviews.first(where: { $0 is UILabel }) as? UILabel {
             cartCountLabel.text = "\(cartCount)"
+           
+                cartButtonView.isHidden = false
+                cartCountLabel.isHidden = false
+            
         }
         TotalPriceManager.shared.selectedMenuArray.append(TotalPriceManager.shared.selectedMenuItems)
         TotalPriceManager.shared.totalPriceArray.append(TotalPriceManager.shared.totalPrice*TotalPriceManager.shared.totalCount)
@@ -259,6 +275,63 @@ class ViewController: UIViewController {
     @objc func buttonTapped(){
         
     }
+    func resetCheckBoxes() {
+        // 메뉴 라디오 버튼 초기화
+        for (sectionIndex, var sectionData) in menuRadioDataArray.enumerated() {
+            for (rowIndex, var item) in sectionData.menu.enumerated() {
+                item.checkBoxSelected = (sectionIndex == 0 && rowIndex == 0) // 첫 번째 라디오 버튼은 선택 상태로 초기화
+                sectionData.menu[rowIndex] = item
+            }
+            menuRadioDataArray[sectionIndex] = sectionData
+        }
+        
+        // 메뉴 체크박스 초기화
+        for (sectionIndex, var sectionData) in menuCheckBoxDataArray.enumerated() {
+            for (rowIndex, var item) in sectionData.menu.enumerated() {
+                item.checkBoxSelected = false
+                sectionData.menu[rowIndex] = item
+                
+            }
+            menuCheckBoxDataArray[sectionIndex] = sectionData
+        }
+        
+        // 선택된 아이템 및 가격 초기화
+        selectedCheckBoxData.removeAll()
+        TotalPriceManager.shared.totalPrice = 0
+        TotalPriceManager.shared.totalCount = 1
+        TotalPriceManager.shared.selectedMenuItems.removeAll()
+        
+        // 선택된 라디오 버튼 인덱스 초기화
+        selectedIndex = 0
+    
+        
+        // 라디오 버튼과 체크박스 UI 업데이트
+           for section in 0..<menuRadioDataArray.count {
+               let indexPath = IndexPath(row: section, section: 0)
+            
+               if let cell = tableView.cellForRow(at: indexPath) as? RadioBoxTableViewCell {
+                   if indexPath.row == 0 {
+                      cell.checkButtonView.backgroundColor = UIColor.logoColor
+                   }
+                   else{
+                       cell.checkButtonView.backgroundColor = .white
+                   }
+               }
+           }
+        // 체크박스 UI 업데이트
+         for section in 0..<menuCheckBoxDataArray.count {
+             for row in 0..<menuCheckBoxDataArray[section].menu.count {
+                 let indexPath = IndexPath(row: row, section: section + 1)
+                 if let cell = tableView.cellForRow(at: indexPath) as? CheckBoxTableViewCell {
+                     cell.checkButtonView.backgroundColor = .white
+                 }
+             }
+         }
+        tableView.reloadData()
+            // 테이블 뷰 높이 업데이트
+            updateTableViewHeight()
+    }
+
     
 }
 
@@ -279,14 +352,19 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
         }
         let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: TableHeaderView.reuseIdentifier) as! TableHeaderView
         let headerData = headerDataArray[section]
-        //        if section == 0 {
-        //            headerView.headerconfigure(headerTitle: headerData.headerTitle, subTitle: headerData.subTitle, selectImage: headerData.selectImage)
-        //        }else{
-        headerView.configure(headerTitle: headerData.headerTitle, subTitle: headerData.subTitle, selectImage: headerData.selectImage)
-    return headerView
-}
+        if section != 0 {
+            
+            headerView.configure(headerTitle: headerData.headerTitle, subTitle: headerData.subTitle, selectImage: headerData.selectImage)
+            return headerView
+            
+        }
+        return headerView
+    }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 0
+        }
         if section == headerDataArray.count-1 {
             return 80
         }
@@ -295,10 +373,10 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 0
+            return 1
         }
         else if section == 1 {
-            return menuRadioDataArray.count
+            return menuRadioDataArray[section-1].menu.count
         }
         else if section == headerDataArray.count-1{
             return 0
@@ -310,64 +388,102 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
         }
         
     }
+    //섹션사이 간격
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        
+        //        if section == headerDataArray.count - 1 {
+        //            // 마지막 섹션에 표시할 푸터 뷰를 생성하고 반환
+        let footerView = UIView()
+        footerView.backgroundColor = UIColor.cellgray
+        return footerView
+        
+    }
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == headerDataArray.count - 1 {
+            return 10.0
+        } else {
+            return 10
+        }
+    }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // 첫 번째 섹션(인덱스 0)은 라디오 버튼 데이터로 설정
         if indexPath.section == 0 {
-            return UITableViewCell()
+            let cell = tableView.dequeueReusableCell(withIdentifier: TitleTableViewCell.reuseIdentifier, for: indexPath) as! TitleTableViewCell
+            cell.selectionStyle = .none
+            return cell
             
         } else if indexPath.section == 1 {
             let radioTableViewCell = tableView.dequeueReusableCell(withIdentifier: RadioBoxTableViewCell.reuseIdentifier, for: indexPath) as! RadioBoxTableViewCell
-            
-            let radioData = menuRadioDataArray[indexPath.row]
-            
-            radioTableViewCell.configure(menu: radioData.menu, price: radioData.price, radioButtonSelected: radioData.radioButtonSelected)
             radioTableViewCell.selectionStyle = .none
-            return radioTableViewCell
-            
-        } else {
-            // 섹션 2부터 이후의 셀은 체크박스로
-            let checkBoxTableViewCell = tableView.dequeueReusableCell(withIdentifier: CheckBoxTableViewCell.reuseIdentifier, for: indexPath) as! CheckBoxTableViewCell
-            
-            let checkBoxData = menuCheckBoxDataArray[indexPath.section-2]
-            
-            let menuItem = checkBoxData.menu[indexPath.row]
-            checkBoxTableViewCell.selectionStyle = .none
-            
-            checkBoxTableViewCell.configure(menu: menuItem.menu, price: menuItem.price, checkBoxSelected: menuItem.checkBoxSelected, sectionNum: menuItem.sectionNum)
-            checkBoxTableViewCell.menuCheckBoxDataArray = menuCheckBoxDataArray
-            
-            
-            return checkBoxTableViewCell
-            
-            
-        }
+
+            let radioData = menuRadioDataArray[indexPath.section-1]
+            let radioItem = radioData.menu[indexPath.row]
+            radioTableViewCell.configure(menu: radioItem.menu, price: radioItem.price, checkBoxSelected: radioItem.checkBoxSelected, sectionNum:radioItem.sectionNum)
+            radioTableViewCell.menuRadioDataArray = menuRadioDataArray
+
+            if indexPath.row == selectedIndex {
+                radioTableViewCell.checkUIView.backgroundColor = UIColor.logoColor
+            }
+            else {
+              radioTableViewCell.checkUIView.backgroundColor = .white
+            }
+            radioTableViewCell.checkButtonView.tag = indexPath.row
+            radioTableViewCell.checkButtonView.addTarget(self, action: #selector(RdoButtonTapped), for: .touchUpInside)
+      
+        radioTableViewCell.selectionStyle = .none
+        return radioTableViewCell
         
+    } else {
+        // 섹션 2부터 이후의 셀은 체크박스로
+        let checkBoxTableViewCell = tableView.dequeueReusableCell(withIdentifier: CheckBoxTableViewCell.reuseIdentifier, for: indexPath) as! CheckBoxTableViewCell
+        checkBoxTableViewCell.selectionStyle = .none
+
+        let checkBoxData = menuCheckBoxDataArray[indexPath.section-2]
+        
+        let menuItem = checkBoxData.menu[indexPath.row]
+        checkBoxTableViewCell.selectionStyle = .none
+        
+        checkBoxTableViewCell.configure(menu: menuItem.menu, price: menuItem.price, checkBoxSelected: menuItem.checkBoxSelected, sectionNum: menuItem.sectionNum)
+        checkBoxTableViewCell.menuCheckBoxDataArray = menuCheckBoxDataArray
+        return checkBoxTableViewCell
+        
+        
+    }
+    
+}
+    @objc func RdoButtonTapped(_ sender: UIButton) {
+        print("🥲")
+        if sender.tag != selectedIndex {
+            let previousIndexPath = IndexPath(row: selectedIndex, section: 1)
+            selectedIndex = sender.tag
+            if let previousCell = tableView.cellForRow(at: previousIndexPath) as? RadioBoxTableViewCell {
+                previousCell.checkButtonView.backgroundColor = .white
+            }
+           sender.backgroundColor = UIColor.logoColor
+        }
     }
 }
 extension ViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-    
-     
         if scrollView.tag == 1{
-                    if scrollView.contentOffset.y < -97 {
-                        // contentOffset.y 값이 0보다 작아질 때 실행할 코드
-                        uiimage.snp.remakeConstraints { make in
-                            make.top.equalTo(view.snp.top)
-                            make.bottom.equalTo(bottomView.snp.top)
-                            make.width.equalTo(uiimage.snp.height).multipliedBy(1.5)
-                        }
-                    }else {
-                        uiimage.snp.remakeConstraints { make in
-                            make.top.leading.trailing.equalToSuperview()
-                         //   make.height.equalTo(100)
-                            make.bottom.equalTo(bottomView.snp.top)
-                          //  make.width.equalTo(uiimage.snp.height).multipliedBy(2)
-                        }
-                    }
+            if scrollView.contentOffset.y < -97 {
+                // contentOffset.y 값이 0보다 작아질 때 실행할 코드
+                uiimage.snp.remakeConstraints { make in
+                    make.top.equalTo(view.snp.top)
+                    make.centerX.equalTo(view.snp.centerX)
+                    make.bottom.equalTo(bottomView.snp.top)
+                    make.width.equalTo(uiimage.snp.height).multipliedBy(1.5)
+                }
+            }else {
+                uiimage.snp.remakeConstraints { make in
+                    make.top.leading.trailing.equalToSuperview()
+                    make.bottom.equalTo(bottomView.snp.top)
+                }
+            }
             
         }
-
-
+        
+        
     }
 }

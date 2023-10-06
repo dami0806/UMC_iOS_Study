@@ -10,4 +10,5 @@ import UIKit
 extension UIColor {
     static let interSpaceColor = UIColor(named: "InterSpaceColor")
         static let logoColor = UIColor(named: "LogoColor")
+    static let cellgray = UIColor(named: "cell사이회색")
 }
