@@ -101,7 +101,6 @@ extension MyCartViewController :UITableViewDataSource, UITableViewDelegate {
             var addPizzaInfo = ""
             var addSideInfo = ""
             var addOtherInfo = ""
-            print(TotalPriceManager.shared.selectedMenuArray[indexPath.section])
             for (_, menuItem) in sectionItems.enumerated() {
                 let formmetNum = (numberWithComma(menuItem.price))
                 

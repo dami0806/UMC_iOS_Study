@@ -100,6 +100,7 @@ class ViewController: UIViewController {
             .map { "\( numberWithComma($0))원 담기" }
             .bind(to: bottomGetView.getLabel.rx.text)
             .disposed(by: disposeBag)
+        TotalPriceManager.shared.totalPrice
         
         //바텀뷰 눌렀을때
         let getCartGestureRecognizer = UITapGestureRecognizer()
@@ -273,10 +274,12 @@ class ViewController: UIViewController {
     }
     
     @objc func buttonTapped(){
-        
+        print("🙌🏻총가격: \(TotalPriceManager.shared.totalPricePer)")
+
     }
     func resetCheckBoxes() {
         // 메뉴 라디오 버튼 초기화
+        TotalPriceManager.shared.totalPricePer = 18900
         for (rowIndex, var item) in menuRadioDataArray[0].menu.enumerated() {
             item.checkBoxSelected = (rowIndex == 0) // 첫 번째 라디오 버튼은 선택 상태로 초기화
             menuRadioDataArray[0].menu[rowIndex] = item
@@ -314,8 +317,6 @@ class ViewController: UIViewController {
                    }
                    else{
                        cell.checkUIView.backgroundColor = UIColor.logoColor
-
-                       print("🙌🏻cell\(cell.menu)")
 
                    }
                }
@@ -508,7 +509,6 @@ extension ViewController : UITableViewDelegate,UITableViewDataSource {
                 // if menuRadioDataArray[0].menu  {
                 // previousItemPrice = data.price
                 //TotalPriceManager.shared.totalPricePer -= previousItemPrice
-                print("🙌🏻data\(menuRadioDataArray[0].menu[0])")
                 if sender.tag == 0{
                     if indexPath.row == 0 {
                         cell.checkUIView.backgroundColor = UIColor.logoColor

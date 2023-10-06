@@ -167,7 +167,6 @@ class BottomCartGetView:UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         totalCountView.layer.cornerRadius = (super.frame.height*0.25) * 0.5
-        print(super.frame.width)
     }
     
 }

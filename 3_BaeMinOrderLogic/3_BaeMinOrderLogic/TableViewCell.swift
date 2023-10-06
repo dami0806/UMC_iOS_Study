@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import RxSwift
 
 
 //MARK: - HeaderView
@@ -102,6 +103,8 @@ class TableHeaderView: UITableViewHeaderFooterView{
 }
 //수량셀
 class CountHeaderView: UIView {
+    private let disposeBag = DisposeBag()
+
     private let headerTitle : UILabel = {
         let lb = UILabel()
         lb.text = "수량"
@@ -209,8 +212,12 @@ class CountHeaderView: UIView {
             count -= 1
             TotalPriceManager.shared.totalCount = count
             print(TotalPriceManager.shared.totalPricePer)
-            TotalPriceManager.shared.totalPrice = (TotalPriceManager.shared.totalCount) * (TotalPriceManager.shared.totalPricePer-18900)
+            TotalPriceManager.shared.totalPrice = (TotalPriceManager.shared.totalCount) * (TotalPriceManager.shared.totalPricePer)
              print("총가격: \(TotalPriceManager.shared.totalPrice)")
+            TotalPriceManager.shared._totalPricePer
+                .map { "\( numberWithComma($0))원 담기" }
+                .bind(to: BottomGetView().getLabel.rx.text)
+                .disposed(by: disposeBag)
             
         }
     }
@@ -219,8 +226,7 @@ class CountHeaderView: UIView {
         count += 1
         TotalPriceManager.shared.totalCount = count
         
-        TotalPriceManager.shared.totalPrice = (TotalPriceManager.shared.totalCount) * (TotalPriceManager.shared.totalPricePer-18900)
-          print("🙌🏻총가격: \(TotalPriceManager.shared.totalPrice)")
+        TotalPriceManager.shared.totalPrice = (TotalPriceManager.shared.totalCount) * (TotalPriceManager.shared.totalPricePer)
         
     }
 }
@@ -419,7 +425,8 @@ class RadioBoxTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         checkUIView.layer.cornerRadius = contentView.frame.height * 0.55 * 0.5
-        calculate()
+        TotalPriceManager.shared.totalPrice = TotalPriceManager.shared.totalPricePer
+     //   calculate()
     }
 
     @objc private func toggleButtonTapped() {
@@ -432,21 +439,8 @@ class RadioBoxTableViewCell: UITableViewCell {
             
         }else{
             radioButtonSelected.toggle()
-            
         }
             var previousItemPrice = 0
-//        for data in sectionDataArray {
-//            if data.menu != menu.text {
-//                previousItemPrice = data.price
-//                TotalPriceManager.shared.totalPricePer -= previousItemPrice
-//                print("🙌🏻data\(data)")
-//
-//            }else{
-//                TotalPriceManager.shared.totalPricePer +=  data.price
-//            }
-//
-//        }
-  //      calculate()
            
         if radioButtonSelected {
             guard var sectionDataArray = menuRadioDataArray?[sectionNum - 1].menu else {
@@ -460,22 +454,7 @@ class RadioBoxTableViewCell: UITableViewCell {
                     
                 }else{
                     TotalPriceManager.shared.totalPricePer +=  data.price
-                    
-                    //      if let menu = menu.text {
-                    // 아이템이 체크된 경우 가격을 더하고, 체크 해제된 경우 가격을 빼기
-                    //  let itemPrice = radioButtonSelected ? priceNum : -priceNum
-                    
-                    //    TotalPriceManager.shared.totalPricePer += itemPrice
-                    
-                    // 다른 인덱스의 버튼들을 해제합니다.
-                    //                for (index, var data) in sectionDataArray.enumerated() {
-                    //                    if index != self.tag {
-                    //                        data.checkBoxSelected = false
-                    //                    }
-                    //                    sectionDataArray[index] = data
-                    //                }
-                    //
-                    // TotalPriceManager의 선택된 메뉴 항목 배열을 업데이트
+                
                     TotalPriceManager.shared.selectedMenuItems.removeAll()
                     TotalPriceManager.shared.selectedMenuItems.append(MenuCheckBox(checkBoxSelected: radioButtonSelected, menu: data.menu, price: priceNum, sectionNum: sectionNum))
                     

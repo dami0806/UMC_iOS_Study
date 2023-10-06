@@ -124,7 +124,8 @@ class TotalPriceManager {
     
     private init() {}
     let _totalPrice = BehaviorRelay<Int>(value: 0)
-    
+    let _totalPricePer = BehaviorRelay<Int>(value: 0)
+
     var totalPrice: Int {
         get {
             return _totalPrice.value
@@ -133,9 +134,17 @@ class TotalPriceManager {
             _totalPrice.accept(newValue)
         }
     }
+    var totalPricePer: Int {
+        get {
+            return _totalPricePer.value
+        }
+        set {
+            _totalPricePer.accept(newValue)
+        }
+    }
     //var totalPrice: Int = 0
     var totalCount: Int = 0
-    var totalPricePer : Int = 0
+    //var totalPricePer : Int = 0
     var selectedMenuItems: [MenuCheckBox] = []
     var selectedMenuArray: [[MenuCheckBox]] = []
 
