@@ -277,13 +277,13 @@ class ViewController: UIViewController {
     }
     func resetCheckBoxes() {
         // 메뉴 라디오 버튼 초기화
-        for (sectionIndex, var sectionData) in menuRadioDataArray.enumerated() {
-            for (rowIndex, var item) in sectionData.menu.enumerated() {
-                item.checkBoxSelected = (sectionIndex == 0 && rowIndex == 0) // 첫 번째 라디오 버튼은 선택 상태로 초기화
-                sectionData.menu[rowIndex] = item
-            }
-            menuRadioDataArray[sectionIndex] = sectionData
+        for (rowIndex, var item) in menuRadioDataArray[0].menu.enumerated() {
+            item.checkBoxSelected = (rowIndex == 0) // 첫 번째 라디오 버튼은 선택 상태로 초기화
+            menuRadioDataArray[0].menu[rowIndex] = item
         }
+        
+    
+        
         
         // 메뉴 체크박스 초기화
         for (sectionIndex, var sectionData) in menuCheckBoxDataArray.enumerated() {
@@ -306,16 +306,16 @@ class ViewController: UIViewController {
     
         
         // 라디오 버튼과 체크박스 UI 업데이트
-           for section in 0..<menuRadioDataArray.count {
-               let indexPath = IndexPath(row: section, section: 0)
+        for row in 0..<menuRadioDataArray[0].menu.count {
+               let indexPath = IndexPath(row: row, section: 0)
             
                if let cell = tableView.cellForRow(at: indexPath) as? RadioBoxTableViewCell {
                    if indexPath.row == 0 {
-                      cell.checkButtonView.backgroundColor = UIColor.logoColor
+                       cell.checkButtonView.backgroundColor = .white
+                     
                    }
                    else{
-                       cell.checkButtonView.backgroundColor = .white
-                   }
+                       cell.checkButtonView.backgroundColor = UIColor.logoColor                   }
                }
            }
         // 체크박스 UI 업데이트
