@@ -153,4 +153,6 @@ class TotalPriceManager {
     
     //총개수
     var totalCountArray : [Int] = []
+    
 }
+

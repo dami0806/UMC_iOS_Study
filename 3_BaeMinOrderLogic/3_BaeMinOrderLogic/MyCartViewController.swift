@@ -10,7 +10,11 @@ import SnapKit
 import UIKit
 import RxCocoa
 import RxSwift
+//Model
 
+//ViewModel
+
+//View
 class MyCartViewController: UIViewController{
     var selectedItems: [MenuCheckBox] = []
     private let bottomGetView : BottomCartGetView = {
@@ -61,8 +65,6 @@ class MyCartViewController: UIViewController{
 }
 // MARK: - UITableViewDataSource
 extension MyCartViewController :UITableViewDataSource, UITableViewDelegate {
- 
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return TotalPriceManager.shared.selectedMenuArray.count+1
     }
@@ -74,8 +76,8 @@ extension MyCartViewController :UITableViewDataSource, UITableViewDelegate {
         if indexPath.section == TotalPriceManager.shared.selectedMenuArray.count {
             
             let cell = tableView.dequeueReusableCell(withIdentifier: CartTotalTableViewCell.reuseIdentifier, for: indexPath) as! CartTotalTableViewCell
-            var totalpriceArray = TotalPriceManager.shared.totalPriceArray
-            var totalCountArray = TotalPriceManager.shared.totalCountArray
+            let totalpriceArray = TotalPriceManager.shared.totalPriceArray
+            let totalCountArray = TotalPriceManager.shared.totalCountArray
             //배열 모든 합
             let totalOrderPrice = totalpriceArray.reduce(0, +)
             let totalCount = totalCountArray.reduce(0, +)

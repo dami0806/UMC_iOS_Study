@@ -35,7 +35,7 @@ var count = 1
         button.tintColor = .black
         button.isEnabled = false
         button.setImage(UIImage(systemName: "minus"), for: .normal)
-        button.addTarget(self, action: #selector(minusButtonTapped), for: .touchUpInside)
+    
         return button
     }()
 
@@ -44,7 +44,7 @@ var count = 1
         button.tintColor = .black
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
+
         return button
     }()
 

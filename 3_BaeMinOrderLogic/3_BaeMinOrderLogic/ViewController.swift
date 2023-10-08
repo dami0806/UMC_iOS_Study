@@ -24,7 +24,6 @@ class ViewController: UIViewController {
     var menuCheckBoxDataArray: [MenuCheckBoxSection] = []
     //
     var selectedIndex: Int = 0
-    
     var selectedCheckBoxData: [MenuCheckBox] = []
     
     private lazy var uiimage: UIImageView = {
@@ -94,8 +93,9 @@ class ViewController: UIViewController {
         addSubviews()
         settingNaviItem()
     }
+    //개당 가격과, 체크표시로 변화되는 가격이 호환이 되지 않았음. combineLatest사용
     private func setupRx() {
-        // 연결
+        // totalPricePer 변화> totalPrice 변화 >bottomGetView라벨구독 연결
                 Observable
                     .combineLatest(
                         TotalPriceManager.shared._totalPricePer.asObservable(),
@@ -119,6 +119,7 @@ class ViewController: UIViewController {
             })
             .disposed(by: disposeBag)
     }
+    
     private func fetchData() {
         headerDataManager.makeHeaderData()
         headerDataArray = headerDataManager.getHeaderData()
@@ -247,11 +248,8 @@ class ViewController: UIViewController {
         
         // 커스텀 뷰를 이용해 UIBarButtonItem 생성
         let cartBtn = UIBarButtonItem(customView: cartButtonView)
-        //        let cartBtn = UIBarButtonItem(image: UIImage(systemName: "cart"), style: .plain, target: self, action: #selector(buttonTapped))
-        
         
         navigationController?.navigationBar.barTintColor = .white
-        
         navigationItem.rightBarButtonItems = [cartBtn,shareBtn,homeBtn]
         navigationItem.leftBarButtonItem = backBtn
         

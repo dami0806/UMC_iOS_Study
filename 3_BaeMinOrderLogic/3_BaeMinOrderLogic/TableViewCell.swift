@@ -136,7 +136,6 @@ class CountHeaderView: UIView {
         button.tintColor = .black
         button.isEnabled = false
         button.setImage(UIImage(systemName: "minus"), for: .normal)
-        button.addTarget(self, action: #selector(minusButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -146,7 +145,6 @@ class CountHeaderView: UIView {
         
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.addTarget(self, action: #selector(plusButtonTapped), for: .touchUpInside)
         return button
     }()
     
@@ -205,36 +203,34 @@ class CountHeaderView: UIView {
             make.width.equalTo(plusButton.snp.height)
             
         }
-    }
-    
-    @objc private func minusButtonTapped() {
-        if count > 1 {
-            count -= 1
-            TotalPriceManager.shared.totalCount = count
-            print(TotalPriceManager.shared.totalPricePer)
-            TotalPriceManager.shared.totalPrice = (TotalPriceManager.shared.totalCount) * (TotalPriceManager.shared.totalPricePer)
-             print("총가격: \(TotalPriceManager.shared.totalPrice)")
-            TotalPriceManager.shared._totalPricePer
-                .map { "\( numberWithComma($0))원 담기" }
-                .bind(to: BottomGetView().getLabel.rx.text)
-                .disposed(by: disposeBag)
-            
-        }
-    }
-    
-    @objc private func plusButtonTapped() {
-        count += 1
-        TotalPriceManager.shared.totalCount = count
+        //버튼은 싱글톤 변수 변화 -> 변수는 label구독중
+        minusButton.rx.tap
+            .subscribe(onNext:{[weak self] in
+                guard let self = self else{ return}
+                if count > 1 {
+                    count -= 1
+                    TotalPriceManager.shared.totalCount = count
+                    TotalPriceManager.shared.totalPrice = (TotalPriceManager.shared.totalCount) * (TotalPriceManager.shared.totalPricePer)
+                }
+            } )
+            .disposed(by: disposeBag)
         
-        TotalPriceManager.shared.totalPrice = (TotalPriceManager.shared.totalCount) * (TotalPriceManager.shared.totalPricePer)
-        
+        plusButton.rx.tap
+            .subscribe(onNext: {[weak self] in
+                guard let self = self else{return}
+                count += 1
+                TotalPriceManager.shared.totalCount = count
+                TotalPriceManager.shared.totalPrice = (TotalPriceManager.shared.totalCount) * (TotalPriceManager.shared.totalPricePer)
+            })
     }
 }
 
 
 //맨위 이미지 바로 아래 설명있는 셀
 class TitleTableViewCell : UITableViewCell {
+    private let disposeBag = DisposeBag()
     static let reuseIdentifier = "TitleTableViewCell"
+    
     //고구마피자
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -327,11 +323,15 @@ class TitleTableViewCell : UITableViewCell {
     
 }
 
-
-//라디오버튼
+class RadioBoxViewModel{
+    
+}
+//라디오버튼 rx 사용전
 class RadioBoxTableViewCell: UITableViewCell {
     static let reuseIdentifier = "RadioBoxTableViewCell"
-    
+    private var viewModel = RadioBoxViewModel()
+    private let disposeBag = DisposeBag()
+
     var radioButtonSelected :Bool = false
     var menuRadioDataArray: [MenuRadioBoxSection]?
     var priceNum: Int = 0
@@ -426,9 +426,9 @@ class RadioBoxTableViewCell: UITableViewCell {
         super.layoutSubviews()
         checkUIView.layer.cornerRadius = contentView.frame.height * 0.55 * 0.5
         TotalPriceManager.shared.totalPrice = TotalPriceManager.shared.totalPricePer
-     //   calculate()
     }
 
+    
     @objc private func toggleButtonTapped() {
            guard var sectionDataArray = menuRadioDataArray?[sectionNum - 1].menu else {
                return
@@ -436,12 +436,12 @@ class RadioBoxTableViewCell: UITableViewCell {
 
            // 현재 라디오 버튼 선택 상태 토글
         if radioButtonSelected == true {
-            
+
         }else{
             radioButtonSelected.toggle()
         }
             var previousItemPrice = 0
-           
+
         if radioButtonSelected {
             guard var sectionDataArray = menuRadioDataArray?[sectionNum - 1].menu else {
                 return
@@ -451,17 +451,17 @@ class RadioBoxTableViewCell: UITableViewCell {
                     previousItemPrice = data.price
                     TotalPriceManager.shared.totalPricePer -= previousItemPrice
                    // print("🙌🏻data\(data)")
-                    
+
                 }else{
                     TotalPriceManager.shared.totalPricePer +=  data.price
-                
+
                     TotalPriceManager.shared.selectedMenuItems.removeAll()
                     TotalPriceManager.shared.selectedMenuItems.append(MenuCheckBox(checkBoxSelected: radioButtonSelected, menu: data.menu, price: priceNum, sectionNum: sectionNum))
-                    
+
                     TotalPriceManager.shared.totalPrice = TotalPriceManager.shared.selectedMenuItems.reduce(0) { $0 + ($1.checkBoxSelected ? $1.price * TotalPriceManager.shared.totalCount : 0) }
-                    
+
                 }
-                
+
             }
         }
     }
@@ -485,7 +485,7 @@ class RadioBoxTableViewCell: UITableViewCell {
                 
                 TotalPriceManager.shared.totalPricePer += itemPrice
                 
-                // 다른 인덱스의 버튼들을 해제합니다.
+                // 다른 인덱스의 버튼들 해제
                 for (index, var data) in sectionDataArray.enumerated() {
                     if index != self.tag {
                         data.checkBoxSelected = false
@@ -504,7 +504,6 @@ class RadioBoxTableViewCell: UITableViewCell {
     }
 }
 
-
 //체크박스 테이블셀
 class CheckBoxTableViewCell: UITableViewCell {
     
@@ -514,9 +513,8 @@ class CheckBoxTableViewCell: UITableViewCell {
     var priceNum: Int = 0
     var sectionNum:Int = 1
     static var totalPrice: Int = 0
-    //선택된 배열
-   // var selectedItems: [CheckBoxTableViewCell] = []
-    
+    private let disposeBag = DisposeBag()
+
     lazy var checkUIView :UIView = {
         let view = UIView()
         view.layer.cornerRadius = 5
@@ -623,7 +621,7 @@ class CheckBoxTableViewCell: UITableViewCell {
                     TotalPriceManager.shared.selectedMenuItems.remove(at: index)
                 }
             }
-        
+        //선택된 아이템 배열을 순환하면서 체크 되어있으면 (가격 * 현재개수), 아니면 0
             TotalPriceManager.shared.totalPrice = TotalPriceManager.shared.selectedMenuItems.reduce(0) { $0 + ($1.checkBoxSelected ? $1.price * TotalPriceManager.shared.totalCount : 0) }
             
         }
@@ -643,7 +641,8 @@ class CheckBoxTableViewCell: UITableViewCell {
 class CartTableViewCell: UITableViewCell {
     static let reuseIdentifier = "CartTableViewCell"
     var sectionNum:Int = 1
-    
+    private let disposeBag = DisposeBag()
+
     //메뉴 이름
     private lazy var cancelBtn : UIButton = {
         let btn = UIButton()
@@ -874,6 +873,8 @@ class CartTableViewCell: UITableViewCell {
 
 class CartTotalTableViewCell: UITableViewCell {
     static let reuseIdentifier = "CartTotalTableViewCell"
+    private let disposeBag = DisposeBag()
+
     //
     lazy var payCost: UILabel = {
         let label = UILabel()

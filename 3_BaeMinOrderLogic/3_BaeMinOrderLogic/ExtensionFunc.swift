@@ -7,6 +7,7 @@
 
 import Foundation
 
+//세자리 끊기
 func numberWithComma(_ number: Int) -> String {
     let formatter = NumberFormatter()
     formatter.numberStyle = .decimal
