@@ -14,10 +14,10 @@ struct Category{
 class HomeCategoryDataManager {
     private var homeCagetoryDataArray: [Category] = []
     func makeHomeCategoryData(){
-        homeCagetoryDataArray = [Category(image: UIImage(named: "카테고리1")!, text: ""),
-                                 Category(image: UIImage(named: "카테고리2")!, text: "알바"),
-                                 Category(image: UIImage(named: "카테고리3")!, text: "부동산"),
-                                 Category(image: UIImage(named: "카테고리4")!, text: "중고차"),
+        homeCagetoryDataArray = [Category(image: UIImage(named: "카테고리1"), text: ""),
+                                 Category(image: UIImage(named: "카테고리2"), text: "알바"),
+                                 Category(image: UIImage(named: "카테고리3"), text: "부동산"),
+                                 Category(image: UIImage(named: "카테고리4"), text: "중고차"),
         ]
     }
     func gethomeCagegoryDataArrayCellData() -> [Category] {
