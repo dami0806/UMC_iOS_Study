@@ -39,8 +39,10 @@ class PlantsViewController: UIViewController {
         plantService.getPlants()
             .subscribe(onNext: { [weak self] plants in
                 self?.plants = plants
+               
                 self?.tableView.reloadData()
             }, onError: { error in
+                print(self.plantService.getPlants())
                 print("Error: \(error)")
             })
             .disposed(by: disposeBag)

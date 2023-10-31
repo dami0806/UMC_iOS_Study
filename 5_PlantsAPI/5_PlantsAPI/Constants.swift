@@ -23,3 +23,15 @@ struct Plant: Codable {
 }
 
 
+
+struct PlantResponse: Codable {
+    let body: PlantResponseBody
+}
+
+struct PlantResponseBody: Codable {
+    let items: PlantItems
+}
+
+struct PlantItems: Codable {
+    let item: [Plant]
+}
