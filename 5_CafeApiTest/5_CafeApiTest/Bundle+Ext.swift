@@ -15,6 +15,9 @@ extension Bundle {
     var API_URL: String {
         return getSecretKey(key: "API_URL")
     }
+//    var NATIVE_APP_KEY: String {
+//        return getSecretKey(key: "NATIVE_APP_KEY")
+//    }
  
     // SecretKey.plist에서 값 가져오기
     /// - parameter key : SecretKey.plist에 등록된 Key
