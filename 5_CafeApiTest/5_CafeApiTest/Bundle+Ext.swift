@@ -15,10 +15,10 @@ extension Bundle {
     var API_URL: String {
         return getSecretKey(key: "API_URL")
     }
-//    var NATIVE_APP_KEY: String {
-//        return getSecretKey(key: "NATIVE_APP_KEY")
-//    }
- 
+    var NATIVE_APP_KEY: String {
+        return Bundle.main.infoDictionary?["KAKAO_NATIVE_APP_KEY"] as! String
+    }
+    
     // SecretKey.plist에서 값 가져오기
     /// - parameter key : SecretKey.plist에 등록된 Key
     /// - returns : Key에 해당하는 Value
