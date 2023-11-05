@@ -21,7 +21,6 @@ class ViewController: UIViewController {
         view.backgroundColor = .white
         title = "경상북도 경주시_전망 좋은 카페 현황"
         setupTableView()
-
         fetchDataFromAPI()
     }
     
@@ -46,7 +45,6 @@ class ViewController: UIViewController {
         AF.request(apiUrl, method: .get, parameters: parameters)
                    .responseJSON { [weak self] response in
                        guard let self = self else { return }
-                       
                        switch response.result {
                        case .success:
                            if let data = response.data {
@@ -55,41 +53,12 @@ class ViewController: UIViewController {
                                    let cafes = response.response.body.items.item
                                    self.cafeData.accept(cafes)
                                } catch {
-                            
-//        AF.request(apiUrl, method: .get, parameters: parameters)
-//            .responseJSON { response in
-//                switch response.result {
-//                    
-//                case .success:
-//                    if let data = response.data {
-//                        do {
-//                            let response = try JSONDecoder().decode(CafeAPIResponse.self, from: data)
-//                            
-//                            // API 응답을 성공적으로 처리
-//                            for cafe in response.response.body.items.item {
-//                               
-//                                
-//                                print("카페명: \(cafe.CAFE_NM)")
-//                                if let telNumber = cafe.TELNO {
-//                                    print("전화번호: \(telNumber)")
-//                                }
-//                                print("주소: \(cafe.ADRES)")
-//                                if let homepage = cafe.HMPG_NM {
-//                                    print("홈페이지: \(homepage)")
-//                                }
-//                                print("----------")
-//                                
-//                            }
-//                        } catch {
-                            // JSON 디코딩 오류 처리
                             print("JSON Decoding Error: \(error)")
                         }
                     } else {
-                        // 데이터가 없음
-                        print("No data in response")
+                        print("No data")
                     }
                 case .failure(let error):
-                    // Alamofire 오류 처리
                     print("Alamofire Error: \(error)")
                 }
             }

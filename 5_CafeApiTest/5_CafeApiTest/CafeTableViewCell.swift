@@ -11,9 +11,7 @@ import UIKit
 final class CafeTableViewCell : UITableViewCell {
     
     static let reuseIdentifier = "CafeTableViewCell"
-    
-   
-    
+
     // 제목 레이블
     private let titleLabel: UILabel = {
         let label = UILabel()

@@ -12,6 +12,8 @@
 		373E0DB32AF169F20044A2BD /* RxKakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 373E0DB22AF169F20044A2BD /* RxKakaoSDKCommon */; };
 		373E0DB52AF169F20044A2BD /* RxKakaoSDKFriend in Frameworks */ = {isa = PBXBuildFile; productRef = 373E0DB42AF169F20044A2BD /* RxKakaoSDKFriend */; };
 		373E0DB72AF169F20044A2BD /* RxKakaoSDKShare in Frameworks */ = {isa = PBXBuildFile; productRef = 373E0DB62AF169F20044A2BD /* RxKakaoSDKShare */; };
+		375CB2B82AF7828C00119DF1 /* LoginModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CB2B72AF7828C00119DF1 /* LoginModel.swift */; };
+		375CB2BA2AF7829D00119DF1 /* Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CB2B92AF7829D00119DF1 /* Service.swift */; };
 		37822F742AF0E22E00C50617 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37822F732AF0E22E00C50617 /* AppDelegate.swift */; };
 		37822F762AF0E22E00C50617 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37822F752AF0E22E00C50617 /* SceneDelegate.swift */; };
 		37822F782AF0E22E00C50617 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37822F772AF0E22E00C50617 /* ViewController.swift */; };
@@ -24,18 +26,19 @@
 		37822F932AF0E2E400C50617 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 37822F922AF0E2E400C50617 /* RxSwift */; };
 		37822F972AF0E47100C50617 /* CafeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37822F962AF0E47100C50617 /* CafeTableViewCell.swift */; };
 		37822F9A2AF0F93F00C50617 /* Configurate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37822F992AF0F93F00C50617 /* Configurate.swift */; };
-		37822F9E2AF0FFD200C50617 /* SecretKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37822F9D2AF0FFD200C50617 /* SecretKey.plist */; };
 		37822FA02AF1004000C50617 /* Bundle+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37822F9F2AF1003F00C50617 /* Bundle+Ext.swift */; };
 		37A10A3E2AF146A60035DADE /* RxKakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 37A10A3D2AF146A60035DADE /* RxKakaoSDK */; };
 		37A10A402AF146A60035DADE /* RxKakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 37A10A3F2AF146A60035DADE /* RxKakaoSDKAuth */; };
 		37A10A422AF146A60035DADE /* RxKakaoSDKCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 37A10A412AF146A60035DADE /* RxKakaoSDKCommon */; };
 		37A10A442AF146A60035DADE /* RxKakaoSDKTalk in Frameworks */ = {isa = PBXBuildFile; productRef = 37A10A432AF146A60035DADE /* RxKakaoSDKTalk */; };
 		37A10A462AF146A60035DADE /* RxKakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 37A10A452AF146A60035DADE /* RxKakaoSDKUser */; };
-		37F873C52AF10968004CDA26 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F873C42AF10968004CDA26 /* LoginViewController.swift */; };
+		37F873C52AF10968004CDA26 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F873C42AF10968004CDA26 /* Login.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		373E0DB82AF16B150044A2BD /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		375CB2B72AF7828C00119DF1 /* LoginModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginModel.swift; sourceTree = "<group>"; };
+		375CB2B92AF7829D00119DF1 /* Service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Service.swift; sourceTree = "<group>"; };
 		37822F702AF0E22E00C50617 /* 5_CafeApiTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 5_CafeApiTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37822F732AF0E22E00C50617 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		37822F752AF0E22E00C50617 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,9 +48,8 @@
 		37822F812AF0E23100C50617 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		37822F962AF0E47100C50617 /* CafeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CafeTableViewCell.swift; sourceTree = "<group>"; };
 		37822F992AF0F93F00C50617 /* Configurate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Configurate.swift; sourceTree = "<group>"; };
-		37822F9D2AF0FFD200C50617 /* SecretKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SecretKey.plist; sourceTree = "<group>"; };
 		37822F9F2AF1003F00C50617 /* Bundle+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Ext.swift"; sourceTree = "<group>"; };
-		37F873C42AF10968004CDA26 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		37F873C42AF10968004CDA26 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,9 +105,10 @@
 				37822F812AF0E23100C50617 /* Info.plist */,
 				37822F962AF0E47100C50617 /* CafeTableViewCell.swift */,
 				37822F992AF0F93F00C50617 /* Configurate.swift */,
-				37822F9D2AF0FFD200C50617 /* SecretKey.plist */,
 				37822F9F2AF1003F00C50617 /* Bundle+Ext.swift */,
-				37F873C42AF10968004CDA26 /* LoginViewController.swift */,
+				37F873C42AF10968004CDA26 /* Login.swift */,
+				375CB2B72AF7828C00119DF1 /* LoginModel.swift */,
+				375CB2B92AF7829D00119DF1 /* Service.swift */,
 				373E0DB82AF16B150044A2BD /* Config.xcconfig */,
 			);
 			path = 5_CafeApiTest;
@@ -193,7 +196,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				37822F802AF0E23100C50617 /* LaunchScreen.storyboard in Resources */,
-				37822F9E2AF0FFD200C50617 /* SecretKey.plist in Resources */,
 				37822F7D2AF0E23100C50617 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,7 +211,9 @@
 				37822F782AF0E22E00C50617 /* ViewController.swift in Sources */,
 				37822F742AF0E22E00C50617 /* AppDelegate.swift in Sources */,
 				37822F9A2AF0F93F00C50617 /* Configurate.swift in Sources */,
-				37F873C52AF10968004CDA26 /* LoginViewController.swift in Sources */,
+				37F873C52AF10968004CDA26 /* Login.swift in Sources */,
+				375CB2BA2AF7829D00119DF1 /* Service.swift in Sources */,
+				375CB2B82AF7828C00119DF1 /* LoginModel.swift in Sources */,
 				37822FA02AF1004000C50617 /* Bundle+Ext.swift in Sources */,
 				37822F762AF0E22E00C50617 /* SceneDelegate.swift in Sources */,
 			);

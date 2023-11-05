@@ -16,7 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-      //   let apiKey = API_KEY.kakao_key
+       
+             
+        
         let nativeAppkey = API_KEY.kakao_key//Bundle.main.infoDictionary?["KAKAO_NATIVE_APP_KEY"] ?? ""
         RxKakaoSDK.initSDK(appKey:nativeAppkey)
 
