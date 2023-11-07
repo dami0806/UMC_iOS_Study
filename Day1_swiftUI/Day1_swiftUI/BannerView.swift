@@ -9,10 +9,13 @@ import SwiftUI
 
 struct BannerView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Image("배너")
+            .resizable()
+            .cornerRadius(10)
     }
 }
 
 #Preview {
     BannerView()
 }
+ 

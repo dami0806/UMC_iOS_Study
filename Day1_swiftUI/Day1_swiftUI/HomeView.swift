@@ -34,43 +34,48 @@ struct HomeView: View {
                             }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
                             
                         ).foregroundColor(.white)
-                        .toolbarBackground(.indigo, for: .navigationBar)
+                        .toolbarBackground(Color("LogoColor"), for: .navigationBar)
                       .toolbarBackground(.visible, for: .navigationBar)
-                    
                         ScrollView{
                             
                             SearchBar()
                                 .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))// 서치 바
-                                .background(.indigo)
+                                .background(Color("LogoColor"))
                               
                                 //.cornerRadius(10)
                             
                             GeometryReader { geometry in
                                 VStack{
-                                    HStack(alignment: .center, spacing: 5) {
-                                        
-                                        FirstView(title: "배달", subTitle: "요즘배민 맛집은?", image: "맨위1")
-                                            .frame(width: (geometry.size.width - 30) / 3, height: (geometry.size.width - 30) / 3)
-                                        
-                                        FirstView(title: "B마트", subTitle: "장보기도 더빠르게!", image: "맨위2")
-                                            .frame(width: (geometry.size.width - 30) / 3, height: (geometry.size.width - 30) / 3)
-                                        
-                                        FirstView(title: "배민스토어", subTitle: "요즘배민 맛집은?", image: "맨위3")
-                                            .frame(width: (geometry.size.width - 30) / 3, height: (geometry.size.width - 30) / 3)
-                                        
-                                        
-                                    }.padding(EdgeInsets(top: 0, leading: 10, bottom: 0, trailing: 10))
+                                    let parentWidth = geometry.size.width
+                                    Image("맨위광고")
+                                        .resizable()
+                                        .frame(width: parentWidth - 10)
+                                        .aspectRatio(4,contentMode:.fill)
+                                        .padding(.horizontal, 5)
                                     
+                                    HStack(alignment:.center, spacing: 10) {
+                                        
+                                        FirstView(title: "배달", subTitle:"요즘 배민\n맛집은?", image: "맨위1")
+                                        FirstView(title: "B마트", subTitle: "장보기도\n더빠르게!", image: "맨위2")
+                                    
+                                        FirstView(title: "배민스토어", subTitle: "배달은 지금\n옵니다", image: "맨위3")
+                              
+                                    }.padding(EdgeInsets(top: 0, leading: 5, bottom: 5, trailing: 5))
+                                        .frame(width: geometry.size.width - 20, height: (geometry.size.width - 20) * 0.3, alignment: .center)
+                                        Spacer()
                                     SaleView()
+                                        .padding(EdgeInsets(top: 10, leading: 5, bottom: 0, trailing: 5))
+                                        .frame(width: geometry.size.width - 20,height: (geometry.size.width - 20) * 0.65, alignment: .center)
                                     
                                     BannerView()
+                                        .padding(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5))
+                                        .frame(width: geometry.size.width - 20,height: (geometry.size.width - 20) * 0.3, alignment: .center)
                                 }
                             }
-                        }.background(.gray)
+                        }.background(Color("InterSpaceColor"))
                 }
             }
-                
-            }.background(Color.gray)
+            }
         }
     }
 }
@@ -80,8 +85,9 @@ struct SearchBar: View {
     var body: some View {
         HStack {
             Image(systemName: "magnifyingglass")
-                .foregroundColor(.indigo)
+                .foregroundColor(Color("LogoColor"))
             TextField("찾는 메뉴가 뭐예요?", text: $searchText)
+            
                 .background(Color.white)
                 .cornerRadius(3)
                 .padding(5)
@@ -97,18 +103,3 @@ struct SearchBar: View {
 #Preview {
     HomeView()
 }
-//struct SearchBar: View {
-//    @Binding var text: String
-//    
-//    var body: some View {
-//        HStack {
-//            Image(systemName: "magnifyingglass")
-//                .foregroundStyle(.green)
-//            TextField("찾는 맛집 이름이 뭐예요?", text: $text)
-//        }
-//        .frame(height: 40)
-//        .padding(EdgeInsets(top: 4, leading: 8, bottom: 4, trailing: 8))
-//        .background(Color(.secondarySystemBackground))
-//        .padding()
-//    }
-//}

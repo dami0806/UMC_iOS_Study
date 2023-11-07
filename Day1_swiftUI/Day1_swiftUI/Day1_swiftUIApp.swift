@@ -12,7 +12,7 @@ struct Day1_swiftUIApp: App {
     var body: some Scene {
         WindowGroup {
 
-            NaviView().background(.indigo)
+            NaviView().background(Color("LogoColor"))
         }
     }
 }

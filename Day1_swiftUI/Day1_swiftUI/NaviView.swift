@@ -12,6 +12,7 @@ struct NaviView: View {
         
         TabView {
             Group {
+               
                 HomeView()
                     .tabItem {Label("검색",image: "1")}
                 
@@ -27,6 +28,7 @@ struct NaviView: View {
             }
             .toolbarBackground(.white, for: .tabBar)
             .toolbarBackground(.visible, for: .tabBar)
+      
         }
     }
     

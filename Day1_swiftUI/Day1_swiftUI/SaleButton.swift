@@ -18,12 +18,12 @@ struct SaleButton: View {
                 Image(imageStr)
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 30,height: 30)
+                    
                 Text(titleStr)
                     .font(.system(size: 10, weight: .regular))
             }
             .foregroundColor(.black)
-            .padding()
+      
             .background(.white)
         })
     }
