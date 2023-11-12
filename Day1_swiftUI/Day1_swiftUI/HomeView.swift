@@ -41,7 +41,6 @@ struct HomeView: View {
                             SearchBar()
                                 .padding(EdgeInsets(top: 10, leading: 0, bottom: 10, trailing: 0))// 서치 바
                                 .background(Color("LogoColor"))
-                              
                                 //.cornerRadius(10)
                             
                             GeometryReader { geometry in
