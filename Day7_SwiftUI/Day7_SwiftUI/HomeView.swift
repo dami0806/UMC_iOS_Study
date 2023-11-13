@@ -15,7 +15,8 @@ struct HomeView: View {
                     ZStack {
                         Color.white
                             .ignoresSafeArea()
-                        ContentView()
+                        GoodsTableView()
+                            .padding(EdgeInsets(top: 0, leading: 5, bottom: 0, trailing: 5))
                             .toolbar {
                                 ToolbarItemGroup(placement: .navigationBarLeading) {
                                     Text("남동구 소래역로 93 ▾")
@@ -35,7 +36,6 @@ struct HomeView: View {
                                     }
                                 }
                             }.accentColor(.black)
-                            
                     }
                 }
             }

@@ -7,11 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		37448F7E2B023B3000885897 /* HorizontalScrollViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37448F7D2B023B3000885897 /* HorizontalScrollViewCell.swift */; };
+		37448F802B023D8300885897 /* HorizontalScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37448F7F2B023D8300885897 /* HorizontalScrollView.swift */; };
 		37465D362AFF657B00278F25 /* Day7_SwiftUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37465D352AFF657B00278F25 /* Day7_SwiftUIApp.swift */; };
 		37465D382AFF657B00278F25 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37465D372AFF657B00278F25 /* ContentView.swift */; };
 		37465D3A2AFF657E00278F25 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37465D392AFF657E00278F25 /* Assets.xcassets */; };
 		37465D3D2AFF657F00278F25 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37465D3C2AFF657F00278F25 /* Preview Assets.xcassets */; };
-		378AE32B2B00DDFC0098C468 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378AE32A2B00DDFC0098C468 /* DataManager.swift */; };
 		378AE32D2B0126580098C468 /* GoodsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378AE32C2B0126570098C468 /* GoodsTableView.swift */; };
 		378AE32F2B0127940098C468 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378AE32E2B0127940098C468 /* HomeView.swift */; };
 		378AE3312B0133470098C468 /* NaviView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378AE3302B0133470098C468 /* NaviView.swift */; };
@@ -20,12 +21,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		37448F7D2B023B3000885897 /* HorizontalScrollViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollViewCell.swift; sourceTree = "<group>"; };
+		37448F7F2B023D8300885897 /* HorizontalScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalScrollView.swift; sourceTree = "<group>"; };
 		37465D322AFF657B00278F25 /* Day7_SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Day7_SwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		37465D352AFF657B00278F25 /* Day7_SwiftUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day7_SwiftUIApp.swift; sourceTree = "<group>"; };
 		37465D372AFF657B00278F25 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		37465D392AFF657E00278F25 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		37465D3C2AFF657F00278F25 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		378AE32A2B00DDFC0098C468 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		378AE32C2B0126570098C468 /* GoodsTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoodsTableView.swift; sourceTree = "<group>"; };
 		378AE32E2B0127940098C468 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		378AE3302B0133470098C468 /* NaviView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaviView.swift; sourceTree = "<group>"; };
@@ -65,14 +67,15 @@
 			children = (
 				37465D352AFF657B00278F25 /* Day7_SwiftUIApp.swift */,
 				37465D372AFF657B00278F25 /* ContentView.swift */,
+				37448F7D2B023B3000885897 /* HorizontalScrollViewCell.swift */,
 				378AE3342B013A200098C468 /* Models.swift */,
 				378AE3302B0133470098C468 /* NaviView.swift */,
 				37465D392AFF657E00278F25 /* Assets.xcassets */,
 				37465D3B2AFF657F00278F25 /* Preview Content */,
-				378AE32A2B00DDFC0098C468 /* DataManager.swift */,
 				378AE32C2B0126570098C468 /* GoodsTableView.swift */,
 				378AE32E2B0127940098C468 /* HomeView.swift */,
 				378AE3322B01381A0098C468 /* TableViewCell.swift */,
+				37448F7F2B023D8300885897 /* HorizontalScrollView.swift */,
 			);
 			path = Day7_SwiftUI;
 			sourceTree = "<group>";
@@ -156,12 +159,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				37465D382AFF657B00278F25 /* ContentView.swift in Sources */,
-				378AE32B2B00DDFC0098C468 /* DataManager.swift in Sources */,
 				378AE32D2B0126580098C468 /* GoodsTableView.swift in Sources */,
 				378AE3352B013A200098C468 /* Models.swift in Sources */,
 				378AE32F2B0127940098C468 /* HomeView.swift in Sources */,
 				378AE3312B0133470098C468 /* NaviView.swift in Sources */,
+				37448F7E2B023B3000885897 /* HorizontalScrollViewCell.swift in Sources */,
 				378AE3332B01381A0098C468 /* TableViewCell.swift in Sources */,
+				37448F802B023D8300885897 /* HorizontalScrollView.swift in Sources */,
 				37465D362AFF657B00278F25 /* Day7_SwiftUIApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

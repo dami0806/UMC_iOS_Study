@@ -14,10 +14,17 @@ struct Goods{
     var locationLabel: String
     var goodsPrice: String
 }
-
+let HorizontaldummyGoods: [Goods] = (0..<10).map { index in
+    Goods(
+        goodsImage: Image("goods"),
+        goodsTitle: "에어팟 프로 1세대",
+        locationLabel: "논현동 . 1분 전",
+        goodsPrice: "100,000원"
+    )
+}
 let dummyGoods: [Goods] = (0..<10).map { index in
     Goods(
-        goodsImage: Image("goods\(index)"), // 실제 이미지와 매칭되는 이름으로 변경
+        goodsImage: Image("goods"),
         goodsTitle: "에어팟 프로 1세대",
         locationLabel: "논현동 . 1분 전",
         goodsPrice: "100,000원"
