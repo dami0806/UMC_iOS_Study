@@ -29,6 +29,7 @@ class OrderViewModel: ObservableObject {
         selectedRadioMenusHistory = []
         totalPriceHistory = []
         totalCountHistory = []
+        //더미
         radioMenus = RadioMenu.dummyData
         menus = Menu.dummyData
     }
