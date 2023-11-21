@@ -24,15 +24,17 @@ struct HomeView: View {
                                 ToolbarItemGroup(placement: .navigationBarTrailing) {
                                     Button(action: {
                                     }) {
-                                        Image(systemName: "square.split.2x2")
+                                        Image(systemName: "person.circle")
+                                    }
+                                    Button(action: {
+                                    }) {
+                                        
+                                        Image(systemName: "magnifyingglass")
+                                        
                                     }
                                     Button(action: {
                                     }) {
                                         Image(systemName: "bell")
-                                    }
-                                    Button(action: {
-                                    }) {
-                                        Image(systemName: "cart")
                                     }
                                 }
                             }.accentColor(.black)
