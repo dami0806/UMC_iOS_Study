@@ -15,7 +15,6 @@ class OrderViewModel: ObservableObject {
     @Published var selectedRadioMenusHistory: [[Menu]]
     
     @Published var totalPrice: Int = 0
-    // @Published var totalCount: Int = 0
     @Published var allTotalCount: Int = 0
     @Published var allTotalPrice: Int = 0
     
@@ -73,6 +72,6 @@ class OrderViewModel: ObservableObject {
             menus[i].isChecked = false
         }
         totalPrice = 0
-        count = 0
+        count = 1
     }
 }

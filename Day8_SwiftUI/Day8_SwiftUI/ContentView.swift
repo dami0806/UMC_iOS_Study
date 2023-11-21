@@ -98,7 +98,7 @@ struct ContentView: View {
                     .font(.headline)
                 
                 Button(action: {
-                    // 버튼 눌렀을 때 로직 추가
+                    viewModel.resetAndCalculateAllTotals()
                 }) {
                     Text("\(viewModel.totalPrice)원")
                         .padding(.horizontal, 10)
@@ -116,7 +116,7 @@ struct ContentView: View {
     func decreaseCount() {
         viewModel.changeCount(-1)
     }
-
+    
     func increaseCount() {
         viewModel.changeCount(+1)
     }
