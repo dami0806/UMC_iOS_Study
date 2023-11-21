@@ -70,28 +70,19 @@ struct ContentView: View {
                 Section(header: Text("")) {
                     HStack {
                         Text("수량")
-                        Text("총 수량: \(viewModel.allTotalCount)개, 총 가격: \(viewModel.totalPrice)원")
+                        Text("ALL총 수량: \(viewModel.allTotalCount)개,총수량:\(viewModel.count), All가격:\(viewModel.allTotalPrice) 총 가격: \(viewModel.totalPrice)원")
                             .font(.headline)
-                        
-                        Button(action: {
-                            if viewModel.count > 1{
-                                
-                                viewModel.changeCount(-1)
-                                
+                        Image(systemName: "minus.circle")
+                            .onTapGesture {
+                                decreaseCount()
                             }
-                        }) {
-                            Image(systemName: "minus.circle")
-                        }
                         
                         Text("\(viewModel.count)개")
                         
-                        Button(action: {
-                            
-                            viewModel.changeCount(+1)
-                            
-                        }) {
-                            Image(systemName: "plus.circle")
-                        }
+                        Image(systemName: "plus.circle")
+                            .onTapGesture {
+                                increaseCount()
+                            }
                     }
                 }
                 
@@ -121,6 +112,13 @@ struct ContentView: View {
             .padding(.bottom, 20) // 하단 여백 추가
         }
         
+    }
+    func decreaseCount() {
+        viewModel.changeCount(-1)
+    }
+
+    func increaseCount() {
+        viewModel.changeCount(+1)
     }
 }
 

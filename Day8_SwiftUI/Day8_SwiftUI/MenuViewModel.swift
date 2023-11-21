@@ -46,16 +46,16 @@ class OrderViewModel: ObservableObject {
     }
     
     func changeCount(_ change: Int) {
-        
-        count = max(1, count + change)
+        count += change
+        print(change)
+        print(count)
         updateTotals()
         
     }
     func updateTotals() {
         totalPrice = selectedMenus.map { $0.price * count }.reduce(0, +)
-        count = selectedMenus.count
     }
-    
+
     func resetAndCalculateAllTotals() {
         allTotalCount += count
         allTotalPrice += totalPrice
