@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		376D3F992B0D04A400708902 /* NextPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 376D3F982B0D04A400708902 /* NextPageView.swift */; };
 		37A626692B0BA0A900CFE922 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37A626682B0BA0A900CFE922 /* MenuViewModel.swift */; };
 		37A6266C2B0BA2FB00CFE922 /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = 37A6266B2B0BA2FB00CFE922 /* RxBlocking */; };
 		37A6266E2B0BA2FB00CFE922 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 37A6266D2B0BA2FB00CFE922 /* RxCocoa */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		376D3F982B0D04A400708902 /* NextPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NextPageView.swift; sourceTree = "<group>"; };
 		37A626682B0BA0A900CFE922 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
 		37CDCCEC2B0C9C26006BF559 /* CartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CartView.swift; sourceTree = "<group>"; };
 		37F5FE982B08C8B1001D6F48 /* Day8_SwiftUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Day8_SwiftUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,6 +51,7 @@
 		37CDCCEB2B0C49D9006BF559 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				376D3F982B0D04A400708902 /* NextPageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -173,6 +176,7 @@
 			files = (
 				37CDCCED2B0C9C26006BF559 /* CartView.swift in Sources */,
 				37F5FE9E2B08C8B1001D6F48 /* ContentView.swift in Sources */,
+				376D3F992B0D04A400708902 /* NextPageView.swift in Sources */,
 				37F5FE9C2B08C8B1001D6F48 /* Day8_SwiftUIApp.swift in Sources */,
 				37A626692B0BA0A900CFE922 /* MenuViewModel.swift in Sources */,
 				37F5FEAC2B090ED0001D6F48 /* Model.swift in Sources */,
