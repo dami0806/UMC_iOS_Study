@@ -100,7 +100,7 @@ struct ContentView: View {
                         
                         Section(header: Text("")) {
                             Text("소스 추가선택").font(.headline)
-                            // 체크박스 뷰
+                      
                             ForEach(viewModel.menus.indices, id: \.self) { index in
                                 if viewModel.menus[index].id <= 9{
                                     CheckBoxView(
@@ -234,11 +234,11 @@ struct ContentView: View {
             }
         }
     }
-    func decreaseCount() {
+    private func decreaseCount() {
         viewModel.changeCount(-1)
     }
     
-    func increaseCount() {
+    private func increaseCount() {
         viewModel.changeCount(+1)
     }
 }

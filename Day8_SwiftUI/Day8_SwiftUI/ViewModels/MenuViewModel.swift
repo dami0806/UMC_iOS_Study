@@ -24,6 +24,7 @@ class OrderViewModel: ObservableObject {
     @Published var count: Int = 1
     
     init(){
+        
         selectedMenusHistory = []
         selectedRadioMenusHistory = []
         totalPriceHistory = []
