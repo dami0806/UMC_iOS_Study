@@ -11,15 +11,17 @@ struct NextPageView: View {
     @ObservedObject var viewModel: OrderViewModel
     
     var body: some View {
+        GeometryReader { geometry in
+
         VStack{
             List {
                 Section(header: Text("").font(.headline)) {
                     ForEach(viewModel.selectedMenusHistory.indices, id: \.self) { index in
                         NextCartView(
                             selectedRadioMenu: viewModel.selectedRadioMenusHistory[index],
-                            selectedMenus: viewModel.selectedMenusHistory[index], // 해당 인덱스의 선택된 메뉴들을 가져옴
-                            totalPrice: viewModel.totalPriceHistory[index], // 해당 인덱스의 총 가격을 가져옴
-                            count: viewModel.totalCountHistory[index] // 해당 인덱스의 수량을 가져옴
+                            selectedMenus: viewModel.selectedMenusHistory[index],
+                            totalPrice: viewModel.totalPriceHistory[index],
+                            count: viewModel.totalCountHistory[index]
                         )
                     }
                 }
@@ -48,20 +50,23 @@ struct NextPageView: View {
                         Divider()
                         HStack {
                             Text("결제예정금액")
+                            
                             Spacer()
                             Text("\(viewModel.allTotalPrice + 2000)원")
-                        }
+                        }                                
+                        .padding(.bottom,10)
                         
                     }
                 }
             }
             .listStyle(GroupedListStyle())
             .navigationBarTitle("장바구니")
-
+            
             ZStack{
                 RoundedRectangle(cornerRadius: 5)
                     .fill(Color("LogoColor"))
-                    .frame(width: 300, height: 50)
+                    .frame(width: geometry.size.width * 0.85, height: 50)
+                
                 HStack{
                     Text("\(viewModel.totalPrice)원 담기")
                         .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
@@ -69,7 +74,8 @@ struct NextPageView: View {
                         .foregroundColor(.white)
                         .fontWeight(.bold)
                         .cornerRadius(5)
-                    Text("주문하기")
+                    
+                    Text("・ 알뜰배달 주문하기")
                         .padding(EdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5))
                         .background(Color("LogoColor"))
                         .foregroundColor(.white)
@@ -77,8 +83,8 @@ struct NextPageView: View {
                         .cornerRadius(5)
                 }
             }
-                
-        
+            
+        }
         }
     }
 }
@@ -107,6 +113,7 @@ struct NextCartView: View {
                     Image("foodImage")
                         .resizable()
                         .frame(width: 80, height: 80)
+                    Spacer(minLength: 10)
                     VStack(alignment: .leading) {
                         
                         Text("・ 가격: \(selectedRadioMenu.map { "\($0.name) (\($0.price)원)" }.joined(separator: " / "))")
@@ -114,23 +121,25 @@ struct NextCartView: View {
                             .tint(Color("customGray1"))
                             .multilineTextAlignment(.leading)
                             .lineLimit(nil)
-                            .truncationMode(.tail)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        
                         
                         Text("・ 사이드 추가선택: \(selectedMenus.map { "\($0.name)(\($0.price)원)" }.joined(separator: " / "))")
-                            
+                        
                             .font(Font.system(size: 15))
-                            .tint(Color("customGray"))
-                            
+                            .tint(Color("customGray1"))
                             .lineLimit(nil)
-                            .truncationMode(.tail)
-
+                            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                        
                         Text("\(totalPrice)원")
                     }
-
+                    
+                   
+                    
                 }
                 Spacer()
                 HStack{
-                    // 회색 테두리 둥근 사각형 2개
+                    Spacer()
                     RoundedRectangle(cornerRadius: 5)
                         .stroke(Color.gray, lineWidth: 1)
                         .frame(width: 60, height: 30)
@@ -145,21 +154,21 @@ struct NextCartView: View {
                     
                     RoundedRectangle(cornerRadius: 5)
                         .stroke(Color.gray, lineWidth: 1)
-                        .frame(width: 60, height: 30)
+                        .frame(width: 65, height: 30)
                         .overlay(
-                            Text("- \(count) +")
-                                .font(.headline)
+                            Text("-  \(count)  +")
+                                .fontWeight(.bold)
                                 .foregroundColor(.gray)
                         )
                         .onTapGesture {
                         }
-                        .padding(.trailing, 10)
+                    
                 }
             }
-            .padding(.horizontal)
-
+            .padding(EdgeInsets(top: 5, leading: 5, bottom: 10, trailing: 10))
+            
         }
         .background(Color.white)
-     
+        
     }
 }

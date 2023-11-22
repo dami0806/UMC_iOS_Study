@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct RadioMenu {
     var id: Int
@@ -64,4 +65,60 @@ struct Menu {
         Menu(id: 18, isChecked: false, name: "[인기최고] 닭껍질 후라이드100g", price: 22500),
         Menu(id: 19, isChecked: false, name: "닭똥집 200g", price: 23000),
     ]
+}
+
+struct RadioButtonView: View {
+    var title: String
+    var price: Int
+    @Binding var isChecked: Bool
+    
+    var body: some View {
+        HStack {
+            RadioButton(isChecked: $isChecked)
+            Text(title)
+            Spacer()
+            Text("+\(price)원")
+                .font(Font.system(size: 17))
+                .fontWeight(.bold)
+        
+        }
+    }
+}
+
+struct CheckBoxView: View {
+    var title: String
+    var price: Int
+    @Binding var isChecked: Bool
+    
+    var body: some View {
+        HStack {
+            CheckBox(isChecked: $isChecked)
+            Text(title)
+            Spacer()
+            Text("+\(price)원")
+                .font(Font.system(size: 17))
+                .fontWeight(.bold)
+        }
+    }
+}
+
+struct RadioButton: View {
+    @Binding var isChecked: Bool
+    var body: some View {
+        Image(systemName: isChecked ? "dot.circle.fill" : "circle")
+            .onTapGesture {
+                isChecked.toggle()
+            }
+    }
+}
+
+struct CheckBox: View {
+    @Binding var isChecked: Bool
+    
+    var body: some View {
+        Image(systemName: isChecked ? "checkmark.square" : "square")
+            .onTapGesture {
+                isChecked.toggle()
+            }
+    }
 }
